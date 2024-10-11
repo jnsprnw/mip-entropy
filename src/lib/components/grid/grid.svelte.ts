@@ -88,7 +88,6 @@ export function createSimple(size: number = 6) {
 	}
 
 	function startGuess(func: Function, start?: number | undefined) {
-		console.log({ start });
 		clearInterval(interval);
 		canGuess = false;
 		mode = 'guess';

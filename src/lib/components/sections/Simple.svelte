@@ -5,10 +5,6 @@
 
 	const grid = createSimple(6);
 	setContext('Grid', grid);
-
-	$inspect('grid.mode', grid.mode);
-	$inspect('grid.canGuess', grid.canGuess);
-	$inspect('grid.isDark', grid.isDark);
 </script>
 
 <div class="flex gap-x-6">

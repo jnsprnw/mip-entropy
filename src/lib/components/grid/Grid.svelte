@@ -8,8 +8,6 @@
 
 	const grid = getContext('Grid');
 
-	$inspect(grid.size);
-
 	const xDomain = $derived(range(0, grid.size));
 	const yDomain = $derived(range(0, grid.size));
 </script>
