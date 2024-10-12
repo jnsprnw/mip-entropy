@@ -38,14 +38,15 @@
 				<button
 					disabled={!grid.can_sort}
 					class:bg-red-500={grid.is_sorting}
-					onclick={() => grid.sort()}
+					onclick={() => (grid.is_sorting ? grid.stopLoop() : grid.sort())}
 					class="bg-black text-white rounded-md p-2"
 					class:bg-gray-500={!grid.can_sort}>{grid.is_sorting ? 'Sorting …' : 'Sort'}</button
 				>
 			</div>
 			Observer: {grid.observer}<br />
 			Sort by: {grid.sort_by}<br />
-			Is sorted: {grid.is_sorted ? 'yes' : 'no'}
+			Is sorted: {grid.is_sorted ? 'yes' : 'no'}<br />
+			Entropy: {grid.entropy}
 		</section>
 	</aside>
 </div>

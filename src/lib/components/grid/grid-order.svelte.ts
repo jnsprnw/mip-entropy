@@ -12,31 +12,37 @@ export function createOrder(size: number = 6) {
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
 
-	const is_sorted = $derived.by(() => {
-		const sorted = fields.slice().sort((a, b) => {
-			if (sort_by === 'color') {
-				return a.color.localeCompare(b.color);
-			} else {
-				return a.figure.localeCompare(b.figure);
-			}
-		});
-		// TODO: Fix this. Sorting can be the other way around. This is alphabettical and the other depends on the starting point.
-		return sorted.every((f, i) => f[sort_by] === fields[i][sort_by]);
-	});
+	// const is_sorted = $derived.by(() => {
+	// 	const sorted = fields.slice().sort((a, b) => {
+	// 		if (sort_by === 'color') {
+	// 			return a.color.localeCompare(b.color);
+	// 		} else {
+	// 			return a.figure.localeCompare(b.figure);
+	// 		}
+	// 	});
+	// 	// TODO: Fix this. Sorting can be the other way around. This is alphabettical and the other depends on the starting point.
+	// 	return sorted.every((f, i) => f[sort_by] === fields[i][sort_by]);
+	// });
 
 	const can_sort = $derived(typeof observer !== 'undefined' && !is_sorted);
 
-	// const entropy = $derived.by(() => {
-	//   let count = 0;
-	//   for (let i = 0; i < fields.length; i++) {
-	//     if (typeof observer === 'undefined') {
-	//       if (fields[i].color === fields[i + 1].color) {
-	//         count++;
-	//       }
-	//     }
+	const entropy = $derived.by(() => {
+		let count = size * size;
+		for (let i = 0; i < fields.length - 1; i++) {
+			if (typeof observer === 'undefined') {
+				if (fields[i].color !== fields[i + 1].color || fields[i].figure !== fields[i + 1].figure) {
+					count--;
+				}
+			} else {
+				if (fields[i][sort_by] !== fields[i + 1][sort_by]) {
+					count--;
+				}
+			}
+		}
+		return count;
+	});
 
-	//   }
-	// }
+	const is_sorted = $derived(entropy >= size * size - 1);
 
 	function stopLoop() {
 		clearInterval(interval);
@@ -57,18 +63,18 @@ export function createOrder(size: number = 6) {
 		interval = setInterval(function () {
 			if (!is_sorted) {
 				for (let i = 0; i < fields.length; i++) {
-					console.log(`Starting with ${i}: ${fields[i][sort_by]}`);
+					// console.log(`Starting with ${i}: ${fields[i][sort_by]}`);
 					const value_current = fields[i][sort_by];
 					const value_next = fields[i + 1] ? fields[i + 1][sort_by] : undefined;
 					if (value_current === value_next) {
-						console.log(`Next element is ${i + 1}: ${fields[i + 1][sort_by]}`);
+						// console.log(`Next element is ${i + 1}: ${fields[i + 1][sort_by]}`);
 						continue;
 					}
 					const next_match = fields.findIndex(
 						({ [sort_by]: value }, index) => index > i + 1 && value === value_current
 					);
 					if (next_match !== -1) {
-						console.log(`Next match is ${next_match}: ${fields[next_match][sort_by]}`);
+						// console.log(`Next match is ${next_match}: ${fields[next_match][sort_by]}`);
 						const temp = fields[i + 1];
 						fields[i + 1] = fields[next_match];
 						fields[next_match] = temp;
@@ -76,7 +82,6 @@ export function createOrder(size: number = 6) {
 						continue;
 					}
 					break;
-					//
 				}
 			} else {
 				stopLoop();
@@ -109,9 +114,13 @@ export function createOrder(size: number = 6) {
 		get can_sort() {
 			return can_sort;
 		},
+		get entropy() {
+			return entropy;
+		},
 		size,
 		shuffle,
 		setObserver,
-		sort
+		sort,
+		stopLoop
 	};
 }
