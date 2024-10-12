@@ -19,18 +19,29 @@
 			</div>
 			<div class="flex gap-x-6">
 				<button
+					class:bg-red-500={typeof grid.observer === 'undefined'}
 					onclick={() => grid.setObserver(undefined)}
 					class="bg-black text-white rounded-md p-2">Set observer to none</button
 				>
-				<button onclick={() => grid.setObserver('alice')} class="bg-black text-white rounded-md p-2"
-					>Set observer to Alice</button
+				<button
+					class:bg-red-500={grid.observer === 'alice'}
+					onclick={() => grid.setObserver('alice')}
+					class="bg-black text-white rounded-md p-2">Set observer to Alice</button
 				>
-				<button onclick={() => grid.setObserver('bob')} class="bg-black text-white rounded-md p-2"
-					>Set observer to Bob</button
+				<button
+					class:bg-red-500={grid.observer === 'bob'}
+					onclick={() => grid.setObserver('bob')}
+					class="bg-black text-white rounded-md p-2">Set observer to Bob</button
 				>
 			</div>
 			<div class="flex gap-x-6">
-				<button onclick={() => grid.sort()} class="bg-black text-white rounded-md p-2">Sort</button>
+				<button
+					disabled={!grid.can_sort}
+					class:bg-red-500={grid.is_sorting}
+					onclick={() => grid.sort()}
+					class="bg-black text-white rounded-md p-2"
+					class:bg-gray-500={!grid.can_sort}>{grid.is_sorting ? 'Sorting …' : 'Sort'}</button
+				>
 			</div>
 			Observer: {grid.observer}<br />
 			Sort by: {grid.sort_by}<br />

@@ -1,16 +1,13 @@
-import { randomPlacement, createMixedFields, getX, getY, fromCoords } from '$lib/utils/utils.ts';
+import { createMixedFields } from '$lib/utils/utils.ts';
 
 export function createOrder(size: number = 6) {
 	let fields = $state(createMixedFields(size));
-	let center = $state<undefined | number>(undefined);
-	let count_total = $state<number>(0);
-	let count_run = $state<number>(0);
-	let interval: undefined | typeof setInterval = undefined;
-	let mode = $state<'loop' | 'guess'>('loop');
-	let canGuess = $state<boolean>(false);
+	let interval = $state<undefined | typeof setInterval>(undefined);
 
 	let observer = $state<undefined | 'alice' | 'bob'>(undefined);
 	const sort_by = $derived<'color' | 'figure'>(observer === 'alice' ? 'color' : 'figure');
+
+	const is_sorting = $derived(typeof interval !== 'undefined');
 
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
@@ -23,84 +20,36 @@ export function createOrder(size: number = 6) {
 				return a.figure.localeCompare(b.figure);
 			}
 		});
-		return sorted.every((f, i) => f === fields[i]);
+		// TODO: Fix this. Sorting can be the other way around. This is alphabettical and the other depends on the starting point.
+		return sorted.every((f, i) => f[sort_by] === fields[i][sort_by]);
 	});
 
-	function findHigh() {
-		center = undefined;
-		const placements = randomPlacement(size * size, size);
-		fields = fields.map((_, n) => (placements.includes(n) ? true : undefined));
-	}
+	const can_sort = $derived(typeof observer !== 'undefined' && !is_sorted);
 
-	function loop(total: number, func: Function, time: number = 500) {
-		mode = 'loop';
-		canGuess = false;
+	// const entropy = $derived.by(() => {
+	//   let count = 0;
+	//   for (let i = 0; i < fields.length; i++) {
+	//     if (typeof observer === 'undefined') {
+	//       if (fields[i].color === fields[i + 1].color) {
+	//         count++;
+	//       }
+	//     }
+
+	//   }
+	// }
+
+	function stopLoop() {
 		clearInterval(interval);
-		count_run = 1;
-		count_total = total;
-		func();
-		interval = setInterval(function () {
-			if (count_run < count_total) {
-				func();
-				count_run += 1;
-			} else {
-				clearInterval(interval);
-			}
-		}, time);
-	}
-
-	function loopHigh() {
-		loop(27540584512, findHigh, 200);
-	}
-
-	function findNextLow(start?: number | undefined) {
-		if (typeof start !== 'undefined') {
-			center = start;
-		}
-		if (typeof center === 'undefined') {
-			center = 0;
-		}
-
-		do {
-			center += 1;
-			if (center >= size * size) {
-				center = 0;
-			}
-		} while (!aroundPoint(center));
-	}
-
-	function loopLow() {
-		center = 0;
-		loop(16, findNextLow);
-	}
-
-	function aroundPoint(position: number = 8) {
-		const x = getX(position, size);
-		const y = getY(position, size);
-		if (x <= 0 || x >= size - 1 || y <= 0 || y >= size - 1) {
-			return false;
-		}
-
-		const around = [
-			fromCoords(x - 1, y - 1),
-			fromCoords(x, y - 1),
-			fromCoords(x + 1, y - 1),
-			fromCoords(x - 1, y),
-			fromCoords(x, y),
-			fromCoords(x + 1, y),
-			fromCoords(x - 1, y + 1),
-			fromCoords(x, y + 1),
-			fromCoords(x + 1, y + 1)
-		];
-		fields = fields.map((_, n) => (around.includes(n) ? true : undefined));
-		return true;
+		interval = undefined;
 	}
 
 	function shuffle() {
+		stopLoop();
 		fields = createMixedFields(size);
 	}
 
 	function setObserver(value: 'alice' | 'bob' | undefined) {
+		stopLoop();
 		observer = value;
 	}
 
@@ -130,7 +79,7 @@ export function createOrder(size: number = 6) {
 					//
 				}
 			} else {
-				clearInterval(interval);
+				stopLoop();
 			}
 		}, time);
 	}
@@ -138,18 +87,6 @@ export function createOrder(size: number = 6) {
 	return {
 		get fields() {
 			return fields;
-		},
-		get count_run() {
-			return count_run;
-		},
-		get count_total() {
-			return count_total;
-		},
-		get mode() {
-			return mode;
-		},
-		get canGuess() {
-			return canGuess;
 		},
 		get observer() {
 			return observer;
@@ -166,9 +103,13 @@ export function createOrder(size: number = 6) {
 		get is_sorted() {
 			return is_sorted;
 		},
+		get is_sorting() {
+			return is_sorting;
+		},
+		get can_sort() {
+			return can_sort;
+		},
 		size,
-		loopHigh,
-		loopLow,
 		shuffle,
 		setObserver,
 		sort
