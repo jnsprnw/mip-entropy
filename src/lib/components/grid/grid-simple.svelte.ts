@@ -4,11 +4,10 @@ export function createSimple(size: number = 6) {
 	let fields = $state(createFilledFields(size));
 	let guesses = $state(createFilledFields(size, true));
 	let center = $state<undefined | number>(undefined);
-	let count_total = $state(0);
-	let count_run = $state(0);
+	let count_total = $state<number>(0);
+	let count_run = $state<number>(0);
 	let interval: undefined | typeof setInterval = undefined;
 	let mode = $state<'loop' | 'guess'>('loop');
-	let isDark = $state<boolean>(false);
 	let canGuess = $state<boolean>(false);
 	let count_guess = $state<number>(0);
 	let count_found = $state<number>(0);
@@ -24,7 +23,6 @@ export function createSimple(size: number = 6) {
 
 	function loop(total: number, func: Function, time: number = 500) {
 		mode = 'loop';
-		isDark = false;
 		canGuess = false;
 		clearInterval(interval);
 		count_run = 1;
@@ -132,9 +130,6 @@ export function createSimple(size: number = 6) {
 		},
 		get mode() {
 			return mode;
-		},
-		get isDark() {
-			return isDark;
 		},
 		get canGuess() {
 			return canGuess;

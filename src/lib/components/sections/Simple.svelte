@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Grid from '$lib/components/grid/Grid.svelte';
-	import { createSimple } from '$lib/components/grid/grid.svelte.ts';
+	import { createSimple } from '$lib/components/grid/grid-simple.svelte.ts';
 	import { setContext } from 'svelte';
 
 	const grid = createSimple(6);
