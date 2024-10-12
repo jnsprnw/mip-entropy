@@ -10,9 +10,21 @@ export function createOrder(size: number = 6) {
 	let canGuess = $state<boolean>(false);
 
 	let observer = $state<undefined | 'alice' | 'bob'>(undefined);
+	const sort_by = $derived<'color' | 'figure'>(observer === 'alice' ? 'color' : 'figure');
 
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
+
+	const is_sorted = $derived.by(() => {
+		const sorted = fields.slice().sort((a, b) => {
+			if (sort_by === 'color') {
+				return a.color.localeCompare(b.color);
+			} else {
+				return a.figure.localeCompare(b.figure);
+			}
+		});
+		return sorted.every((f, i) => f === fields[i]);
+	});
 
 	function findHigh() {
 		center = undefined;
@@ -92,6 +104,37 @@ export function createOrder(size: number = 6) {
 		observer = value;
 	}
 
+	function sort(time: number = 500) {
+		interval = setInterval(function () {
+			if (!is_sorted) {
+				for (let i = 0; i < fields.length; i++) {
+					console.log(`Starting with ${i}: ${fields[i][sort_by]}`);
+					const value_current = fields[i][sort_by];
+					const value_next = fields[i + 1] ? fields[i + 1][sort_by] : undefined;
+					if (value_current === value_next) {
+						console.log(`Next element is ${i + 1}: ${fields[i + 1][sort_by]}`);
+						continue;
+					}
+					const next_match = fields.findIndex(
+						({ [sort_by]: value }, index) => index > i + 1 && value === value_current
+					);
+					if (next_match !== -1) {
+						console.log(`Next match is ${next_match}: ${fields[next_match][sort_by]}`);
+						const temp = fields[i + 1];
+						fields[i + 1] = fields[next_match];
+						fields[next_match] = temp;
+					} else {
+						continue;
+					}
+					break;
+					//
+				}
+			} else {
+				clearInterval(interval);
+			}
+		}, time);
+	}
+
 	return {
 		get fields() {
 			return fields;
@@ -117,10 +160,17 @@ export function createOrder(size: number = 6) {
 		get count_fields() {
 			return count_fields;
 		},
+		get sort_by() {
+			return sort_by;
+		},
+		get is_sorted() {
+			return is_sorted;
+		},
 		size,
 		loopHigh,
 		loopLow,
 		shuffle,
-		setObserver
+		setObserver,
+		sort
 	};
 }

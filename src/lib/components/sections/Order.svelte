@@ -29,7 +29,12 @@
 					>Set observer to Bob</button
 				>
 			</div>
-			Observer: {grid.observer}
+			<div class="flex gap-x-6">
+				<button onclick={() => grid.sort()} class="bg-black text-white rounded-md p-2">Sort</button>
+			</div>
+			Observer: {grid.observer}<br />
+			Sort by: {grid.sort_by}<br />
+			Is sorted: {grid.is_sorted ? 'yes' : 'no'}
 		</section>
 	</aside>
 </div>
