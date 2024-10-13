@@ -45,7 +45,7 @@
 	{#if grid.mode === 'guess' && !grid.guesses[position]}
 		<path
 			d="M {-step / 2 + 0.5} {-step / 2 + 0.5} h {step - 1} v {step - 1} h {-step + 1} Z"
-			class="fill fill-black transition-colors hover:fill-gray-500"
+			class="fill fill-black transition-colors hover:fill-gray-500 opacity-90"
 			class:cursor-pointer={grid.canGuess}
 			onclick={() => grid.guess(position)}
 		/>

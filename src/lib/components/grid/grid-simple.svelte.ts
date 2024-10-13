@@ -1,4 +1,5 @@
 import { randomPlacement, createFilledFields, getX, getY, fromCoords } from '$lib/utils/utils.ts';
+import { range } from 'd3-array';
 
 export function createSimple(size: number = 6) {
 	let fields = $state(createFilledFields(size));
@@ -63,10 +64,18 @@ export function createSimple(size: number = 6) {
 		loop(16, findNextLow);
 	}
 
-	function aroundPoint(position: number = 8) {
+	function checkValidAroundPoint(position: number = 8) {
 		const x = getX(position, size);
 		const y = getY(position, size);
 		if (x <= 0 || x >= size - 1 || y <= 0 || y >= size - 1) {
+			return false;
+		}
+		return { x, y };
+	}
+
+	function aroundPoint(position: number = 8) {
+		const { x, y } = checkValidAroundPoint(position);
+		if (!x || !y) {
 			return false;
 		}
 
@@ -98,9 +107,9 @@ export function createSimple(size: number = 6) {
 		}, 100);
 	}
 
+	const validPositions = range(0, size * size).filter((_, i) => checkValidAroundPoint(i));
 	function guessLow() {
-		// TODO: Better random. Only choose from possible fields
-		startGuess(findNextLow, Math.floor(Math.random() * size * size + 1));
+		startGuess(findNextLow, validPositions[Math.floor(Math.random() * validPositions.length)]);
 	}
 
 	function guessHigh() {
