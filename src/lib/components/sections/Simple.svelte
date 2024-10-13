@@ -31,7 +31,7 @@
 					>Guess Low</button
 				>
 				<button onclick={() => grid.guessHigh()} class="bg-black text-white rounded-md p-2"
-					>Loop High</button
+					>Guess High</button
 				>
 			</div>
 			<span class:text-gray-200={grid.mode !== 'guess'}

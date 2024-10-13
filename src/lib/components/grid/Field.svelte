@@ -25,7 +25,12 @@
 	const step = $derived($xScale.step());
 </script>
 
-<g transform="translate({$xScale(getX(position))}, {$yScale(getY(position))})">
+<g
+	transform="translate({$xScale(getX(position)) + $xScale.bandwidth() / 2}, {$yScale(
+		getY(position)
+	) +
+		$yScale.bandwidth() / 2})"
+>
 	{#if typeof fill !== 'undefined'}
 		{#if typeof fill === 'boolean'}
 			<circle cx={0} cy={0} r="10" />
