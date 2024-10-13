@@ -29,7 +29,7 @@ export function createMove(size: number = 6) {
 			}
 
 			if ((wall_x < 1 && wall_x > 0 && wall_hit_right) || wall_hit_left) {
-				wall_x += 0.01 * (wall_hit_right ? 1 : -1);
+				wall_x += 0.005 * (wall_hit_right ? 1 : -1);
 				wall_highlight = true;
 				setTimeout(() => (wall_highlight = false), 100);
 			}
