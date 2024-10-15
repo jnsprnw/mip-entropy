@@ -46,7 +46,9 @@
 			Observer: {grid.observer}<br />
 			Sort by: {grid.sort_by}<br />
 			Is sorted: {grid.is_sorted ? 'yes' : 'no'}<br />
-			Entropy: {grid.entropy}
+			Entropy: {grid.entropy}<br />
+			Max entropy: {grid.max_entropy}<br />
+			<progress max={grid.max_entropy} value={grid.entropy}>{grid.entropy}%</progress>
 		</section>
 	</aside>
 </div>

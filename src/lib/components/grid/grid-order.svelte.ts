@@ -24,25 +24,27 @@ export function createOrder(size: number = 6) {
 	// 	return sorted.every((f, i) => f[sort_by] === fields[i][sort_by]);
 	// });
 
-	const can_sort = $derived(typeof observer !== 'undefined' && !is_sorted);
-
 	const entropy = $derived.by(() => {
-		let count = size * size;
+		let count = 0;
 		for (let i = 0; i < fields.length - 1; i++) {
 			if (typeof observer === 'undefined') {
 				if (fields[i].color !== fields[i + 1].color || fields[i].figure !== fields[i + 1].figure) {
-					count--;
+					count++;
 				}
 			} else {
 				if (fields[i][sort_by] !== fields[i + 1][sort_by]) {
-					count--;
+					count++;
 				}
 			}
 		}
-		return count;
+		return count - 1;
 	});
 
-	const is_sorted = $derived(entropy >= size * size - 1);
+	const max_entropy = size * size - 1;
+
+	const is_sorted = $derived(entropy === 0);
+
+	const can_sort = $derived(typeof observer !== 'undefined' && !is_sorted);
 
 	function stopLoop() {
 		clearInterval(interval);
@@ -117,6 +119,7 @@ export function createOrder(size: number = 6) {
 		get entropy() {
 			return entropy;
 		},
+		max_entropy,
 		size,
 		shuffle,
 		setObserver,
