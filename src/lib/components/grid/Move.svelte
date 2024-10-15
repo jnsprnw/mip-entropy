@@ -33,7 +33,9 @@
 		/>
 	{:else if grid.mode === 'diagonal'}
 		<path
-			d="M {$xScale(0)} {$yScale(0)} L {$xScale(1)} {$yScale(1)}"
+			d="M {$xScale(grid.wall_x1)} {$yScale(grid.wall_y1)} L {$xScale(grid.wall_x2)} {$yScale(
+				grid.wall_y2
+			)}"
 			class="stroke"
 			class:stroke-black={!grid.wall_highlight}
 			class:stroke-red-500={grid.wall_highlight}

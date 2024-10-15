@@ -7,6 +7,11 @@ export function createMove(size: number = 6) {
 	let wall_x = $state(0.5);
 	let wall_highlight = $state(false);
 
+	let wall_x1 = $state(0.2);
+	let wall_y1 = $state(0);
+	let wall_x2 = $state(0.8);
+	let wall_y2 = $state(1);
+
 	const radius = 0.05;
 
 	const speed = 0.005;
@@ -45,8 +50,8 @@ export function createMove(size: number = 6) {
 				dy = -dy;
 			}
 
-			if (intersectsWall(cx, cy, dx, dy, 0, 0, 1, 1)) {
-				const normal = getWallNormal(0, 0, 1, 1);
+			if (intersectsWall(cx, cy, dx, dy, wall_x1, wall_y1, wall_x2, wall_y2)) {
+				const normal = getWallNormal(wall_x1, wall_y1, wall_x2, wall_y2);
 				const dotProduct = dx * normal.x + dy * normal.y;
 				dx = dx - 2 * dotProduct * normal.x;
 				dy = dy - 2 * dotProduct * normal.y;
@@ -93,6 +98,18 @@ export function createMove(size: number = 6) {
 		changeMode,
 		changeShadow,
 		resetWall,
+		get wall_x1() {
+			return wall_x1;
+		},
+		get wall_y1() {
+			return wall_y1;
+		},
+		get wall_x2() {
+			return wall_x2;
+		},
+		get wall_y2() {
+			return wall_y2;
+		},
 		get cx() {
 			return cx;
 		},
