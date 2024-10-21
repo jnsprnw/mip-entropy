@@ -1,48 +1,64 @@
 export function createMove(size: number = 6) {
 	let mode = $state<'vertical' | 'diagonal'>('vertical');
-	let has_shadow = $state(false);
-	let cx = $state(Math.random() > 0.5 ? 0.75 : 0.25);
-	let cy = $state(0.5);
 
-	let wall_x = $state(0.5);
-	let wall_highlight = $state(false);
+	// Koordinaten des Balls
+	let cx = $state<number>(0);
+	let cy = $state<number>(0);
 
-	let wall_x1 = $state(0.2);
-	let wall_y1 = $state(0);
-	let wall_x2 = $state(0.8);
-	let wall_y2 = $state(1);
-
+	// Radius des Balls
 	const radius = 0.05;
 
-	const speed = 0.005;
+	// Bewegungsgeschwindigkeit
+	const speed = 0.03;
 
-	const angle = Math.random() * 2 * Math.PI;
+	// Winkel der Bewegung
+	let angle = $state<number>(0);
 
-	let dx = Math.cos(angle) * speed;
-	let dy = Math.sin(angle) * speed;
+	// Beweungsrichtung
+	let dx = $state<number>(0);
+	let dy = $state<number>(0);
+
+	// Koordinaten der Wand
+	let wall_x1 = $state<number>(0);
+	let wall_x2 = $state<number>(0);
+
+	const wall_y1 = 0;
+	const wall_y2 = 1;
+
+	let wall_highlight = $state<boolean>(false);
+	let has_shadow = $state<boolean>(false);
 
 	function move() {
 		cx += dx;
 		cy += dy;
 
 		if (mode === 'vertical') {
-			const wall_hit_right = cx + radius > wall_x && cx < wall_x;
-			const wall_hit_left = cx - radius < wall_x && cx > wall_x;
+			// The wall is vertical
 
+			// The wall was hit on the right hand side
+			const wall_hit_right = cx - radius <= wall_x1 && cx > wall_x1;
+			// The wall was hit on the right hand side
+			const wall_hit_left = cx + radius >= wall_x1 && cx < wall_x1;
+
+			// The wall or outer bounds are hit
 			if (cx - radius < 0 || wall_hit_right || wall_hit_left || cx + radius > 1) {
 				dx = -dx;
 			}
 
-			if ((wall_x < 1 && wall_x > 0 && wall_hit_right) || wall_hit_left) {
-				wall_x += 0.005 * (wall_hit_right ? 1 : -1);
-				wall_highlight = true;
-				setTimeout(() => (wall_highlight = false), 100);
+			if (wall_hit_right || wall_hit_left) {
+				moveWall(wall_hit_right, true);
 			}
+			// if (wall_hit_right || wall_hit_left) {
+			// 	console.log({ wall_hit_right, wall_hit_left });
+			// }
 
+			// The outer bounds are hit
 			if (cy - radius < 0 || cy + radius > 1) {
+				// console.log(cy - radius, cy + radius);
 				dy = -dy;
 			}
 		} else {
+			// The wall is diagonal
 			if (cx - radius < 0 || cx + radius > 1) {
 				dx = -dx;
 			}
@@ -50,17 +66,55 @@ export function createMove(size: number = 6) {
 				dy = -dy;
 			}
 
-			if (intersectsWall(cx, cy, dx, dy, wall_x1, wall_y1, wall_x2, wall_y2)) {
+			const { intersects, comingFrom } = intersectsWall(
+				cx,
+				cy,
+				dx,
+				dy,
+				wall_x1,
+				wall_y1,
+				wall_x2,
+				wall_y2,
+				radius
+			);
+
+			if (intersects) {
 				const normal = getWallNormal(wall_x1, wall_y1, wall_x2, wall_y2);
 				const dotProduct = dx * normal.x + dy * normal.y;
 				dx = dx - 2 * dotProduct * normal.x;
 				dy = dy - 2 * dotProduct * normal.y;
+				moveWall(comingFrom === 'left', false);
 			}
 		}
 	}
 
+	function moveWall(wall_hit_right: boolean, isVertical: boolean) {
+		let addition = 0.01 * (wall_hit_right ? -1 : 1);
+		// The addition is limited by the wall position. This prevents the wall from moving beyond the outer bounds.
+		if (wall_hit_right) {
+			// The addition is not greater than the distance of the wall to the left outer bound
+			addition = Math.min(wall_x1, wall_x2, addition);
+		} else {
+			// The addition is not greater than the distance of the wall to the right outer bound
+			addition = Math.min(1 - wall_x1, 1 - wall_x2, addition);
+		}
+
+		if (wall_x1 < 1 && wall_x1 > 0 && wall_x2 < 1 && wall_x2 > 0) {
+			wall_x1 += addition;
+			// wall_x1 = Math.min(1, Math.max(0, wall_x1));
+			if (isVertical) {
+				wall_x2 = wall_x1;
+			} else {
+				wall_x2 += addition;
+			}
+		}
+		wall_highlight = true;
+		setTimeout(() => (wall_highlight = false), 100);
+	}
+
 	function changeMode() {
 		mode = mode === 'vertical' ? 'diagonal' : 'vertical';
+		resetWall();
 	}
 
 	function changeShadow() {
@@ -68,10 +122,39 @@ export function createMove(size: number = 6) {
 	}
 
 	function resetWall() {
-		wall_x = 0.5;
+		if (mode === 'vertical') {
+			wall_x1 = 0.5;
+			wall_x2 = 0.5;
+		} else {
+			wall_x1 = 0.2;
+			wall_x2 = 0.8;
+		}
+		resetBall();
 	}
 
-	function intersectsWall(x, y, dx, dy, x1, y1, x2, y2) {
+	function resetBall() {
+		cx = Math.random() > 0.5 ? 0.75 : 0.25;
+		cy = 0.5;
+		resetAngle();
+	}
+
+	function resetAngle() {
+		angle = Math.random() * 2 * Math.PI;
+		dx = Math.cos(angle) * speed;
+		dy = Math.sin(angle) * speed;
+	}
+
+	function intersectsWall(
+		x: number,
+		y: number,
+		dx: number,
+		dy: number,
+		x1: number,
+		y1: number,
+		x2: number,
+		y2: number,
+		radius: number
+	) {
 		// Berechnen der nächsten Position des Balls
 		const nextX = x + dx;
 		const nextY = y + dy;
@@ -81,15 +164,30 @@ export function createMove(size: number = 6) {
 			Math.abs((y2 - y1) * nextX - (x2 - x1) * nextY + x2 * y1 - y2 * x1) /
 			Math.sqrt((y2 - y1) ** 2 + (x2 - x1) ** 2);
 
-		return dist <= radius;
+		// Berechnen des Normalenvektors der Wand
+		const wallNormalX = y2 - y1;
+		const wallNormalY = x1 - x2;
+
+		// Berechnen des Skalarprodukts des Bewegungsvektors des Balls mit dem Normalenvektor der Wand
+		const dotProduct = dx * wallNormalX + dy * wallNormalY;
+
+		// Bestimmen, ob der Ball von der linken oder rechten Seite kommt
+		const comingFrom = dotProduct > 0 ? 'right' : 'left';
+
+		return {
+			intersects: dist <= radius,
+			comingFrom: comingFrom
+		};
 	}
 
-	function getWallNormal(x1, y1, x2, y2) {
+	function getWallNormal(x1: number, y1: number, x2: number, y2: number) {
 		const dx = x2 - x1;
 		const dy = y2 - y1;
 		const length = Math.sqrt(dx * dx + dy * dy);
 		return { x: -dy / length, y: dx / length };
 	}
+
+	resetWall();
 
 	return {
 		size,
@@ -98,17 +196,13 @@ export function createMove(size: number = 6) {
 		changeMode,
 		changeShadow,
 		resetWall,
+		wall_y1,
+		wall_y2,
 		get wall_x1() {
 			return wall_x1;
 		},
-		get wall_y1() {
-			return wall_y1;
-		},
 		get wall_x2() {
 			return wall_x2;
-		},
-		get wall_y2() {
-			return wall_y2;
 		},
 		get cx() {
 			return cx;
@@ -117,7 +211,7 @@ export function createMove(size: number = 6) {
 			return cy;
 		},
 		get wall_x() {
-			return wall_x;
+			return wall_x1;
 		},
 		get wall_highlight() {
 			return wall_highlight;
