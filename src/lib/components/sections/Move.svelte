@@ -17,7 +17,7 @@
 </script>
 
 <div class="flex gap-x-6">
-	<Grid type="linear" />
+	<Grid type="linear" padding={{ bottom: 0, left: 50, top: 30, right: 50 }} />
 
 	<aside class="flex flex-col m-6 gap-y-6">
 		<section class="flex flex-col gap-y-3">
@@ -35,6 +35,7 @@
 
 			Mode: {grid.mode}<br />
 			Shadow: {grid.has_shadow}<br />
+			Site of ball: {grid.is_ball_left ? 'left' : 'right'}
 		</section>
 	</aside>
 </div>

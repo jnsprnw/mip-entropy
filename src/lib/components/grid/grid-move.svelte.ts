@@ -9,7 +9,7 @@ export function createMove(size: number = 6) {
 	const radius = 0.05;
 
 	// Bewegungsgeschwindigkeit
-	const speed = 0.03;
+	const speed = 0.01;
 
 	// Winkel der Bewegung
 	let angle = $state<number>(0);
@@ -27,6 +27,21 @@ export function createMove(size: number = 6) {
 
 	let wall_highlight = $state<boolean>(false);
 	let has_shadow = $state<boolean>(false);
+
+	const is_ball_left = $derived.by(() => {
+		const wallDirX = wall_x2 - wall_x1;
+		const wallDirY = wall_y2 - wall_y1;
+
+		// Vektor vom Startpunkt der Wand zum Ball
+		const ballVecX = cx - wall_x1;
+		const ballVecY = cy - wall_y1;
+
+		// Berechne das Kreuzprodukt
+		const crossProduct = wallDirX * ballVecY - wallDirY * ballVecX;
+
+		// Wenn das Kreuzprodukt positiv ist, befindet sich der Ball rechts von der Wand
+		return crossProduct > 0;
+	});
 
 	function move() {
 		cx += dx;
@@ -198,6 +213,9 @@ export function createMove(size: number = 6) {
 		resetWall,
 		wall_y1,
 		wall_y2,
+		get is_ball_left() {
+			return is_ball_left;
+		},
 		get wall_x1() {
 			return wall_x1;
 		},
