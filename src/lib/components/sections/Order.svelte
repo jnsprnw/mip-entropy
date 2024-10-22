@@ -13,34 +13,39 @@
 	<aside class="flex flex-col m-6 gap-y-6">
 		<section class="flex flex-col gap-y-3">
 			<div class="flex gap-x-6">
-				<button onclick={() => grid.shuffle()} class="bg-black text-white rounded-md p-2"
-					>Shuffle</button
+				<button
+					onclick={() => grid.shuffle()}
+					class="bg-slate-300 text-blue-900 border border-blue-900 rounded-md p-2">Shuffle</button
 				>
 			</div>
 			<div class="flex gap-x-6">
 				<button
-					class:bg-red-500={typeof grid.observer === 'undefined'}
+					class:bg-amber-500={typeof grid.observer === 'undefined'}
+					class:bg-slate-300={typeof grid.observer !== 'undefined'}
 					onclick={() => grid.setObserver(undefined)}
-					class="bg-black text-white rounded-md p-2">Set observer to none</button
+					class="border border-blue-900 text-blue-900 rounded-md p-2">Set observer to none</button
 				>
 				<button
-					class:bg-red-500={grid.observer === 'alice'}
+					class:bg-amber-500={grid.observer === 'alice'}
+					class:bg-slate-300={grid.observer !== 'alice'}
 					onclick={() => grid.setObserver('alice')}
-					class="bg-black text-white rounded-md p-2">Set observer to Alice</button
+					class="border border-blue-900 text-blue-900 rounded-md p-2">Set observer to Alice</button
 				>
 				<button
-					class:bg-red-500={grid.observer === 'bob'}
+					class:bg-amber-500={grid.observer === 'bob'}
+					class:bg-slate-300={grid.observer !== 'bob'}
 					onclick={() => grid.setObserver('bob')}
-					class="bg-black text-white rounded-md p-2">Set observer to Bob</button
+					class="border border-blue-900 text-blue-900 rounded-md p-2">Set observer to Bob</button
 				>
 			</div>
 			<div class="flex gap-x-6">
 				<button
 					disabled={!grid.can_sort}
-					class:bg-red-500={grid.is_sorting}
+					class:bg-amber-500={grid.is_sorting}
+					class:bg-slate-300={!grid.is_sorting && grid.can_sort}
 					onclick={() => (grid.is_sorting ? grid.stopLoop() : grid.sort())}
-					class="bg-black text-white rounded-md p-2"
-					class:bg-gray-500={!grid.can_sort}>{grid.is_sorting ? 'Sorting …' : 'Sort'}</button
+					class="text-blue-900 border border-blue-900 rounded-md p-2"
+					class:text-slate-300={!grid.can_sort}>{grid.is_sorting ? 'Sorting …' : 'Sort'}</button
 				>
 			</div>
 			Observer: {grid.observer}<br />

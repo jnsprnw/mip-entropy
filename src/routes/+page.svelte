@@ -4,9 +4,9 @@
 	import Move from '$lib/components/sections/Move.svelte';
 </script>
 
-<h2>Interactive 1</h2>
+<h2 class="text-blue-900 font-bold text-xl">Interactive 1</h2>
 <Simple />
-<h2>Interactive 2</h2>
+<h2 class="text-blue-900 font-bold text-xl">Interactive 2</h2>
 <Order />
-<h2>Interactive 3</h2>
+<h2 class="text-blue-900 font-bold text-xl">Interactive 3</h2>
 <Move />

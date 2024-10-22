@@ -10,13 +10,13 @@
 
 	const color = $derived.by(() => {
 		if (grid.observer === 'bob') {
-			return 'fill-black';
+			return 'fill-slate-300';
 		}
 		switch (fill?.color) {
 			case 'blue':
-				return 'fill-blue-500';
+				return 'fill-violet-300';
 			case 'red':
-				return 'fill-red-500';
+				return 'fill-emerald-300';
 			default:
 				return undefined;
 		}
@@ -33,13 +33,24 @@
 >
 	{#if typeof fill !== 'undefined'}
 		{#if typeof fill === 'boolean'}
-			<circle cx={0} cy={0} r="10" />
+			<circle cx={0} cy={0} r="10" class="stroke-2 stroke-blue-900 fill-amber-300" />
 		{:else if grid.observer === 'alice'}
-			<circle cx={0} cy={0} r="8" class="fill transition-colors {color}" />
+			<circle cx={0} cy={0} r="8" class="stroke-2 stroke-blue-900 fill transition-colors {color}" />
 		{:else if fill.figure === 'square'}
-			<rect x={-8} y={-8} width="16" height="16" class="fill transition-colors {color}" />
+			<rect
+				x={-8}
+				y={-8}
+				width="16"
+				height="16"
+				stroke-linejoin="round"
+				class="stroke-2 stroke-blue-900 fill transition-colors {color}"
+			/>
 		{:else if fill.figure === 'triangle'}
-			<polygon points="-8,8 8,8 0,-8" class="fill transition-colors {color}" />
+			<polygon
+				points="-8,8 8,8 0,-8"
+				stroke-linejoin="round"
+				class="stroke-2 stroke-blue-900 fill transition-colors {color}"
+			/>
 		{/if}
 	{/if}
 	{#if grid.mode === 'guess' && !grid.guesses[position]}

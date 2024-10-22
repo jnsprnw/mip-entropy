@@ -22,13 +22,19 @@
 	<aside class="flex flex-col m-6 gap-y-6">
 		<section class="flex flex-col gap-y-3">
 			<div class="flex gap-x-6">
-				<button onclick={() => grid.changeMode()} class="bg-black text-white rounded-md p-2"
+				<button
+					onclick={() => grid.changeMode()}
+					class="bg-slate-300 text-blue-900 border border-blue-900 rounded-md p-2"
 					>Change mode</button
 				>
-				<button onclick={() => grid.changeShadow()} class="bg-black text-white rounded-md p-2"
+				<button
+					onclick={() => grid.changeShadow()}
+					class="bg-slate-300 text-blue-900 border border-blue-900 rounded-md p-2"
 					>Change shadow</button
 				>
-				<button onclick={() => grid.resetWall()} class="bg-black text-white rounded-md p-2"
+				<button
+					onclick={() => grid.resetWall()}
+					class="bg-slate-300 text-blue-900 border border-blue-900 rounded-md p-2"
 					>Reset wall</button
 				>
 			</div>

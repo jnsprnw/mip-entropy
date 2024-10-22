@@ -1,5 +1,5 @@
 export function createMove(size: number = 6) {
-	const padding = { bottom: 0, left: 50, top: 30, right: 50 };
+	const padding = { bottom: 10, left: 50, top: 30, right: 50 };
 	let mode = $state<'vertical' | 'diagonal'>('vertical');
 
 	// Koordinaten des Balls

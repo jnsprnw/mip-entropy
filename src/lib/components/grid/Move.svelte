@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
 
-	const { xScale, yScale, width } = getContext('LayerCake');
+	const { xScale, yScale, width, padding } = getContext('LayerCake');
 
 	import { scaleLinear } from 'd3-scale';
 
@@ -36,30 +36,35 @@
 </defs>
 
 <g>
-	<circle cx={$xScale(cx)} cy={$yScale(cy)} r={radius * $width} />
+	<circle
+		cx={$xScale(cx)}
+		cy={$yScale(cy)}
+		class="fill-slate-600 stroke-2 stroke-slate-900"
+		r={radius * $width - 2}
+	/>
 	{#if mode === 'vertical'}
 		<path
 			d="M {$xScale(wall_x)} {$yScale(0)} V {$yScale(1)}"
-			class="stroke"
-			class:stroke-black={!wall_highlight}
-			class:stroke-red-500={wall_highlight}
+			class="stroke-2"
+			class:stroke-amber-500={!wall_highlight}
+			class:stroke-amber-600={wall_highlight}
 		/>
 	{:else if mode === 'diagonal'}
 		<path
 			d="M {$xScale(wall_x1)} {$yScale(wall_y1)} L {$xScale(wall_x2)} {$yScale(wall_y2)}"
-			class="stroke"
-			class:stroke-black={!wall_highlight}
-			class:stroke-red-500={wall_highlight}
+			class="stroke-2"
+			class:stroke-amber-500={!wall_highlight}
+			class:stroke-amber-600={wall_highlight}
 		/>
 	{/if}
 	{#if has_shadow}
 		<circle
-			filter="url(#shadow)"
+			class="fill-slate-500"
 			style="opacity: {opacity(cy)}"
 			transform="scale(1 0.2)"
 			cx={$xScale(cx)}
 			cy={$yScale(0)}
-			transform-origin="{$xScale(cx)} {$yScale(0)}"
+			transform-origin="{$xScale(cx)} {$yScale(0) + $padding.bottom}"
 			r={radius * $width}
 		/>
 	{/if}

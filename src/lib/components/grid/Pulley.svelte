@@ -33,8 +33,8 @@
 </script>
 
 <g>
-	<circle cx={cx_1} {cy} r={radius} />
-	<circle cx={cx_2} {cy} r={radius} />
+	<circle cx={cx_1} {cy} r={radius - 1.5} class="fill-slate-300 stroke-2 stroke-blue-900" />
+	<circle cx={cx_2} {cy} r={radius - 1.5} class="fill-slate-300 stroke-2 stroke-blue-900" />
 	{#if is_ball_left}
 		<path
 			d="
@@ -46,7 +46,7 @@
 				L {weight_x} {cord_y}
 				L {weight_x} {weight_y}
 			"
-			class="fill-none stroke-2 stroke-pink-500"
+			class="fill-none stroke-2 stroke-amber-500"
 		/>
 	{:else}
 		<path
@@ -59,7 +59,7 @@
 				L {weight_x} {cord_y}
 				L {weight_x} {weight_y}
 			"
-			class="fill-none stroke-2 stroke-pink-500"
+			class="fill-none stroke-2 stroke-amber-500"
 		/>
 	{/if}
 	<path
@@ -70,6 +70,7 @@
 				L {weight_x - 25 / 2} {weight_y + 22}
 				Z
 			"
-		class="fill fill-gray-500"
+		stroke-linejoin="round"
+		class="stroke-2 stroke-blue-900 fill fill-slate-300"
 	/>
 </g>
