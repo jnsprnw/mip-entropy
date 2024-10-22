@@ -1,4 +1,5 @@
 export function createMove(size: number = 6) {
+	const padding = { bottom: 0, left: 50, top: 30, right: 50 };
 	let mode = $state<'vertical' | 'diagonal'>('vertical');
 
 	// Koordinaten des Balls
@@ -9,7 +10,7 @@ export function createMove(size: number = 6) {
 	const radius = 0.05;
 
 	// Bewegungsgeschwindigkeit
-	const speed = 0.01;
+	const speed = 0.03;
 
 	// Winkel der Bewegung
 	let angle = $state<number>(0);
@@ -42,6 +43,10 @@ export function createMove(size: number = 6) {
 		// Wenn das Kreuzprodukt positiv ist, befindet sich der Ball rechts von der Wand
 		return crossProduct > 0;
 	});
+
+	const pulley_radius = 10;
+	const pulley_off_x = padding.left / 2;
+	const pulley_off_y = padding.top / 2;
 
 	function move() {
 		cx += dx;
@@ -213,6 +218,10 @@ export function createMove(size: number = 6) {
 		resetWall,
 		wall_y1,
 		wall_y2,
+		padding,
+		pulley_radius,
+		pulley_off_x,
+		pulley_off_y,
 		get is_ball_left() {
 			return is_ball_left;
 		},
