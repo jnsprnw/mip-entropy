@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { getSimpleState } from './grid-simple.svelte';
 	import Field from './Field.svelte';
 
-	const grid = getContext('Grid');
+	const grid = getSimpleState();
 </script>
 
 <g class="fields">

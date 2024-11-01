@@ -4,7 +4,9 @@
 
 	const { xScale, yScale } = getContext('LayerCake');
 
-	const grid = getContext('Grid');
+	import { getSimpleState } from './grid-simple.svelte';
+
+	const grid = getSimpleState();
 
 	const { position = 0, fill = undefined } = $props();
 

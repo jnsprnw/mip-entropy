@@ -1,10 +1,8 @@
 <script lang="ts">
 	import Grid from '$lib/components/grid/Grid.svelte';
-	import { createSimple } from '$lib/components/grid/grid-simple.svelte.ts';
-	import { setContext } from 'svelte';
+	import { getSimpleState } from '$lib/components/grid/grid-simple.svelte';
 
-	const grid = createSimple(6);
-	setContext('Grid', grid);
+	const grid = getSimpleState();
 </script>
 
 <div class="flex gap-x-6">

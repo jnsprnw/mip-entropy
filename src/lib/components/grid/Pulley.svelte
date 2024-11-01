@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
+	import { getSimpleState } from './grid-simple.svelte';
 
 	const { xScale, yScale, width } = getContext('LayerCake');
 
-	const grid = getContext('Grid');
+	const grid = getSimpleState();
 	const {
 		wall_x1,
 		wall_y1,

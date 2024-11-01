@@ -1,4 +1,5 @@
-import { randomPlacement, createFilledFields, getX, getY, fromCoords } from '$lib/utils/utils.ts';
+import { setContext, getContext } from 'svelte';
+import { randomPlacement, createFilledFields, getX, getY, fromCoords } from '$lib/utils/utils';
 import { range } from 'd3-array';
 
 export function createSimple(size: number = 6) {
@@ -162,4 +163,14 @@ export function createSimple(size: number = 6) {
 		guessHigh,
 		guess
 	};
+}
+
+const GRID_KEY = Symbol('grid');
+
+export function setSimpleState(size: number = 6) {
+	return setContext(GRID_KEY, createSimple(size));
+}
+
+export function getSimpleState() {
+	return getContext<ReturnType<typeof setSimpleState>>(GRID_KEY);
 }

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
 	import { LayerCake, Svg } from 'layercake';
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { range } from 'd3-array';
@@ -7,8 +6,9 @@
 	import Fields from './Fields.svelte';
 	import Move from './Move.svelte';
 	import Pulley from './Pulley.svelte';
+	import { getSimpleState } from './grid-simple.svelte';
 
-	const grid = getContext('Grid');
+	const grid = getSimpleState();
 
 	const { type = 'point' } = $props();
 	const scale = $derived(type === 'point' ? scaleBand() : scaleLinear());

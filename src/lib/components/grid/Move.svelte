@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getContext } from 'svelte';
+	import { getSimpleState } from './grid-simple.svelte';
 
 	const { xScale, yScale, width, padding } = getContext('LayerCake');
 
@@ -8,7 +8,7 @@
 	const opacity = scaleLinear().domain([0, 1]).range([0.7, 0.3]);
 	const blur = scaleLinear().domain([0, 1]).range([2, 10]);
 
-	const grid = getContext('Grid');
+	const grid = getSimpleState();
 	const {
 		cx,
 		cy,
