@@ -5,6 +5,8 @@ export const ID = Symbol('move');
 export function createMove(size: number = 6) {
 	let mode = $state<'vertical' | 'diagonal'>('vertical');
 	let is_moving = $state<boolean>(false);
+	let has_weight = $state<boolean>(false);
+	let selected_side = $state<'left' | 'right' | null>(null);
 
 	// Koordinaten des Balls
 	let cx = $state<number>(0);
@@ -69,7 +71,11 @@ export function createMove(size: number = 6) {
 				dx = -dx;
 			}
 
-			if (wall_hit_right || wall_hit_left) {
+			if (
+				((wall_hit_right && selected_side === 'right') ||
+					(wall_hit_left && selected_side === 'left')) &&
+				has_weight
+			) {
 				moveWall(wall_hit_right, true);
 			}
 			// if (wall_hit_right || wall_hit_left) {
@@ -107,12 +113,20 @@ export function createMove(size: number = 6) {
 				const dotProduct = dx * normal.x + dy * normal.y;
 				dx = dx - 2 * dotProduct * normal.x;
 				dy = dy - 2 * dotProduct * normal.y;
-				moveWall(comingFrom === 'left', false);
+				if (has_weight) {
+					moveWall(comingFrom === 'left', false);
+				}
 			}
 		}
 		if (is_moving) {
 			requestAnimationFrame(move);
 		}
+	}
+
+	function selectSide(side: 'left' | 'right' | null) {
+		console.log(side, 'selected');
+		selected_side = side;
+		has_weight = side === 'left' || side === 'right';
 	}
 
 	// const moving = $derived.by(() => {
@@ -162,7 +176,6 @@ export function createMove(size: number = 6) {
 	}
 
 	function resetWall() {
-		console.log('resetWall');
 		if (mode === 'vertical') {
 			wall_x1 = 0.5;
 			wall_x2 = 0.5;
@@ -232,6 +245,7 @@ export function createMove(size: number = 6) {
 
 	return {
 		layout: LAYOUT_LINEAR,
+		selectSide,
 		size,
 		radius,
 		move,
@@ -245,6 +259,12 @@ export function createMove(size: number = 6) {
 		pulley_off_y,
 		startMoving,
 		stopMoving,
+		get selected_side() {
+			return selected_side;
+		},
+		get has_weight() {
+			return has_weight;
+		},
 		get is_ball_left() {
 			return is_ball_left;
 		},

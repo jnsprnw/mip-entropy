@@ -59,6 +59,14 @@ export function createOrder(size: number = 6) {
 		fields = createMixedFields(size);
 	}
 
+	function setAlice() {
+		setObserver('alice');
+	}
+
+	function setBob() {
+		setObserver('bob');
+	}
+
 	function setObserver(value: 'alice' | 'bob' | undefined) {
 		stopLoop();
 		observer = value;
@@ -130,7 +138,9 @@ export function createOrder(size: number = 6) {
 		shuffle,
 		setObserver,
 		sort,
-		stopLoop
+		stopLoop,
+		setAlice,
+		setBob
 	};
 }
 
