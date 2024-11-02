@@ -1,7 +1,8 @@
+import { PADDING_GRID } from '$config';
+
 export const ID = Symbol('move');
 
 export function createMove(size: number = 6) {
-	const padding = { bottom: 10, left: 50, top: 30, right: 50 };
 	let mode = $state<'vertical' | 'diagonal'>('vertical');
 	let is_moving = $state<boolean>(false);
 
@@ -48,8 +49,8 @@ export function createMove(size: number = 6) {
 	});
 
 	const pulley_radius = 10;
-	const pulley_off_x = padding.left / 2;
-	const pulley_off_y = padding.top / 2;
+	const pulley_off_x = PADDING_GRID.left / 2;
+	const pulley_off_y = PADDING_GRID.top / 2;
 
 	function move() {
 		cx += dx;
@@ -239,7 +240,6 @@ export function createMove(size: number = 6) {
 		resetWall,
 		wall_y1,
 		wall_y2,
-		padding,
 		pulley_radius,
 		pulley_off_x,
 		pulley_off_y,
