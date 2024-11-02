@@ -14,17 +14,16 @@
 	const scale = $derived(grid.layout === 'linear' ? scaleLinear() : scaleBand());
 
 	const domain = $derived(grid.layout === 'linear' ? [0, 1] : range(0, grid.size));
+	const padding = { bottom: 10, left: 50, top: 30, right: 50 };
+	let h = $state<number>();
 </script>
 
-<div class="h-96 w-96 m-2">
-	<div class="grid-container h-full w-full relative">
-		<LayerCake
-			padding={grid.padding}
-			xDomain={domain}
-			yDomain={domain}
-			xScale={scale}
-			yScale={scale}
-		>
+<div class="h-96 m-2" bind:clientHeight={h}>
+	<div
+		class="grid-container h-full relative"
+		style="width: {h + padding.left + padding.right - padding.top - padding.bottom}px"
+	>
+		<LayerCake {padding} xDomain={domain} yDomain={domain} xScale={scale} yScale={scale}>
 			<Svg>
 				<Base />
 				{#if grid.layout === 'linear'}
