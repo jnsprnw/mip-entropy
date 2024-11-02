@@ -1,4 +1,7 @@
-import { createMixedFields } from '$lib/utils/utils.ts';
+// import { setContext, getContext } from 'svelte';
+import { createMixedFields } from '$lib/utils/utils';
+
+export const ID = Symbol('order');
 
 export function createOrder(size: number = 6) {
 	let fields = $state(createMixedFields(size));
@@ -92,6 +95,9 @@ export function createOrder(size: number = 6) {
 	}
 
 	return {
+		// get id() {
+		// 	return ID;
+		// },
 		get fields() {
 			return fields;
 		},
@@ -127,3 +133,17 @@ export function createOrder(size: number = 6) {
 		stopLoop
 	};
 }
+
+// const GRID_KEY = Symbol('grid');
+
+// export function setOrderState(size: number = 6) {
+// 	return setContext(GRID_KEY, createOrder(size));
+// }
+
+// export function getOrderState() {
+// 	return getContext<ReturnType<typeof setOrderState>>(GRID_KEY);
+// }
+
+// export function getID() {
+// 	return ID;
+// }

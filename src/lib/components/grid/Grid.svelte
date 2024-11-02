@@ -6,14 +6,14 @@
 	import Fields from './Fields.svelte';
 	import Move from './Move.svelte';
 	import Pulley from './Pulley.svelte';
-	import { getSimpleState } from './grid-simple.svelte';
+	import { getGridState } from './grid-state.svelte';
 
-	const grid = getSimpleState();
+	const gridState = getGridState();
+	const { grid } = $derived(gridState);
 
-	const { type = 'point' } = $props();
-	const scale = $derived(type === 'point' ? scaleBand() : scaleLinear());
+	const scale = $derived(grid.layout === 'linear' ? scaleLinear() : scaleBand());
 
-	const domain = $derived(type === 'point' ? range(0, grid.size) : [0, 1]);
+	const domain = $derived(grid.layout === 'linear' ? [0, 1] : range(0, grid.size));
 </script>
 
 <div class="h-96 w-96 m-2">
@@ -27,11 +27,11 @@
 		>
 			<Svg>
 				<Base />
-				{#if type === 'point'}
-					<Fields />
-				{:else}
+				{#if grid.layout === 'linear'}
 					<Move />
 					<Pulley />
+				{:else}
+					<Fields />
 				{/if}
 			</Svg>
 		</LayerCake>

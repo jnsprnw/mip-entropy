@@ -1,6 +1,9 @@
+export const ID = Symbol('move');
+
 export function createMove(size: number = 6) {
 	const padding = { bottom: 10, left: 50, top: 30, right: 50 };
 	let mode = $state<'vertical' | 'diagonal'>('vertical');
+	let is_moving = $state<boolean>(false);
 
 	// Koordinaten des Balls
 	let cx = $state<number>(0);
@@ -106,6 +109,22 @@ export function createMove(size: number = 6) {
 				moveWall(comingFrom === 'left', false);
 			}
 		}
+		if (is_moving) {
+			requestAnimationFrame(move);
+		}
+	}
+
+	// const moving = $derived.by(() => {
+
+	// })
+
+	function startMoving() {
+		is_moving = true;
+		move();
+	}
+
+	function stopMoving() {
+		is_moving = false;
 	}
 
 	function moveWall(wall_hit_right: boolean, isVertical: boolean) {
@@ -142,6 +161,7 @@ export function createMove(size: number = 6) {
 	}
 
 	function resetWall() {
+		console.log('resetWall');
 		if (mode === 'vertical') {
 			wall_x1 = 0.5;
 			wall_x2 = 0.5;
@@ -207,9 +227,10 @@ export function createMove(size: number = 6) {
 		return { x: -dy / length, y: dx / length };
 	}
 
-	resetWall();
+	// resetWall();
 
 	return {
+		layout: 'linear',
 		size,
 		radius,
 		move,
@@ -222,6 +243,8 @@ export function createMove(size: number = 6) {
 		pulley_radius,
 		pulley_off_x,
 		pulley_off_y,
+		startMoving,
+		stopMoving,
 		get is_ball_left() {
 			return is_ball_left;
 		},

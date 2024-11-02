@@ -2,39 +2,47 @@
 	import { setStoryState } from './story-state.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Grid from '$lib/components/grid/Grid.svelte';
-	import { setSimpleState } from '$lib/components/grid/grid-simple.svelte';
-	import Simple from '../sections/Simple.svelte';
+	import { setGridState } from '$lib/components/grid/grid-state.svelte';
 	import { onMount } from 'svelte';
 
 	const story = setStoryState();
-	const grid = setSimpleState();
+	let grid = setGridState();
 
-	onMount(() => {
+	function runActions() {
+		console.log(`Running ${story.currentActions.length} actions`);
+		const { grid: state } = grid;
 		story.currentActions.forEach((action) => {
-			if (typeof grid[action] === 'function') {
-				grid[action]();
-			}
-		});
-	});
-
-	function nextPage() {
-		story.nextPage();
-		console.log(story.currentActions);
-		story.currentActions.forEach((action) => {
-			if (typeof grid[action] === 'function') {
-				grid[action]();
+			if (typeof state[action] === 'function') {
+				console.log('Running action:', action);
+				state[action]();
+			} else {
+				console.warn('Action not found:', action);
 			}
 		});
 	}
 
+	function setGrid() {
+		console.log('Setting grid');
+		if (typeof story.currentType === 'symbol') {
+			grid.currentState = story.currentType;
+		}
+	}
+
+	onMount(() => {
+		setGrid();
+		runActions();
+	});
+
+	function nextPage() {
+		story.nextPage();
+		setGrid();
+		runActions();
+	}
+
 	function prevPage() {
 		story.prevPage();
-		console.log(story.currentActions);
-		story.currentActions.forEach((action) => {
-			if (typeof grid[action] === 'function') {
-				grid[action]();
-			}
-		});
+		setGrid();
+		runActions();
 	}
 </script>
 

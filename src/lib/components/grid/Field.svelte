@@ -1,12 +1,14 @@
 <script lang="ts">
-	import { getX, getY } from '$lib/utils/utils.ts';
+	import { getX, getY } from '$lib/utils/utils';
+	import { fade } from 'svelte/transition';
 	import { getContext } from 'svelte';
+	import { MODE_GUESS } from '$config';
 
 	const { xScale, yScale } = getContext('LayerCake');
 
-	import { getSimpleState } from './grid-simple.svelte';
-
-	const grid = getSimpleState();
+	import { getGridState } from './grid-state.svelte';
+	const gridState = getGridState();
+	const { grid } = $derived(gridState);
 
 	const { position = 0, fill = undefined } = $props();
 
@@ -25,13 +27,13 @@
 	});
 
 	const step = $derived($xScale.step());
+	const xBandwidth = $derived($xScale.bandwidth() / 2);
+	const yBandwidth = $derived($yScale.bandwidth() / 2);
 </script>
 
 <g
-	transform="translate({$xScale(getX(position)) + $xScale.bandwidth() / 2}, {$yScale(
-		getY(position)
-	) +
-		$yScale.bandwidth() / 2})"
+	transform="translate({$xScale(getX(position)) + xBandwidth}, {$yScale(getY(position)) +
+		yBandwidth})"
 >
 	{#if typeof fill !== 'undefined'}
 		{#if typeof fill === 'boolean'}
@@ -55,10 +57,11 @@
 			/>
 		{/if}
 	{/if}
-	{#if grid.mode === 'guess' && !grid.guesses[position]}
+	{#if grid.mode === MODE_GUESS && !grid.guesses[position]}
 		<path
+			in:fade={{ duration: 500 }}
 			d="M {-step / 2 + 0.5} {-step / 2 + 0.5} h {step - 1} v {step - 1} h {-step + 1} Z"
-			class="fill fill-black transition-colors hover:fill-gray-500 opacity-90"
+			class="fill fill-blue-900 transition-colors hover:fill-blue-600"
 			class:cursor-pointer={grid.canGuess}
 			onclick={() => grid.guess(position)}
 		/>

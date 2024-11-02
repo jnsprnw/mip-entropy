@@ -1,16 +1,17 @@
 <script lang="ts">
 	import Grid from '$lib/components/grid/Grid.svelte';
-	import { getSimpleState } from '$lib/components/grid/grid-simple.svelte';
+	// import { getSimpleState } from '$lib/components/grid/grid-simple.svelte';
+	// import { MODE_GUESS, MODE_LOOP } from '$config';
 
-	const grid = getSimpleState();
+	// const grid = getSimpleState();
 </script>
 
 <div class="flex gap-x-6">
 	<Grid />
-
+	<!--
 	<aside class="flex flex-col m-6 gap-y-6">
 		<section>
-			<span class="font-semibold text-xl" class:text-amber-500={grid.mode === 'loop'}>Loop</span>
+			<span class="font-semibold text-xl" class:text-amber-500={grid.mode === MODE_LOOP}>Loop</span>
 			<div class="flex gap-x-6">
 				<button
 					onclick={() => grid.loopLow()}
@@ -22,10 +23,14 @@
 				>
 			</div>
 
-			<span class:text-gray-200={grid.mode !== 'loop'}>{grid.count_run} / {grid.count_total}</span>
+			<span class:text-gray-200={grid.mode !== MODE_LOOP}
+				>{grid.count_run} / {grid.count_total}</span
+			>
 		</section>
 		<section>
-			<span class="font-semibold text-xl" class:text-amber-500={grid.mode === 'guess'}>Guess</span>
+			<span class="font-semibold text-xl" class:text-amber-500={grid.mode === MODE_GUESS}
+				>Guess</span
+			>
 			<div class="flex gap-x-6">
 				<button
 					onclick={() => grid.guessLow()}
@@ -37,9 +42,9 @@
 					>Guess High</button
 				>
 			</div>
-			<span class:text-gray-200={grid.mode !== 'guess'}
+			<span class:text-gray-200={grid.mode !== MODE_GUESS}
 				>Guesses: {grid.count_guess} / {grid.count_fields} Found: {grid.count_found} / {grid.count_filled}</span
 			>
 		</section>
-	</aside>
+	</aside> -->
 </div>

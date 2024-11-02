@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { getSimpleState } from './grid-simple.svelte';
+	import { getGridState } from './grid-state.svelte';
 	import Field from './Field.svelte';
 
-	const grid = getSimpleState();
+	const gridState = getGridState();
+	const { grid } = $derived(gridState);
 </script>
 
 <g class="fields">

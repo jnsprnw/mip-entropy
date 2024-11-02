@@ -21,6 +21,7 @@ export function createStory() {
 	const currentPage = $derived(PAGES[page]);
 	const { text: currentText } = $derived(currentPage);
 	const { actions: currentActions = [] } = $derived(currentPage);
+	const { type: currentType } = $derived(currentPage);
 
 	return {
 		nextPage,
@@ -42,6 +43,9 @@ export function createStory() {
 		},
 		get currentActions() {
 			return currentActions;
+		},
+		get currentType() {
+			return currentType;
 		}
 	};
 }

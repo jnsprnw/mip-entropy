@@ -17,7 +17,7 @@
 </script>
 
 <div class="flex gap-x-6">
-	<Grid type="linear" padding={grid.padding} />
+	<Grid />
 
 	<aside class="flex flex-col m-6 gap-y-6">
 		<section class="flex flex-col gap-y-3">

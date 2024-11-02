@@ -1,6 +1,9 @@
-import { setContext, getContext } from 'svelte';
+// import { setContext, getContext } from 'svelte';
 import { randomPlacement, createFilledFields, getX, getY, fromCoords } from '$lib/utils/utils';
 import { range } from 'd3-array';
+import { MODE_GUESS, MODE_LOOP } from '$config';
+
+export const ID = Symbol('simple');
 
 export function createSimple(size: number = 6) {
 	let fields = $state(createFilledFields(size));
@@ -9,13 +12,17 @@ export function createSimple(size: number = 6) {
 	let count_total = $state<number>(0);
 	let count_run = $state<number>(0);
 	let interval: undefined | typeof setInterval = undefined;
-	let mode = $state<'loop' | 'guess'>('loop');
+	let mode = $state<typeof MODE_LOOP | typeof MODE_GUESS>(MODE_LOOP);
 	let canGuess = $state<boolean>(false);
 	let count_guess = $state<number>(0);
 	let count_found = $state<number>(0);
 
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
+
+	function clearFields() {
+		fields = createFilledFields(size);
+	}
 
 	function findHigh() {
 		center = undefined;
@@ -24,7 +31,7 @@ export function createSimple(size: number = 6) {
 	}
 
 	function loop(total: number, func: Function, time: number = 500) {
-		mode = 'loop';
+		mode = MODE_LOOP;
 		canGuess = false;
 		clearInterval(interval);
 		count_run = 1;
@@ -97,15 +104,18 @@ export function createSimple(size: number = 6) {
 
 	function startGuess(func: Function, start?: number | undefined) {
 		clearInterval(interval);
-		canGuess = false;
-		mode = 'guess';
-		guesses = createFilledFields(size, false);
-		count_guess = 0;
-		count_found = 0;
+		clearFields();
 		setTimeout(() => {
-			func(start);
-			canGuess = true;
-		}, 100);
+			canGuess = false;
+			mode = MODE_GUESS;
+			guesses = createFilledFields(size, false);
+			count_guess = 0;
+			count_found = 0;
+			setTimeout(() => {
+				func(start);
+				canGuess = true;
+			}, 500);
+		}, 200);
 	}
 
 	const validPositions = range(0, size * size).filter((_, i) => checkValidAroundPoint(i));
@@ -126,6 +136,9 @@ export function createSimple(size: number = 6) {
 	}
 
 	return {
+		// get id() {
+		// 	return ID;
+		// },
 		get fields() {
 			return fields;
 		},
@@ -165,12 +178,12 @@ export function createSimple(size: number = 6) {
 	};
 }
 
-const GRID_KEY = Symbol('grid');
+// const GRID_KEY = Symbol('grid');
 
-export function setSimpleState(size: number = 6) {
-	return setContext(GRID_KEY, createSimple(size));
-}
+// export function setSimpleState(size: number = 6) {
+// 	return setContext(GRID_KEY, createSimple(size));
+// }
 
-export function getSimpleState() {
-	return getContext<ReturnType<typeof setSimpleState>>(GRID_KEY);
-}
+// export function getSimpleState() {
+// 	return getContext<ReturnType<typeof setSimpleState>>(GRID_KEY);
+// }
