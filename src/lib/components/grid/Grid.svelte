@@ -7,14 +7,14 @@
 	import Move from './Move.svelte';
 	import Pulley from './Pulley.svelte';
 	import { getGridState } from './grid-state.svelte';
-	import { PADDING_GRID } from '$config';
+	import { PADDING_GRID, LAYOUT_LINEAR } from '$config';
 
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
 
-	const scale = $derived(grid.layout === 'linear' ? scaleLinear() : scaleBand());
+	const scale = $derived(grid.layout === LAYOUT_LINEAR ? scaleLinear() : scaleBand());
 
-	const domain = $derived(grid.layout === 'linear' ? [0, 1] : range(0, grid.size));
+	const domain = $derived(grid.layout === LAYOUT_LINEAR ? [0, 1] : range(0, grid.size));
 
 	let height = $state<number>(0);
 	const width = $derived(
@@ -34,7 +34,7 @@
 			>
 				<Svg>
 					<Base />
-					{#if grid.layout === 'linear'}
+					{#if grid.layout === LAYOUT_LINEAR}
 						<Move />
 						<Pulley />
 					{:else}

@@ -1,4 +1,4 @@
-import { PADDING_GRID } from '$config';
+import { PADDING_GRID, LAYOUT_LINEAR } from '$config';
 
 export const ID = Symbol('move');
 
@@ -231,7 +231,7 @@ export function createMove(size: number = 6) {
 	// resetWall();
 
 	return {
-		layout: 'linear',
+		layout: LAYOUT_LINEAR,
 		size,
 		radius,
 		move,
