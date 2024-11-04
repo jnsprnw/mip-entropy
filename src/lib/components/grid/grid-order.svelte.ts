@@ -143,17 +143,3 @@ export function createOrder(size: number = 6) {
 		setBob
 	};
 }
-
-// const GRID_KEY = Symbol('grid');
-
-// export function setOrderState(size: number = 6) {
-// 	return setContext(GRID_KEY, createOrder(size));
-// }
-
-// export function getOrderState() {
-// 	return getContext<ReturnType<typeof setOrderState>>(GRID_KEY);
-// }
-
-// export function getID() {
-// 	return ID;
-// }

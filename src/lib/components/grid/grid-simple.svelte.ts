@@ -177,13 +177,3 @@ export function createSimple(size: number = 6) {
 		guess
 	};
 }
-
-// const GRID_KEY = Symbol('grid');
-
-// export function setSimpleState(size: number = 6) {
-// 	return setContext(GRID_KEY, createSimple(size));
-// }
-
-// export function getSimpleState() {
-// 	return getContext<ReturnType<typeof setSimpleState>>(GRID_KEY);
-// }
