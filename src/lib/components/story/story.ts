@@ -63,7 +63,8 @@ export const PAGES: Page[] = [
 	},
 	{
 		text: 'Earlier, we saw how it’s easier to harness work from a low-entropy state. If Alice and Bob can assign different values of entropy to the same system, what does that mean for their ability to do work?',
-		type: id_move
+		type: id_move,
+		actions: ['resetWall']
 	},
 	{
 		text: 'To Bob, the room is already in a maximum-entropy state, so there’s no way for him to extract energy.',
