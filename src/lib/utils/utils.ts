@@ -6,8 +6,8 @@ export function shuffleArray<T>(array: T[]): T[] {
 	return array;
 }
 
-export function randomPlacement(n: number = 36, size: number = 6) {
-	// return Array.from({ length: n }, () => Math.floor(Math.random() * n)).slice(0, size + 1);
+export function randomPlacement(n: number = 36, count: number = 9) {
+	// return Array.from({ length: n }, () => Math.floor(Math.random() * n)).slice(0, count + 1);
 	const positions = Array.from({ length: n }, (_, index) => index);
 
 	// Zufällig mischen
@@ -17,19 +17,28 @@ export function randomPlacement(n: number = 36, size: number = 6) {
 	}
 
 	// Die ersten 'count' Positionen zurückgeben
-	return positions.slice(0, size);
+	return positions.slice(0, count);
 }
 
-type SimpleField = boolean | undefined;
+type SimpleField = { fill: boolean | undefined } | undefined;
 
 export function createFilledFields(
 	size: number = 6,
 	fill: boolean | undefined = undefined
 ): SimpleField[] {
+	return [Array(size).fill(Array(size).fill({ fill }))].flat(3);
+}
+
+type GuessField = boolean | undefined;
+
+export function createGuessFields(
+	size: number = 6,
+	fill: boolean | undefined = undefined
+): GuessField[] {
 	return [Array(size).fill(Array(size).fill(fill))].flat(3);
 }
 
-type RichField = { color: string; figure: string };
+type RichField = { color: string; figure: string; index: number };
 
 export function createMixedFields(size: number = 6): RichField[] {
 	const numberOfEachType = (size * size) / 4;
@@ -41,7 +50,8 @@ export function createMixedFields(size: number = 6): RichField[] {
 			});
 		});
 	}
-	return shuffleArray(fields);
+	const shuffled = shuffleArray(fields);
+	return shuffled.map((field, index) => ({ ...field, index }));
 }
 
 export function getX(position: number, size: number = 6) {

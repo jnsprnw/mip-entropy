@@ -10,13 +10,13 @@
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
 
-	const { position = 0, fill = undefined } = $props();
+	const { position = 0, opt = undefined } = $props();
 
 	const color = $derived.by(() => {
 		if (grid.observer === 'bob') {
 			return 'fill-slate-300';
 		}
-		switch (fill?.color) {
+		switch (opt?.color) {
 			case 'blue':
 				return 'fill-violet-300';
 			case 'red':
@@ -32,15 +32,16 @@
 </script>
 
 <g
-	transform="translate({$xScale(getX(position)) + xBandwidth}, {$yScale(getY(position)) +
-		yBandwidth})"
+	style="transform: translate({$xScale(getX(position)) + xBandwidth}px, {$yScale(getY(position)) +
+		yBandwidth}px);"
+	class="transition-transform"
 >
-	{#if typeof fill !== 'undefined'}
-		{#if typeof fill === 'boolean'}
+	{#if typeof opt !== 'undefined'}
+		{#if typeof opt?.fill === 'boolean'}
 			<circle cx={0} cy={0} r="10" class="stroke-2 stroke-blue-900 fill-amber-300" />
 		{:else if grid.observer === 'alice'}
 			<circle cx={0} cy={0} r="8" class="stroke-2 stroke-blue-900 fill transition-colors {color}" />
-		{:else if fill.figure === 'square'}
+		{:else if opt.figure === 'square'}
 			<rect
 				x={-8}
 				y={-8}
@@ -49,7 +50,7 @@
 				stroke-linejoin="round"
 				class="stroke-2 stroke-blue-900 fill transition-colors {color}"
 			/>
-		{:else if fill.figure === 'triangle'}
+		{:else if opt.figure === 'triangle'}
 			<polygon
 				points="-8,8 8,8 0,-8"
 				stroke-linejoin="round"

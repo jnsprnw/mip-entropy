@@ -7,7 +7,7 @@
 </script>
 
 <g class="fields">
-	{#each grid.fields as fill, i}
-		<Field position={i} {fill} />
+	{#each grid.fields as opt, i}
+		<Field position={opt?.index ?? i} {opt} />
 	{/each}
 </g>

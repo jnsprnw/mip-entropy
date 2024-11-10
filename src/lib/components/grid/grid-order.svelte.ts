@@ -1,5 +1,6 @@
 // import { setContext, getContext } from 'svelte';
 import { createMixedFields } from '$lib/utils/utils';
+import { orderBy } from 'lodash-es';
 
 export const ID = Symbol('order');
 
@@ -72,25 +73,38 @@ export function createOrder(size: number = 6) {
 		observer = value;
 	}
 
+	function getField(position: number) {
+		return fields.find(({ index }) => index === position);
+	}
+
 	function sort(time: number = 500) {
 		interval = setInterval(function () {
 			if (!is_sorted) {
 				for (let i = 0; i < fields.length; i++) {
+					const current_field = getField(i);
+					const next_field = getField(i + 1);
+					if (typeof current_field === 'undefined') {
+						continue;
+					}
 					// console.log(`Starting with ${i}: ${fields[i][sort_by]}`);
-					const value_current = fields[i][sort_by];
-					const value_next = fields[i + 1] ? fields[i + 1][sort_by] : undefined;
-					if (value_current === value_next) {
+					const value_current = current_field[sort_by];
+					const value_next = next_field ? next_field[sort_by] : undefined;
+					if (value_current === value_next || typeof next_field === 'undefined') {
 						// console.log(`Next element is ${i + 1}: ${fields[i + 1][sort_by]}`);
 						continue;
 					}
-					const next_match = fields.findIndex(
-						({ [sort_by]: value }, index) => index > i + 1 && value === value_current
+
+					const next_match = orderBy(fields, 'index').find(
+						({ [sort_by]: value, index }) => index > i + 1 && value === value_current
 					);
-					if (next_match !== -1) {
+					if (typeof next_match !== 'undefined') {
 						// console.log(`Next match is ${next_match}: ${fields[next_match][sort_by]}`);
-						const temp = fields[i + 1];
-						fields[i + 1] = fields[next_match];
-						fields[next_match] = temp;
+						const new_index = next_match.index;
+						next_match.index = next_field.index;
+						next_field.index = new_index;
+						// const temp = getField(i+1);
+						// getField(i+1).index = getField(next_match);
+						// getField(next_match) = temp;
 					} else {
 						continue;
 					}

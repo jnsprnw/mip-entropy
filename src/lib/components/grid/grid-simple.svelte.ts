@@ -1,5 +1,12 @@
 // import { setContext, getContext } from 'svelte';
-import { randomPlacement, createFilledFields, getX, getY, fromCoords } from '$lib/utils/utils';
+import {
+	randomPlacement,
+	createFilledFields,
+	createGuessFields,
+	getX,
+	getY,
+	fromCoords
+} from '$lib/utils/utils';
 import { range } from 'd3-array';
 import { MODE_GUESS, MODE_LOOP } from '$config';
 
@@ -7,7 +14,7 @@ export const ID = Symbol('simple');
 
 export function createSimple(size: number = 6) {
 	let fields = $state(createFilledFields(size));
-	let guesses = $state(createFilledFields(size, true));
+	let guesses = $state(createGuessFields(size, true));
 	let center = $state<undefined | number>(undefined);
 	let count_total = $state<number>(0);
 	let count_run = $state<number>(0);
@@ -26,8 +33,8 @@ export function createSimple(size: number = 6) {
 
 	function findHigh() {
 		center = undefined;
-		const placements = randomPlacement(size * size, size);
-		fields = fields.map((_, n) => (placements.includes(n) ? true : undefined));
+		const placements = randomPlacement(size * size, 9);
+		fields = fields.map((_, n) => (placements.includes(n) ? { fill: true } : undefined));
 	}
 
 	function loop(total: number, func: Function, time: number = 500, continuously: boolean = false) {
@@ -101,7 +108,7 @@ export function createSimple(size: number = 6) {
 			fromCoords(x, y + 1),
 			fromCoords(x + 1, y + 1)
 		];
-		fields = fields.map((_, n) => (around.includes(n) ? true : undefined));
+		fields = fields.map((_, n) => (around.includes(n) ? { fill: true } : undefined));
 		return true;
 	}
 
@@ -111,7 +118,7 @@ export function createSimple(size: number = 6) {
 		setTimeout(() => {
 			canGuess = false;
 			mode = MODE_GUESS;
-			guesses = createFilledFields(size, false);
+			guesses = createGuessFields(size, false);
 			count_guess = 0;
 			count_found = 0;
 			setTimeout(() => {
