@@ -30,7 +30,7 @@ export function createSimple(size: number = 6) {
 		fields = fields.map((_, n) => (placements.includes(n) ? true : undefined));
 	}
 
-	function loop(total: number, func: Function, time: number = 500) {
+	function loop(total: number, func: Function, time: number = 500, continuously: boolean = false) {
 		mode = MODE_LOOP;
 		canGuess = false;
 		clearInterval(interval);
@@ -43,12 +43,15 @@ export function createSimple(size: number = 6) {
 				count_run += 1;
 			} else {
 				clearInterval(interval);
+				if (continuously) {
+					loop(total, func, time, continuously);
+				}
 			}
 		}, time);
 	}
 
 	function loopHigh() {
-		loop(27540584512, findHigh, 200);
+		loop(27540584512, findHigh, 200, true);
 	}
 
 	function findNextLow(start?: number | undefined) {
@@ -69,7 +72,7 @@ export function createSimple(size: number = 6) {
 
 	function loopLow() {
 		center = 0;
-		loop(16, findNextLow);
+		loop(16, findNextLow, 500, true);
 	}
 
 	function checkValidAroundPoint(position: number = 8) {
