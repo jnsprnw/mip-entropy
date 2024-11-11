@@ -6,7 +6,7 @@ import { createMove, ID as id_move } from './grid-move.svelte';
 const GRID_KEY = Symbol('grid');
 
 export function createGrid() {
-	let currentState = $state<symbol>(id_simple);
+	let currentState = $state<string>(id_simple);
 
 	const gridState = $derived.by(() => {
 		switch (currentState) {
@@ -26,8 +26,11 @@ export function createGrid() {
 		get grid() {
 			return gridState;
 		},
-		set currentState(value: symbol) {
+		set currentState(value: string) {
 			currentState = value;
+		},
+		get currentState(): string {
+			return currentState.toString();
 		}
 	};
 }

@@ -4,6 +4,7 @@
 	import Grid from '$lib/components/grid/Grid.svelte';
 	import { setGridState } from '$lib/components/grid/grid-state.svelte';
 	import { onMount } from 'svelte';
+	import Menu from '$lib/components/menu/Menu.svelte';
 
 	const story = setStoryState();
 	let grid = setGridState();
@@ -22,7 +23,6 @@
 	}
 
 	function setGrid() {
-		console.log('Setting grid');
 		if (typeof story.currentType === 'symbol') {
 			grid.currentState = story.currentType;
 		}
@@ -46,9 +46,12 @@
 	}
 </script>
 
-<div class="grid grid-rows-[2fr_1fr_auto] gap-y-4 min-h-screen p-12">
+<div class="grid grid-rows-[3fr_1fr_2fr_auto] gap-y-4 min-h-screen p-12">
 	<div class="flex items-center justify-center">
 		<Grid />
+	</div>
+	<div class="flex items-center justify-center">
+		<Menu />
 	</div>
 	<div class="flex justify-center">
 		<p class="max-w-prose text-lg">{story.currentText}</p>

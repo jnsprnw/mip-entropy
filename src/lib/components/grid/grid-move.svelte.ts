@@ -1,7 +1,6 @@
-import { PADDING_GRID, LAYOUT_LINEAR } from '$config';
-import { intersectsWall, getWallNormal } from './utils-move';
+import { PADDING_GRID, LAYOUT_LINEAR, MODE_MOVE } from '$config';
 
-export const ID = Symbol('move');
+export const ID = 'move';
 
 const pulley_radius = 10;
 const pulley_off_x = PADDING_GRID.left / 2;

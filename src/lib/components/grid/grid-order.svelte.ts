@@ -2,7 +2,7 @@
 import { createMixedFields } from '$lib/utils/utils';
 import { orderBy } from 'lodash-es';
 
-export const ID = Symbol('order');
+export const ID = 'order';
 
 export function createOrder(size: number = 6) {
 	let fields = $state(createMixedFields(size));
