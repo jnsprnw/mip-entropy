@@ -2,7 +2,7 @@
 import { createMixedFields } from '$lib/utils/utils';
 import { orderBy } from 'lodash-es';
 
-export const ID = 'order';
+export const ID = 'order' as const;
 
 export function createOrder(size: number = 6) {
 	let fields = $state(createMixedFields(size));
@@ -10,6 +10,8 @@ export function createOrder(size: number = 6) {
 
 	let observer = $state<undefined | 'alice' | 'bob'>(undefined);
 	const sort_by = $derived<'color' | 'figure'>(observer === 'alice' ? 'color' : 'figure');
+
+	let allow_observer_switch = $state<boolean>(false);
 
 	const is_sorting = $derived(typeof interval !== 'undefined');
 
@@ -27,16 +29,23 @@ export function createOrder(size: number = 6) {
 	// 	// TODO: Fix this. Sorting can be the other way around. This is alphabettical and the other depends on the starting point.
 	// 	return sorted.every((f, i) => f[sort_by] === fields[i][sort_by]);
 	// });
+	//
+	function getField(position: number) {
+		return fields.find(({ index }) => index === position);
+	}
 
 	const entropy = $derived.by(() => {
 		let count = 0;
 		for (let i = 0; i < fields.length - 1; i++) {
 			if (typeof observer === 'undefined') {
-				if (fields[i].color !== fields[i + 1].color || fields[i].figure !== fields[i + 1].figure) {
+				if (
+					getField(i)?.color !== getField(i + 1)?.color ||
+					getField(i)?.figure !== getField(i + 1)?.figure
+				) {
 					count++;
 				}
 			} else {
-				if (fields[i][sort_by] !== fields[i + 1][sort_by]) {
+				if (getField(i)?.[sort_by] !== getField(i + 1)?.[sort_by]) {
 					count++;
 				}
 			}
@@ -68,17 +77,26 @@ export function createOrder(size: number = 6) {
 		setObserver('bob');
 	}
 
+	function removeObserver() {
+		setObserver(undefined);
+	}
+
 	function setObserver(value: 'alice' | 'bob' | undefined) {
 		stopLoop();
 		observer = value;
 	}
 
-	function getField(position: number) {
-		return fields.find(({ index }) => index === position);
+	function allowObserverSwitch() {
+		allow_observer_switch = true;
+	}
+
+	function disallowObserverSwitch() {
+		allow_observer_switch = false;
 	}
 
 	function sort(time: number = 500) {
 		interval = setInterval(function () {
+			console.log('Sort items', is_sorted);
 			if (!is_sorted) {
 				for (let i = 0; i < fields.length; i++) {
 					const current_field = getField(i);
@@ -147,6 +165,9 @@ export function createOrder(size: number = 6) {
 		get entropy() {
 			return entropy;
 		},
+		get allow_observer_switch() {
+			return allow_observer_switch;
+		},
 		max_entropy,
 		size,
 		shuffle,
@@ -154,6 +175,9 @@ export function createOrder(size: number = 6) {
 		sort,
 		stopLoop,
 		setAlice,
-		setBob
+		setBob,
+		removeObserver,
+		allowObserverSwitch,
+		disallowObserverSwitch
 	};
 }

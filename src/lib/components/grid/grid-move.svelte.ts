@@ -1,6 +1,6 @@
 import { PADDING_GRID, LAYOUT_LINEAR, MODE_MOVE } from '$config';
 
-export const ID = 'move';
+export const ID = 'move' as const;
 
 const pulley_radius = 10;
 const pulley_off_x = PADDING_GRID.left / 2;
@@ -30,6 +30,7 @@ export function createMove(size: number = 6) {
 	let has_weight = $state<boolean>(false);
 	let selected_side = $state<'left' | 'right' | null>(null);
 	let particles = $state<Particle[]>([]);
+	let can_select = $state<boolean>(false);
 
 	// Koordinaten der Wand
 	let wall_x1 = $state<number>(0);
@@ -94,6 +95,7 @@ export function createMove(size: number = 6) {
 	function selectSide(side: 'left' | 'right' | null) {
 		selected_side = side;
 		has_weight = side === 'left' || side === 'right';
+		startMoving();
 	}
 
 	function startMoving() {
@@ -155,7 +157,7 @@ export function createMove(size: number = 6) {
 			const angle = Math.random() * 2 * Math.PI;
 			arr.push({
 				cx: i % 2 ? 0.75 : 0.25,
-				cy: 0.5,
+				cy: 0.2,
 				angle,
 				dx: Math.cos(angle) * SPEED,
 				dy: Math.sin(angle) * SPEED,
@@ -172,11 +174,13 @@ export function createMove(size: number = 6) {
 		// resetAngle();
 	}
 
-	// function resetAngle() {
-	// 	angle = Math.random() * 2 * Math.PI;
-	// 	dx = Math.cos(angle) * SPEED;
-	// 	dy = Math.sin(angle) * SPEED;
-	// }
+	function allowSelectSide() {
+		can_select = true;
+	}
+
+	function disallowSelectSide() {
+		can_select = false;
+	}
 
 	return {
 		layout: LAYOUT_LINEAR,
@@ -194,6 +198,11 @@ export function createMove(size: number = 6) {
 		pulley_off_y,
 		startMoving,
 		stopMoving,
+		allowSelectSide,
+		disallowSelectSide,
+		get can_select() {
+			return can_select;
+		},
 		get particles() {
 			return particles;
 		},

@@ -10,7 +10,7 @@ import {
 import { range } from 'd3-array';
 import { MODE_GUESS, MODE_LOOP } from '$config';
 
-export const ID = 'simple';
+export const ID = 'simple' as const;
 
 export function createSimple(size: number = 6) {
 	let fields = $state(createFilledFields(size));

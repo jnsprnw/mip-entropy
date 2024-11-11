@@ -6,6 +6,10 @@
 	import { onMount } from 'svelte';
 	import Menu from '$lib/components/menu/Menu.svelte';
 
+	import { ID as id_order } from '$lib/components/grid/grid-order.svelte';
+	import { ID as id_simple } from '$lib/components/grid/grid-simple.svelte';
+	import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
+
 	const story = setStoryState();
 	let grid = setGridState();
 
@@ -23,7 +27,7 @@
 	}
 
 	function setGrid() {
-		if (typeof story.currentType === 'symbol') {
+		if ([id_order, id_simple, id_move].includes(story.currentType)) {
 			grid.currentState = story.currentType;
 		}
 	}

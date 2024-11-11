@@ -86,14 +86,14 @@
 			class="stroke-2 stroke-blue-900 fill fill-slate-300"
 		/>
 	</g>
-{:else}
+{:else if grid.can_select}
 	<g onclick={() => grid.selectSide('left')} class="cursor-pointer group">
 		<path
 			d="M {x0 + 1} {y0 - 1} H {xWall} V {y1 + 1} H {x0 + 1} Z"
 			class="fill-transparent group-hover:fill-blue-600/10"
 		/>
 		<text x={xWall / 2} y={(y0 - y1) / 2} text-anchor="middle" dominant-baseline="middle">
-			Click to select
+			Hang left
 		</text>
 	</g>
 	<g onclick={() => grid.selectSide('right')} class="cursor-pointer group">
@@ -102,7 +102,7 @@
 			class="fill-transparent group-hover:fill-blue-600/10"
 		/>
 		<text x={xWall + xWall / 2} y={(y0 - y1) / 2} text-anchor="middle" dominant-baseline="middle">
-			Click to select
+			Hang right
 		</text>
 	</g>
 {/if}

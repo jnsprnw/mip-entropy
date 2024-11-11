@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Simple from '$lib/components/menu/Simple.svelte';
+	import Order from '$lib/components/menu/Order.svelte';
+	import Move from '$lib/components/menu/Move.svelte';
 	import { getGridState } from '$lib/components/grid/grid-state.svelte';
 
 	const grid = getGridState();
@@ -12,10 +14,10 @@
 
 <menu>
 	{#if currentState === id_order}
-		<Simple />
+		<Order />
 	{:else if currentState === id_simple}
 		<Simple />
 	{:else if currentState === id_move}
-		<Simple />
+		<Move />
 	{/if}
 </menu>

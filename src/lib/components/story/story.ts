@@ -5,7 +5,7 @@ import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
 type Page = {
 	text: string;
 	actions?: string[];
-	type?: symbol;
+	type?: typeof id_simple | typeof id_order | typeof id_move;
 };
 
 export const PAGES: Page[] = [
@@ -37,29 +37,32 @@ export const PAGES: Page[] = [
 	{
 		text: 'Because ordered states are likely to evolve into disordered states, an observer can use her certainty about the system’s distribution to extract work.',
 		type: id_move,
-		actions: ['resetWall', 'startMoving']
+		actions: ['resetWall', 'disallowSelectSide']
 	},
 	{
 		text: 'Here, we know where the particles are and that they’re likely to evolve into a higher-entropy state. We can exploit that knowledge to lift this weight off the ground.',
-		type: id_move
+		type: id_move,
+		actions: ['allowSelectSide']
 	},
 	{
 		text: 'However, the concept of “order” can differ between observers. Here we have a room full of particles with different shapes and colors. The task is to organize the room by putting similar objects on the same side.',
-		type: id_order
+		type: id_order,
+		actions: ['removeObserver', 'stopLoop']
 	},
 	{
 		text: 'First up is Alice, who has blurry vision and forgot her glasses. Alice can distinguish only the colors of the particles.',
 		type: id_order,
-		actions: ['setAlice', 'sort']
+		actions: ['setAlice']
 	},
 	{
 		text: 'Now Bob enters the room. Bob is color-blind, so he can distinguish only the shapes of the particles. To Bob, this room still looks messy.',
 		type: id_order,
-		actions: ['setBob', 'sort']
+		actions: ['setBob', 'disallowObserverSwitch']
 	},
 	{
 		text: 'This illustrates that entropy is a subjective measure. What different observers perceive as “ordered” depends on the information they have access to.',
-		type: id_order
+		type: id_order,
+		actions: ['allowObserverSwitch']
 	},
 	{
 		text: 'Earlier, we saw how it’s easier to harness work from a low-entropy state. If Alice and Bob can assign different values of entropy to the same system, what does that mean for their ability to do work?',
