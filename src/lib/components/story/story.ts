@@ -42,7 +42,7 @@ export const PAGES: Page[] = [
 	{
 		text: 'Here, we know where the particles are and that they’re likely to evolve into a higher-entropy state. We can exploit that knowledge to lift this weight off the ground.',
 		type: id_move,
-		actions: ['allowSelectSide']
+		actions: ['resetWall', 'allowSelectSide']
 	},
 	{
 		text: 'However, the concept of “order” can differ between observers. Here we have a room full of particles with different shapes and colors. The task is to organize the room by putting similar objects on the same side.',

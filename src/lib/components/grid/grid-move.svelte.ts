@@ -1,4 +1,5 @@
 import { PADDING_GRID, LAYOUT_LINEAR, MODE_MOVE } from '$config';
+import { random } from 'lodash-es';
 
 export const ID = 'move' as const;
 
@@ -10,7 +11,7 @@ const pulley_off_y = PADDING_GRID.top / 2;
 const SPEED = 0.03;
 
 // Radius des Balls
-const RADIUS = 0.05;
+const RADIUS = 0.03;
 
 type Particle = {
 	// Koordinaten des Balls
@@ -148,16 +149,31 @@ export function createMove(size: number = 6) {
 			wall_x1 = 0.2;
 			wall_x2 = 0.8;
 		}
-		resetBall();
+		if (!particles.length) {
+			resetParticles(4, 'random');
+		}
+		// resetBall();
 	}
 
-	function resetParticles(count: number = 2) {
+	function resetParticles(
+		count: number = 2,
+		side: 'left' | 'right' | 'random' | undefined = undefined
+	) {
 		const arr: Particle[] = [];
+		const random_side = Math.random() > 0.5 ? 'right' : 'left';
 		for (let i = 0; i < count; i++) {
 			const angle = Math.random() * 2 * Math.PI;
+			let cx: number = i % 2 ? 0.75 : 0.25;
+			if (side === 'random') {
+				cx = random_side === 'left' ? random(0.2, 0.4) : random(0.6, 0.8);
+			} else if (side === 'left') {
+				cx = 0.25;
+			} else if (side === 'right') {
+				cx = 0.75;
+			}
 			arr.push({
-				cx: i % 2 ? 0.75 : 0.25,
-				cy: 0.2,
+				cx,
+				cy: random(0.1, 0.3),
 				angle,
 				dx: Math.cos(angle) * SPEED,
 				dy: Math.sin(angle) * SPEED,
@@ -168,7 +184,7 @@ export function createMove(size: number = 6) {
 	}
 
 	function resetBall() {
-		resetParticles();
+		resetParticles(4, 'random');
 		// cx = Math.random() > 0.5 ? 0.75 : 0.25;
 		// cy = 0.5;
 		// resetAngle();
@@ -191,6 +207,7 @@ export function createMove(size: number = 6) {
 		changeMode,
 		changeShadow,
 		resetWall,
+		resetBall,
 		wall_y1,
 		wall_y2,
 		pulley_radius,
