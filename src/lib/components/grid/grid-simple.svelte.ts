@@ -23,6 +23,7 @@ export function createSimple(size: number = 6) {
 	let canGuess = $state<boolean>(false);
 	let count_guess = $state<number>(0);
 	let count_found = $state<number>(0);
+	let show_count = $state<boolean>(true);
 
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
@@ -39,6 +40,7 @@ export function createSimple(size: number = 6) {
 
 	function loop(total: number, func: Function, time: number = 500, continuously: boolean = false) {
 		mode = MODE_LOOP;
+		show_count = true;
 		canGuess = false;
 		clearInterval(interval);
 		count_run = 1;
@@ -80,6 +82,22 @@ export function createSimple(size: number = 6) {
 	function loopLow() {
 		center = 0;
 		loop(16, findNextLow, 500, true);
+	}
+
+	function toggleLowHigh() {
+		show_count = false;
+		mode = MODE_LOOP;
+		canGuess = false;
+		clearInterval(interval);
+		let isLow = false;
+		interval = setInterval(function () {
+			if (isLow) {
+				findHigh();
+			} else {
+				findNextLow(22);
+			}
+			isLow = !isLow;
+		}, 1000);
 	}
 
 	function checkValidAroundPoint(position: number = 8) {
@@ -179,11 +197,15 @@ export function createSimple(size: number = 6) {
 		get count_fields() {
 			return count_fields;
 		},
+		get show_count() {
+			return show_count;
+		},
 		size,
 		loopHigh,
 		loopLow,
 		guessLow,
 		guessHigh,
-		guess
+		guess,
+		toggleLowHigh
 	};
 }

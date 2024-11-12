@@ -9,6 +9,6 @@
 {#if grid.mode === MODE_GUESS}
 	<span>Guesses: {grid.count_guess}</span><br />
 	<span>{grid.count_found} / {grid.count_filled} particles found</span>
-{:else if grid.mode === MODE_LOOP}
+{:else if grid.mode === MODE_LOOP && grid.show_count}
 	<span>{grid.count_run} / {grid.count_total} configurations</span>
 {/if}

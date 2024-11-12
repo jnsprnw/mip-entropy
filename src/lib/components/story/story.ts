@@ -21,7 +21,7 @@ export const PAGES: Page[] = [
 	},
 	{
 		text: 'It’s much more probable for the particles to be spread throughout the box than it is for them to be clumped together. This is the basic idea behind the Second Law of Thermodynamics, the statement that entropy never decreases in a closed system.',
-		actions: ['loopHigh'],
+		actions: ['toggleLowHigh'],
 		type: id_simple
 	},
 	{
