@@ -40,7 +40,12 @@
 		{#if typeof opt?.fill === 'boolean'}
 			<circle cx={0} cy={0} r="10" class="stroke-2 stroke-blue-900 fill-amber-300" />
 		{:else if grid.observer === 'alice'}
-			<circle cx={0} cy={0} r="8" class="stroke-2 stroke-blue-900 fill transition-colors {color}" />
+			<circle
+				cx={0}
+				cy={0}
+				r="8"
+				class="stroke-2 stroke-blue-900 fill transition-colors {color} blur-sm"
+			/>
 		{:else if opt.figure === 'square'}
 			<rect
 				x={-8}
