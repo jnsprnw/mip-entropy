@@ -99,7 +99,6 @@ export const PAGES: Page[] = [
 		text: 'But Alice sees the room as being in a low-entropy state. So, she can lift the weight by cleverly employing a divider that responds only to red particles.',
 		type: id_move,
 		actions: [
-			'stopMoving',
 			'showWall',
 			'setAlice',
 			'setParticles',

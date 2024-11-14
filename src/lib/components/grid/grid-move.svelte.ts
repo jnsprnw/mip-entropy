@@ -111,7 +111,7 @@ export function createMove(size: number = 6) {
 	function selectLeftSide() {
 		selected_side = 'left';
 		has_weight = true;
-		startMoving();
+		// startMoving();
 	}
 
 	function resetSide() {
