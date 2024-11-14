@@ -1,4 +1,3 @@
-// import { setContext, getContext } from 'svelte';
 import { createMixedFields } from '$lib/utils/utils';
 import { orderBy } from 'lodash-es';
 
@@ -18,18 +17,6 @@ export function createOrder(size: number = 6) {
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
 
-	// const is_sorted = $derived.by(() => {
-	// 	const sorted = fields.slice().sort((a, b) => {
-	// 		if (sort_by === 'color') {
-	// 			return a.color.localeCompare(b.color);
-	// 		} else {
-	// 			return a.figure.localeCompare(b.figure);
-	// 		}
-	// 	});
-	// 	// TODO: Fix this. Sorting can be the other way around. This is alphabettical and the other depends on the starting point.
-	// 	return sorted.every((f, i) => f[sort_by] === fields[i][sort_by]);
-	// });
-	//
 	function getField(position: number) {
 		return fields.find(({ index }) => index === position);
 	}

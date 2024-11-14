@@ -8,11 +8,9 @@
 
 	const {
 		wall_x1,
-		wall_y1,
 		wall_x2,
 		pulley_off_y,
 		pulley_off_x,
-		is_ball_left,
 		pulley_radius: radius,
 		selected_side
 	} = $derived(grid);

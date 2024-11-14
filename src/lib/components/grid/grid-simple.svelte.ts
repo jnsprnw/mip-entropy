@@ -1,4 +1,3 @@
-// import { setContext, getContext } from 'svelte';
 import {
 	randomPlacement,
 	createFilledFields,
