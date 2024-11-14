@@ -65,3 +65,17 @@ export function getY(position: number, size: number = 6) {
 export function fromCoords(x: number, y: number, size: number = 6) {
 	return y * size + x;
 }
+
+export function getFill(observer: 'alice' | 'bob' | undefined, color: 'blue' | 'red' | undefined) {
+	if (observer === 'bob') {
+		return 'fill-slate-300';
+	}
+	switch (color) {
+		case 'blue':
+			return 'fill-violet-300';
+		case 'red':
+			return 'fill-emerald-300';
+		default:
+			return undefined;
+	}
+}

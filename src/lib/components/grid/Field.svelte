@@ -1,8 +1,11 @@
 <script lang="ts">
-	import { getX, getY } from '$lib/utils/utils';
+	import { getFill, getX, getY } from '$lib/utils/utils';
 	import { fade } from 'svelte/transition';
 	import { getContext } from 'svelte';
 	import { MODE_GUESS } from '$config';
+	import Square from '$lib/components/grid/shapes/Square.svelte';
+	import Circle from '$lib/components/grid/shapes/Circle.svelte';
+	import Triangle from '$lib/components/grid/shapes/Triangle.svelte';
 
 	const { xScale, yScale } = getContext('LayerCake');
 
@@ -12,19 +15,7 @@
 
 	const { position = 0, opt = undefined } = $props();
 
-	const color = $derived.by(() => {
-		if (grid.observer === 'bob') {
-			return 'fill-slate-300';
-		}
-		switch (opt?.color) {
-			case 'blue':
-				return 'fill-violet-300';
-			case 'red':
-				return 'fill-emerald-300';
-			default:
-				return undefined;
-		}
-	});
+	const color = $derived(getFill(grid.observer, opt?.color));
 
 	const step = $derived($xScale.step());
 	const xBandwidth = $derived($xScale.bandwidth() / 2);
@@ -40,27 +31,11 @@
 		{#if typeof opt?.fill === 'boolean'}
 			<circle cx={0} cy={0} r="10" class="stroke-2 stroke-blue-900 fill-amber-300" />
 		{:else if grid.observer === 'alice'}
-			<circle
-				cx={0}
-				cy={0}
-				r="8"
-				class="stroke-2 stroke-blue-900 fill transition-colors {color} blur-sm"
-			/>
+			<Circle {color} />
 		{:else if opt.figure === 'square'}
-			<rect
-				x={-8}
-				y={-8}
-				width="16"
-				height="16"
-				stroke-linejoin="round"
-				class="stroke-2 stroke-blue-900 fill transition-colors {color}"
-			/>
+			<Square {color} />
 		{:else if opt.figure === 'triangle'}
-			<polygon
-				points="-8,8 8,8 0,-8"
-				stroke-linejoin="round"
-				class="stroke-2 stroke-blue-900 fill transition-colors {color}"
-			/>
+			<Triangle {color} />
 		{/if}
 	{/if}
 	{#if grid.mode === MODE_GUESS && !grid.guesses[position]}
