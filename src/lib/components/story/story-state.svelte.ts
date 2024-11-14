@@ -2,7 +2,7 @@ import { PAGES } from './story';
 import { setContext, getContext } from 'svelte';
 
 export function createStory() {
-	let page = $state<number>(11);
+	let page = $state<number>(0);
 	const totalPages = PAGES.length;
 	const maxPage = totalPages - 1;
 
