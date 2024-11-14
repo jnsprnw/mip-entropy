@@ -37,12 +37,24 @@ export const PAGES: Page[] = [
 	{
 		text: 'Because ordered states are likely to evolve into disordered states, an observer can use her certainty about the system’s distribution to extract work.',
 		type: id_move,
-		actions: ['resetWall', 'disallowSelectSide']
+		actions: [
+			'showWall',
+			'resetWall',
+			'disallowSelectSide',
+			'disallowObserverSwitch',
+			'hideObserverSwitch'
+		]
 	},
 	{
 		text: 'Here, we know where the particles are and that they’re likely to evolve into a higher-entropy state. We can exploit that knowledge to lift this weight off the ground.',
 		type: id_move,
-		actions: ['resetWall', 'allowSelectSide']
+		actions: [
+			'showWall',
+			'resetWall',
+			'allowSelectSide',
+			'disallowObserverSwitch',
+			'hideObserverSwitch'
+		]
 	},
 	{
 		text: 'However, the concept of “order” can differ between observers. Here we have a room full of particles with different shapes and colors. The task is to organize the room by putting similar objects on the same side.',
@@ -67,14 +79,34 @@ export const PAGES: Page[] = [
 	{
 		text: 'Earlier, we saw how it’s easier to harness work from a low-entropy state. If Alice and Bob can assign different values of entropy to the same system, what does that mean for their ability to do work?',
 		type: id_move,
-		actions: ['resetWall']
+		actions: ['hideWall', 'resetWall', 'setParticles', 'showObserverSwitch', 'allowObserverSwitch']
 	},
 	{
 		text: 'To Bob, the room is already in a maximum-entropy state, so there’s no way for him to extract energy.',
-		type: id_move
+		type: id_move,
+		actions: [
+			'stopMoving',
+			'showWall',
+			'setBob',
+			'showObserverSwitch',
+			'disallowObserverSwitch',
+			'startMoving',
+			'resetSide',
+			'setNoIgnoreColor'
+		]
 	},
 	{
 		text: 'But Alice sees the room as being in a low-entropy state. So, she can lift the weight by cleverly employing a divider that responds only to red particles.',
-		type: id_move
+		type: id_move,
+		actions: [
+			'stopMoving',
+			'showWall',
+			'setAlice',
+			'setParticles',
+			'showObserverSwitch',
+			'disallowObserverSwitch',
+			'selectLeftSide',
+			'setRedIgnoreColor'
+		]
 	}
 ];

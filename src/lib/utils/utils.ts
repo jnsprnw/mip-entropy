@@ -76,6 +76,6 @@ export function getFill(observer: 'alice' | 'bob' | undefined, color: 'blue' | '
 		case 'red':
 			return 'fill-emerald-300';
 		default:
-			return undefined;
+			return 'fill-slate-600';
 	}
 }

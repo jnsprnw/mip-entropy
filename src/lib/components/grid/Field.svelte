@@ -31,7 +31,7 @@
 		{#if typeof opt?.fill === 'boolean'}
 			<circle cx={0} cy={0} r="10" class="stroke-2 stroke-blue-900 fill-amber-300" />
 		{:else if grid.observer === 'alice'}
-			<Circle {color} />
+			<Circle {color} isBlur={true} />
 		{:else if opt.figure === 'square'}
 			<Square {color} />
 		{:else if opt.figure === 'triangle'}

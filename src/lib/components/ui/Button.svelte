@@ -10,7 +10,11 @@
 
 <button
 	{disabled}
-	class="bg-black text-white h-9 px-4 py-2 shadow-sm shadow-black/[0.04] hover:bg-black/80 inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+	aria-pressed={isActive}
+	class="text-white disabled:text-neutral-200 disabled:cursor-not-allowed h-9 px-4 py-2 shadow-sm shadow-black/[0.04] hover:bg-black/80 inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
 	class:bg-amber-800={isActive}
+	class:bg-black={!isActive}
+	class:disabled:bg-neutral-500={!isActive}
+	class:disabled:bg-amber-700={isActive}
 	{onclick}>{label}</button
 >
