@@ -3,4 +3,4 @@
 	import { pages } from './story';
 </script>
 
-<Module {pages} title="What Is Entropy?" />
+<Module {pages} title="Knowledge Is Power" />
