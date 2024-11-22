@@ -39,14 +39,14 @@
 		}
 	}
 
-	onMount(() => {
-		doStep();
-	});
-
 	function doStep() {
 		setGrid();
 		runActions();
 	}
+
+	onMount(() => {
+		doStep();
+	});
 
 	function nextPage() {
 		story.nextPage();
