@@ -20,6 +20,7 @@
 		class="bg-white/50 w-full h-full rounded-3xl row-start-1 row-end-3 {highlight_area}"
 		role="presentation"
 	></div>
+
+	<div class="col-start-1 row-start-1 p-5"><Alice /></div>
+	<div class="col-start-5 row-start-1 p-5"><Bob /></div>
 {/if}
-<div class="col-start-1 row-start-1 p-5"><Alice /></div>
-<div class="col-start-5 row-start-1 p-5"><Bob /></div>
