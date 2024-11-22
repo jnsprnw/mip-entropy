@@ -29,7 +29,7 @@
 >
 	{#if typeof opt !== 'undefined'}
 		{#if typeof opt?.fill === 'boolean'}
-			<circle cx={0} cy={0} r={entity_size / 2} class="stroke-2 stroke-blue-900 fill-amber-300" />
+			<circle cx={0} cy={0} r={entity_size / 2} class="fill-entity" />
 		{:else if grid.observer === 'alice'}
 			<Circle {color} isBlur={true} />
 		{:else if opt.figure === 'square'}

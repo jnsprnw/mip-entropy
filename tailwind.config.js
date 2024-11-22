@@ -19,6 +19,9 @@ export default {
 				bar: {
 					line: '#B2E2EA',
 					bar: '#E5322E'
+				},
+				entity: {
+					DEFAULT: '#F9922D'
 				}
 			}
 		}
