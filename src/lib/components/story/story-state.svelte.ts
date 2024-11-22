@@ -10,8 +10,10 @@ export class StoryState {
 		this.pages = module_pages;
 	}
 
-	totalPages = $derived(this.pages.length);
-	maxPage = $derived(this.totalPages - 1);
+	total_pages = $derived(this.pages.length);
+	maxPage = $derived(this.total_pages - 1);
+	is_first_page = $derived<boolean>(this.current_page_index === 0);
+	is_last_page = $derived<boolean>(this.current_page_number === this.total_pages);
 	currentPage = $derived<Page>(this.pages[this.current_page_index]);
 	currentText = $derived<string>(this.currentPage.text);
 	currentActions = $derived<string[]>(this.currentPage.actions ?? []);
