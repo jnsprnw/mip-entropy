@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { Snippet } from 'svelte';
 	import type { Page } from '$types';
 	import Stage from './Stage.svelte';
 	import Footer from './Footer.svelte';
@@ -10,7 +9,6 @@
 
 	interface Props {
 		title: string;
-		children: Snippet;
 		pages: Page[];
 	}
 	const { title, pages }: Props = $props();
