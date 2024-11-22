@@ -10,20 +10,20 @@
 	import { PADDING_GRID, LAYOUT_LINEAR } from '$config';
 
 	const gridState = getGridState();
-	const { grid } = $derived(gridState);
+	const { grid, width } = $derived(gridState);
 
 	const scale = $derived(grid.layout === LAYOUT_LINEAR ? scaleLinear() : scaleBand());
 
 	const domain = $derived(grid.layout === LAYOUT_LINEAR ? [0, 1] : range(0, grid.size));
 
-	let height = $state<number>(0);
-	const width = $derived(
-		height + PADDING_GRID.left + PADDING_GRID.right - PADDING_GRID.top - PADDING_GRID.bottom
-	);
+	// let height = $state<number>(0);
+	// const width = $derived(
+	// 	height + PADDING_GRID.left + PADDING_GRID.right - PADDING_GRID.top - PADDING_GRID.bottom
+	// );
 </script>
 
-<div class="h-96 m-2" bind:clientHeight={height}>
-	{#if height && width}
+<div class="h-full m-2" bind:clientHeight={gridState.height}>
+	{#if width}
 		<div class="grid-container h-full relative" style="width: {width}px">
 			<LayerCake
 				padding={PADDING_GRID}

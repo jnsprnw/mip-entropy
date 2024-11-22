@@ -11,7 +11,7 @@
 
 	import { getGridState } from './grid-state.svelte';
 	const gridState = getGridState();
-	const { grid } = $derived(gridState);
+	const { grid, entity_size } = $derived(gridState);
 
 	const { position = 0, opt = undefined } = $props();
 
@@ -29,7 +29,7 @@
 >
 	{#if typeof opt !== 'undefined'}
 		{#if typeof opt?.fill === 'boolean'}
-			<circle cx={0} cy={0} r="10" class="stroke-2 stroke-blue-900 fill-amber-300" />
+			<circle cx={0} cy={0} r={entity_size / 2} class="stroke-2 stroke-blue-900 fill-amber-300" />
 		{:else if grid.observer === 'alice'}
 			<Circle {color} isBlur={true} />
 		{:else if opt.figure === 'square'}
