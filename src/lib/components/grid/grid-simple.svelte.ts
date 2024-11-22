@@ -40,7 +40,12 @@ export function createSimple(size: number = 6) {
 		fields = fields.map((_, n) => (placements.includes(n) ? { fill: true } : undefined));
 	}
 
-	function loop(total: number, func: Function, time: number = 500, continuously: boolean = false) {
+	function loop(
+		total: number,
+		func: () => void,
+		time: number = 500,
+		continuously: boolean = false
+	) {
 		mode = MODE_LOOP;
 		show_count = true;
 		canGuess = false;
@@ -93,14 +98,13 @@ export function createSimple(size: number = 6) {
 		mode = MODE_LOOP;
 		canGuess = false;
 		clearInterval(interval);
-		let isLow = false;
 		interval = setInterval(function () {
-			if (isLow) {
+			if (entropy_level === 'low') {
 				findHigh();
 			} else {
 				findNextLow(22);
 			}
-			isLow = !isLow;
+			entropy_level = entropy_level === 'low' ? 'high' : 'low';
 		}, 1000);
 	}
 
@@ -134,7 +138,7 @@ export function createSimple(size: number = 6) {
 		return true;
 	}
 
-	function startGuess(func: Function, start?: number | undefined) {
+	function startGuess(func: () => void, start?: number | undefined) {
 		clearInterval(interval);
 		clearFields();
 		setTimeout(() => {

@@ -22,6 +22,12 @@ export default {
 				},
 				entity: {
 					DEFAULT: '#F9922D'
+				},
+				highlight: {
+					DEFAULT: '#E5322E'
+				},
+				entropy: {
+					bar: '#90CEDD'
 				}
 			}
 		}
