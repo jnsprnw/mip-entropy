@@ -65,8 +65,9 @@
 </script>
 
 <section class="grid grid-rows-[auto_1fr_auto] h-screen">
-	<header class="p-5">
-		<h2 class="text-accent-dark font-bold text-xl">{title}</h2>
+	<header class="p-5 flex flex-col gap-y-4">
+		<h2 class="text-accent-dark font-bold text-xl md:text-3xl">{title}</h2>
+		<p class="font-serif text-base md:text-xl">{story.currentText}</p>
 	</header>
 	<main class="p-5 flex items-center justify-center">
 		<Grid />
