@@ -22,7 +22,7 @@
 	// );
 </script>
 
-<div class="h-full m-2" bind:clientHeight={gridState.height}>
+<div class="h-full" bind:clientHeight={gridState.height}>
 	{#if width}
 		<div class="grid-container h-full relative" style="width: {width}px">
 			<LayerCake

@@ -1,5 +1,7 @@
 import { PADDING_GRID, LAYOUT_LINEAR } from '$config';
 import { random } from 'lodash-es';
+import type { Observer } from '$types';
+import { OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 
 export const ID = 'move' as const;
 
@@ -34,7 +36,7 @@ export function createMove(size: number = 6) {
 	let selected_side = $state<'left' | 'right' | null>(null);
 	let particles = $state<Particle[]>([]);
 	let can_select = $state<boolean>(false);
-	let observer = $state<undefined | 'alice' | 'bob'>('alice');
+	let observer = $state<Observer>(OBSERVER_ALICE);
 	let allow_observer_switch = $state<boolean>(false);
 	let show_observer_switch = $state<boolean>(false);
 	let show_wall = $state<boolean>(false);
@@ -316,16 +318,16 @@ export function createMove(size: number = 6) {
 		can_select = false;
 	}
 
-	function setObserver(value: 'alice' | 'bob' | undefined) {
+	function setObserver(value: Observer) {
 		observer = value;
 	}
 
 	function setAlice() {
-		setObserver('alice');
+		setObserver(OBSERVER_ALICE);
 	}
 
 	function setBob() {
-		setObserver('bob');
+		setObserver(OBSERVER_BOB);
 	}
 
 	function allowObserverSwitch() {

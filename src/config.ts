@@ -9,3 +9,6 @@ export const LAYOUT_POINT = 'point';
 export const MODE_SIMPLE = 'simple';
 export const MODE_MOVE = 'move';
 export const MODE_ORDER = 'order';
+
+export const OBSERVER_ALICE = 'alice';
+export const OBSERVER_BOB = 'bob';
