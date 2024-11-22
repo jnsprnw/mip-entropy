@@ -59,6 +59,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{title}</title>
+</svelte:head>
+
 <section class="grid grid-rows-[2fr_5fr_1fr] h-screen gap-y-2">
 	<header class="px-2 pt-2 flex flex-col gap-y-4">
 		<h2 class="text-accent-dark font-bold text-xl md:text-3xl">{title}</h2>
