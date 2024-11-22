@@ -6,6 +6,8 @@
 	const { entropy_value } = $derived(grid);
 </script>
 
-<div class="col-start-2 row-start-1 p-5 w-full h-full">
-	<Gauge value={entropy_value} />
-</div>
+{#if typeof entropy_value === 'number'}
+	<div class="col-start-2 row-start-1 p-5 w-full h-full">
+		<Gauge value={entropy_value} />
+	</div>
+{/if}
