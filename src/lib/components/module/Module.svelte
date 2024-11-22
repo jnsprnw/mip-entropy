@@ -64,12 +64,12 @@
 	}
 </script>
 
-<section class="grid grid-rows-[auto_1fr_auto] h-screen">
-	<header class="p-5 flex flex-col gap-y-4">
+<section class="grid grid-rows-[2fr_5fr_1fr] h-screen gap-y-2">
+	<header class="px-2 pt-2 flex flex-col gap-y-4">
 		<h2 class="text-accent-dark font-bold text-xl md:text-3xl">{title}</h2>
 		<p class="font-serif text-base md:text-xl">{story.currentText}</p>
 	</header>
-	<main class="p-5 flex items-center justify-center">
+	<main class="px-2 flex items-center justify-center">
 		<Grid />
 	</main>
 	<Footer {nextPage} {prevPage} />
