@@ -27,6 +27,9 @@ export function createSimple(size: number = 6) {
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
 
+	let entropy_level = $state<'low' | 'high'>('low');
+	const entropy_value = $derived(entropy_level === 'low' ? 0 : 100);
+
 	function clearFields() {
 		fields = createFilledFields(size);
 	}
@@ -59,6 +62,7 @@ export function createSimple(size: number = 6) {
 	}
 
 	function loopHigh() {
+		entropy_level = 'high';
 		loop(27540584512, findHigh, 200, true);
 	}
 
@@ -79,6 +83,7 @@ export function createSimple(size: number = 6) {
 	}
 
 	function loopLow() {
+		entropy_level = 'low';
 		center = 0;
 		loop(16, findNextLow, 500, true);
 	}
@@ -198,6 +203,9 @@ export function createSimple(size: number = 6) {
 		},
 		get show_count() {
 			return show_count;
+		},
+		get entropy_value() {
+			return entropy_value;
 		},
 		size,
 		loopHigh,
