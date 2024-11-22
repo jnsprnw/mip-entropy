@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html {
-	background-color: #edeee9;
+	@apply bg-bg-bright;
 }
