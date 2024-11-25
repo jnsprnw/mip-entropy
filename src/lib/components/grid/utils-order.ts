@@ -1,11 +1,11 @@
 import type { Observer, RichField, SortByKey } from '$types';
-import { KEY_SORT_COLOR, KEY_SORT_FIGURE } from '$config';
+import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 
 export function getFieldByPosition(fields: RichField[], position: number): RichField | undefined {
 	return fields.find(({ index }) => index === position);
 }
 
-export function sortBy(fields: RichField[], observer: Observer, sort_by_ley: SortByKey) {
+export function sortBy(fields: RichField[], observer: Observer | null, sort_by_ley: SortByKey) {
 	let count = 0;
 	for (let i = 0; i < fields.length - 1; i++) {
 		const field_i = getFieldByPosition(fields, i);
@@ -27,4 +27,18 @@ export function sortBy(fields: RichField[], observer: Observer, sort_by_ley: Sor
 		}
 	}
 	return count - 1;
+}
+
+export function getObserverDetail(observer: typeof OBSERVER_ALICE | typeof OBSERVER_BOB) {
+	if (observer === OBSERVER_ALICE) {
+		return {
+			label: 'Alice',
+			other: OBSERVER_BOB
+		};
+	} else {
+		return {
+			label: 'Bob',
+			other: OBSERVER_ALICE
+		};
+	}
 }

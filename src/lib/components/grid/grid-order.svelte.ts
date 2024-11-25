@@ -10,10 +10,14 @@ export function createOrder(size: number = 6) {
 	let fields = $state<RichField[]>(createMixedFields(size));
 	let interval = $state<undefined | typeof setInterval>(undefined);
 
+	let is_visible_bob = $state<boolean>(false);
+	let is_visible_alice = $state<boolean>(false);
+
 	let observer = $state<Observer>(undefined);
 	const sort_by = $derived<SortByKey>(
 		observer === OBSERVER_ALICE ? KEY_SORT_COLOR : KEY_SORT_FIGURE
 	);
+	const hasObserver = $derived(typeof observer !== 'undefined');
 
 	let allow_observer_switch = $state<boolean>(false);
 
@@ -23,6 +27,11 @@ export function createOrder(size: number = 6) {
 	const count_fields = $derived(fields.length);
 
 	const entropy = $derived<number>(sortBy(fields, observer, sort_by));
+
+	const entropy_value = $derived([
+		sortBy(fields, null, KEY_SORT_COLOR),
+		sortBy(fields, null, KEY_SORT_FIGURE)
+	]);
 
 	const max_entropy = size * size - 1;
 
@@ -41,11 +50,21 @@ export function createOrder(size: number = 6) {
 	}
 
 	function setAlice() {
+		is_visible_alice = true;
 		setObserver(OBSERVER_ALICE);
 	}
 
 	function setBob() {
+		is_visible_bob = true;
 		setObserver(OBSERVER_BOB);
+	}
+
+	function setVisibleAlice() {
+		is_visible_alice = true;
+	}
+
+	function setVisibleBob() {
+		is_visible_bob = true;
 	}
 
 	function removeObserver() {
@@ -67,7 +86,6 @@ export function createOrder(size: number = 6) {
 
 	function sort(time: number = 500) {
 		interval = setInterval(function () {
-			console.log('Sort items', is_sorted);
 			if (!is_sorted) {
 				for (let i = 0; i < fields.length; i++) {
 					const current_field = getFieldByPosition(fields, i);
@@ -75,11 +93,9 @@ export function createOrder(size: number = 6) {
 					if (typeof current_field === 'undefined') {
 						continue;
 					}
-					// console.log(`Starting with ${i}: ${fields[i][sort_by]}`);
 					const value_current = current_field[sort_by];
 					const value_next = next_field ? next_field[sort_by] : undefined;
 					if (value_current === value_next || typeof next_field === 'undefined') {
-						// console.log(`Next element is ${i + 1}: ${fields[i + 1][sort_by]}`);
 						continue;
 					}
 
@@ -87,13 +103,9 @@ export function createOrder(size: number = 6) {
 						({ [sort_by]: value, index }) => index > i + 1 && value === value_current
 					);
 					if (typeof next_match !== 'undefined') {
-						// console.log(`Next match is ${next_match}: ${fields[next_match][sort_by]}`);
 						const new_index = next_match.index;
 						next_match.index = next_field.index;
 						next_field.index = new_index;
-						// const temp = getField(i+1);
-						// getField(i+1).index = getField(next_match);
-						// getField(next_match) = temp;
 					} else {
 						continue;
 					}
@@ -106,14 +118,23 @@ export function createOrder(size: number = 6) {
 	}
 
 	return {
-		// get id() {
-		// 	return ID;
-		// },
 		get fields() {
 			return fields;
 		},
 		get observer() {
 			return observer;
+		},
+		get hasObserver() {
+			return hasObserver;
+		},
+		get is_visible_bob() {
+			return is_visible_bob;
+		},
+		get is_visible_alice() {
+			return is_visible_alice;
+		},
+		get entropy_value() {
+			return entropy_value;
 		},
 		get count_filled() {
 			return count_filled;
@@ -149,6 +170,8 @@ export function createOrder(size: number = 6) {
 		setBob,
 		removeObserver,
 		allowObserverSwitch,
-		disallowObserverSwitch
+		disallowObserverSwitch,
+		setVisibleAlice,
+		setVisibleBob
 	};
 }

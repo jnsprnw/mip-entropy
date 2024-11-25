@@ -2,6 +2,7 @@
 	import Grid from '$lib/components/grid/Grid.svelte';
 	import Observer from './Observer.svelte';
 	import Gauge from './Gauge.svelte';
+	import Actions from './actions/Actions.svelte';
 </script>
 
 <main
@@ -13,8 +14,7 @@
 	<div class="col-start-3 row-start-1 w-full h-full p-2">
 		<Grid />
 	</div>
-
-	<footer class="col-start-1 col-span-5 row-start-2">Button</footer>
+	<Actions />
 </main>
 
 <style>

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Right from '$lib/icons/Right.svelte';
 	import Left from '$lib/icons/Left.svelte';
+	import Sort from '$lib/icons/Sort.svelte';
+	import Eye from '$lib/icons/Eye.svelte';
 
 	interface Props {
 		onclick: () => void;
@@ -9,6 +11,8 @@
 		isActive?: boolean;
 		isButtonNext?: boolean;
 		isButtonPrevious?: boolean;
+		isButtonSort?: boolean;
+		isButtonView?: boolean;
 	}
 	const {
 		onclick,
@@ -16,7 +20,9 @@
 		disabled = false,
 		isActive = false,
 		isButtonNext = false,
-		isButtonPrevious = false
+		isButtonPrevious = false,
+		isButtonSort = false,
+		isButtonView = false
 	}: Props = $props();
 </script>
 
@@ -36,5 +42,9 @@
 	{label}
 	{#if isButtonNext}
 		<Right />
+	{:else if isButtonSort}
+		<Sort />
+	{:else if isButtonView}
+		<Eye />
 	{/if}
 </button>

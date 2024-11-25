@@ -6,14 +6,14 @@
 	import { OBSERVER_ALICE } from '$config';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
-	const { observer } = $derived(grid);
+	const { observer, hasObserver } = $derived(grid);
 
 	const highlight_area = $derived(
 		observer === OBSERVER_ALICE ? 'col-start-1 col-end-4' : 'col-start-3 col-end-6 '
 	);
 </script>
 
-{#if typeof observer !== 'undefined'}
+{#if hasObserver}
 	<div
 		out:fade
 		in:fade
