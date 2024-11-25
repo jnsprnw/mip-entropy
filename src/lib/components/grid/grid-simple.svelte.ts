@@ -7,9 +7,11 @@ import {
 	fromCoords
 } from '$lib/utils/utils';
 import { range } from 'd3-array';
-import { MODE_GUESS, MODE_LOOP } from '$config';
+import { MODE_GUESS, MODE_LOOP, ENTROPY_LOW, ENTROPY_HIGH } from '$config';
 
 export const ID = 'simple' as const;
+
+export const GUESS_PARTICLE_COUNT = 9;
 
 export function createSimple(size: number = 6) {
 	let fields = $state(createFilledFields(size));
@@ -24,19 +26,20 @@ export function createSimple(size: number = 6) {
 	let count_found = $state<number>(0);
 	let show_count = $state<boolean>(true);
 
-	const count_filled = $derived(fields.filter((f) => f).length);
+	// const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
 
-	let entropy_level = $state<'low' | 'high'>('low');
-	const entropy_value = $derived(entropy_level === 'low' ? 0 : 100);
+	let entropy_level = $state<typeof ENTROPY_LOW | typeof ENTROPY_HIGH>(ENTROPY_LOW);
+	const entropy_value = $derived(entropy_level === ENTROPY_LOW ? 0 : 100);
 
 	function clearFields() {
 		fields = createFilledFields(size);
 	}
 
 	function findHigh() {
+		entropy_level = ENTROPY_HIGH;
 		center = undefined;
-		const placements = randomPlacement(size * size, 9);
+		const placements = randomPlacement(size * size, GUESS_PARTICLE_COUNT);
 		fields = fields.map((_, n) => (placements.includes(n) ? { fill: true } : undefined));
 	}
 
@@ -67,11 +70,12 @@ export function createSimple(size: number = 6) {
 	}
 
 	function loopHigh() {
-		entropy_level = 'high';
+		entropy_level = ENTROPY_HIGH;
 		loop(27540584512, findHigh, 200, true);
 	}
 
 	function findNextLow(start?: number | undefined) {
+		entropy_level = ENTROPY_LOW;
 		if (typeof start !== 'undefined') {
 			center = start;
 		}
@@ -88,7 +92,7 @@ export function createSimple(size: number = 6) {
 	}
 
 	function loopLow() {
-		entropy_level = 'low';
+		entropy_level = ENTROPY_LOW;
 		center = 0;
 		loop(16, findNextLow, 500, true);
 	}
@@ -99,12 +103,12 @@ export function createSimple(size: number = 6) {
 		canGuess = false;
 		clearInterval(interval);
 		interval = setInterval(function () {
-			if (entropy_level === 'low') {
+			if (entropy_level === ENTROPY_LOW) {
 				findHigh();
 			} else {
 				findNextLow(22);
 			}
-			entropy_level = entropy_level === 'low' ? 'high' : 'low';
+			entropy_level = entropy_level === ENTROPY_LOW ? ENTROPY_HIGH : ENTROPY_LOW;
 		}, 1000);
 	}
 
@@ -171,6 +175,13 @@ export function createSimple(size: number = 6) {
 		guesses[position] = true;
 	}
 
+	function setEntropyLow() {
+		entropy_level = ENTROPY_LOW;
+	}
+	function setEntropyHigh() {
+		entropy_level = ENTROPY_HIGH;
+	}
+
 	return {
 		// get id() {
 		// 	return ID;
@@ -199,9 +210,6 @@ export function createSimple(size: number = 6) {
 		get count_found() {
 			return count_found;
 		},
-		get count_filled() {
-			return count_filled;
-		},
 		get count_fields() {
 			return count_fields;
 		},
@@ -211,12 +219,17 @@ export function createSimple(size: number = 6) {
 		get entropy_value() {
 			return entropy_value;
 		},
+		get entropy_level() {
+			return entropy_level;
+		},
 		size,
 		loopHigh,
 		loopLow,
 		guessLow,
 		guessHigh,
 		guess,
-		toggleLowHigh
+		toggleLowHigh,
+		setEntropyLow,
+		setEntropyHigh
 	};
 }

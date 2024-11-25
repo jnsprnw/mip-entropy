@@ -22,3 +22,6 @@ export const ENTITY_SHAPE_TRIANGLE = 'triangle';
 
 export const KEY_SORT_COLOR = 'color';
 export const KEY_SORT_FIGURE = 'figure';
+
+export const ENTROPY_HIGH = 'high';
+export const ENTROPY_LOW = 'low';
