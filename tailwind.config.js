@@ -31,6 +31,11 @@ export default {
 				},
 				entropy: {
 					bar: '#90CEDD'
+				},
+				button: {
+					secondary: '#00B2E2',
+					primary: '#005CDE',
+					mute: '#BFDBF5'
 				}
 			}
 		}
