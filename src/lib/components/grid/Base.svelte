@@ -3,10 +3,14 @@
 
 	const { yRange, xRange, xScale, xDomain, yScale, yDomain } = getContext('LayerCake');
 
-	const x0 = $derived($xRange.at(0));
-	const x1 = $derived($xRange.at(-1));
-	const y0 = $derived($yRange.at(0));
-	const y1 = $derived($yRange.at(-1));
+	// For some reason, the range is not always min/max
+	const x = $derived($xRange.sort((a: number, b: number) => a - b));
+	const y = $derived($yRange.sort((a: number, b: number) => a - b));
+
+	const x0 = $derived(x.at(0));
+	const x1 = $derived(x.at(-1));
+	const y0 = $derived(y.at(0));
+	const y1 = $derived(y.at(-1));
 
 	const radius = 5;
 
