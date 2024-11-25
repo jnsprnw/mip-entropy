@@ -44,6 +44,7 @@
 			d="M {-step / 2 + 0.5} {-step / 2 + 0.5} h {step - 1} v {step - 1} h {-step + 1} Z"
 			class="fill fill-blue-900 transition-colors hover:fill-blue-600"
 			class:cursor-pointer={grid.canGuess}
+			class:pointer-events-none={!grid.canGuess}
 			onclick={() => grid.guess(position)}
 		/>
 	{/if}
