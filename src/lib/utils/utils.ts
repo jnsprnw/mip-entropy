@@ -3,9 +3,11 @@ import {
 	ENTITY_COLOR_A,
 	ENTITY_COLOR_B,
 	ENTITY_SHAPE_TRIANGLE,
-	ENTITY_SHAPE_SQUARE
+	ENTITY_SHAPE_SQUARE,
+	KEY_SORT_COLOR,
+	KEY_SORT_FIGURE
 } from '$config';
-import type { Observer, EntityColor } from '$types';
+import type { Observer, EntityColor, RichField, SimpleField } from '$types';
 
 export function shuffleArray<T>(array: T[]): T[] {
 	for (let i = array.length - 1; i >= 0; i--) {
@@ -29,8 +31,6 @@ export function randomPlacement(n: number = 36, count: number = 9) {
 	return positions.slice(0, count);
 }
 
-type SimpleField = { fill: boolean | undefined } | undefined;
-
 export function createFilledFields(
 	size: number = 6,
 	fill: boolean | undefined = undefined
@@ -47,15 +47,13 @@ export function createGuessFields(
 	return [Array(size).fill(Array(size).fill(fill))].flat(3);
 }
 
-type RichField = { color: string; figure: string };
-
 export function createMixedFields(size: number = 6): RichField[] {
 	const numberOfEachType = (size * size) / 4;
 	const fields: RichField[] = [];
 	for (let i = 0; i < numberOfEachType; i++) {
 		[ENTITY_COLOR_A, ENTITY_COLOR_B].forEach((color) => {
 			[ENTITY_SHAPE_SQUARE, ENTITY_SHAPE_TRIANGLE].forEach((figure) => {
-				fields.push({ color, figure });
+				fields.push({ [KEY_SORT_COLOR]: color, [KEY_SORT_FIGURE]: figure });
 			});
 		});
 	}

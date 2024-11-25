@@ -1,14 +1,18 @@
 import { createMixedFields } from '$lib/utils/utils';
 import { orderBy } from 'lodash-es';
+import type { Observer, RichField } from '$types';
+import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 
 export const ID = 'order' as const;
 
 export function createOrder(size: number = 6) {
-	let fields = $state(createMixedFields(size));
+	let fields = $state<RichField[]>(createMixedFields(size));
 	let interval = $state<undefined | typeof setInterval>(undefined);
 
-	let observer = $state<undefined | 'alice' | 'bob'>(undefined);
-	const sort_by = $derived<'color' | 'figure'>(observer === 'alice' ? 'color' : 'figure');
+	let observer = $state<Observer>(undefined);
+	const sort_by = $derived<typeof KEY_SORT_FIGURE | typeof KEY_SORT_COLOR>(
+		observer === OBSERVER_ALICE ? KEY_SORT_COLOR : KEY_SORT_FIGURE
+	);
 
 	let allow_observer_switch = $state<boolean>(false);
 
@@ -17,7 +21,7 @@ export function createOrder(size: number = 6) {
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
 
-	function getField(position: number) {
+	function getField(position: number): RichField | undefined {
 		return fields.find(({ index }) => index === position);
 	}
 
@@ -57,18 +61,18 @@ export function createOrder(size: number = 6) {
 	}
 
 	function setAlice() {
-		setObserver('alice');
+		setObserver(OBSERVER_ALICE);
 	}
 
 	function setBob() {
-		setObserver('bob');
+		setObserver(OBSERVER_BOB);
 	}
 
 	function removeObserver() {
 		setObserver(undefined);
 	}
 
-	function setObserver(value: 'alice' | 'bob' | undefined) {
+	function setObserver(value: Observer) {
 		stopLoop();
 		observer = value;
 	}
