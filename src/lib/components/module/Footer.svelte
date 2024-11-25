@@ -17,7 +17,7 @@
 		class="w-full px-2 py-2 max-w-[920px] mx-auto grid grid-cols-3 justify-items-center items-center gap-x-4"
 	>
 		<Button isButtonPrevious={true} onclick={prevPage} disabled={is_first_page} label="Previous" />
-		<span>{current_page_number} / {total_pages}</span>
+		<span class="text-accent-light">{current_page_number} / {total_pages}</span>
 		<Button isButtonNext={true} onclick={nextPage} disabled={is_last_page} label="Next" />
 	</div>
 </menu>
