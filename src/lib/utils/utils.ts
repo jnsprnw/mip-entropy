@@ -17,9 +17,31 @@ export function shuffleArray<T>(array: T[]): T[] {
 	return array;
 }
 
-export function randomPlacement(n: number = 36, count: number = 9) {
-	// return Array.from({ length: n }, () => Math.floor(Math.random() * n)).slice(0, count + 1);
-	const positions = Array.from({ length: n }, (_, index) => index);
+function getLowerLeftIndices(location_size: number, size: number = 6): number[] {
+	const fieldSize = size; // Das 9x9-Feld
+	const indices: number[] = [];
+
+	if (location_size > 0 && location_size <= fieldSize) {
+		// Startzeile für das n*n-Feld im unteren linken Bereich
+		const startRow = fieldSize - location_size;
+
+		for (let row = startRow; row < fieldSize; row++) {
+			for (let col = 0; col < location_size; col++) {
+				indices.push(row * fieldSize + col);
+			}
+		}
+	}
+
+	return indices;
+}
+
+export function randomPlacement(
+	location_size: number = 4,
+	size_grid: number = 6,
+	count: number = 9
+) {
+	const positions = getLowerLeftIndices(location_size, size_grid);
+	// Array.from({ length: n }, (_, index) => index);
 
 	// Zufällig mischen
 	for (let i = positions.length - 1; i > 0; i--) {

@@ -7,6 +7,7 @@ import {
 	fromCoords
 } from '$lib/utils/utils';
 import { range } from 'd3-array';
+import { scaleLinear } from 'd3-scale';
 import { MODE_GUESS, MODE_LOOP, ENTROPY_LOW, ENTROPY_HIGH } from '$config';
 
 export const ID = 'simple' as const;
@@ -25,21 +26,34 @@ export function createSimple(size: number = 6) {
 	let count_guess = $state<number>(0);
 	let count_found = $state<number>(0);
 	let show_count = $state<boolean>(true);
+	let is_spreading = $state<boolean>(false);
 
 	// const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
 
-	let entropy_level = $state<typeof ENTROPY_LOW | typeof ENTROPY_HIGH>(ENTROPY_LOW);
-	const entropy_value = $derived(entropy_level === ENTROPY_LOW ? 0 : 100);
+	let entropy_level = $state<typeof ENTROPY_LOW | typeof ENTROPY_HIGH | number>(ENTROPY_LOW);
+	const entropy_value = $derived.by(() => {
+		switch (entropy_level) {
+			case ENTROPY_LOW:
+				return 0;
+			case ENTROPY_HIGH:
+				return 100;
+			default:
+				return entropy_level;
+		}
+	});
 
 	function clearFields() {
 		fields = createFilledFields(size);
 	}
 
-	function findHigh() {
-		entropy_level = ENTROPY_HIGH;
+	function findHigh(range_size: number = 6, setLevel: boolean = true) {
+		if (setLevel) {
+			entropy_level = ENTROPY_HIGH;
+		}
+
 		center = undefined;
-		const placements = randomPlacement(size * size, GUESS_PARTICLE_COUNT);
+		const placements = randomPlacement(range_size, size, GUESS_PARTICLE_COUNT);
 		fields = fields.map((_, n) => (placements.includes(n) ? { fill: true } : undefined));
 	}
 
@@ -97,19 +111,24 @@ export function createSimple(size: number = 6) {
 		loop(16, findNextLow, 500, true);
 	}
 
+	const entropy_scale = $derived(scaleLinear().range([0, 100]).domain([3, size]));
+
 	function toggleLowHigh() {
 		show_count = false;
 		mode = MODE_LOOP;
 		canGuess = false;
+		findNextLow(22);
 		clearInterval(interval);
+		let range_size = 3;
 		interval = setInterval(function () {
-			if (entropy_level === ENTROPY_LOW) {
-				findHigh();
+			if (range_size < size) {
+				range_size += 1;
+				entropy_level = entropy_scale(range_size);
+				findHigh(range_size, false);
 			} else {
-				findNextLow(22);
+				range_size = 2;
 			}
-			entropy_level = entropy_level === ENTROPY_LOW ? ENTROPY_HIGH : ENTROPY_LOW;
-		}, 1000);
+		}, 3000);
 	}
 
 	function checkValidAroundPoint(position: number = 8) {
