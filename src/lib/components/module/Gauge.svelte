@@ -8,6 +8,6 @@
 
 {#if typeof entropy_value === 'number'}
 	<div class="col-start-2 row-start-1 w-full p-2 h-full">
-		<Gauge value={entropy_value} />
+		<Gauge value={entropy_value} label="Entropy according to Alice" />
 	</div>
 {/if}
