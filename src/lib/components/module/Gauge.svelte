@@ -7,7 +7,7 @@
 </script>
 
 {#if typeof entropy_value === 'number'}
-	<div class="col-start-2 row-start-1 p-5 w-full h-full">
+	<div class="col-start-2 row-start-1 w-full p-2 h-full">
 		<Gauge value={entropy_value} />
 	</div>
 {/if}
