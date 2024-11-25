@@ -5,6 +5,12 @@
 	import Square from '$lib/components/grid/shapes/Square.svelte';
 	import Circle from '$lib/components/grid/shapes/Circle.svelte';
 	import Triangle from '$lib/components/grid/shapes/Triangle.svelte';
+	import {
+		OBSERVER_ALICE,
+		ENTITY_SHAPE_SQUARE,
+		ENTITY_SHAPE_CIRCLE,
+		ENTITY_SHAPE_TRIANGLE
+	} from '$config';
 
 	const { xScale, yScale, width } = getContext('LayerCake');
 
@@ -12,7 +18,7 @@
 	const { grid } = $derived(gridState);
 	const { particles, radius, observer } = $derived(grid);
 
-	const r = $derived(radius * $width - 2);
+	const r = $derived<number>(radius * $width - 2);
 </script>
 
 <g>
@@ -20,12 +26,12 @@
 		{@const x = $xScale(cx)}
 		{@const y = $yScale(cy)}
 		{@const color = getFill(observer, fill)}
-		{#if observer === 'alice' || shape === 'circle'}
+		{#if observer === OBSERVER_ALICE || shape === ENTITY_SHAPE_CIRCLE}
 			<Circle cx={x} cy={y} {r} {color} isBlur={true} />
-		{:else if shape === 'square'}
-			<Square {x} {y} {r} {color} />
-		{:else if shape === 'triangle'}
-			<Triangle {x} {y} {r} {color} />
+		{:else if shape === ENTITY_SHAPE_SQUARE}
+			<Square {x} {y} size={r} {color} />
+		{:else if shape === ENTITY_SHAPE_TRIANGLE}
+			<Triangle {x} {y} size={r} {color} />
 		{/if}
 	{/each}
 </g>

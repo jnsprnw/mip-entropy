@@ -4,7 +4,9 @@ import {
 	ENTITY_COLOR_A,
 	ENTITY_COLOR_B,
 	OBSERVER_ALICE,
-	OBSERVER_BOB
+	OBSERVER_BOB,
+	ENTITY_SHAPE_SQUARE,
+	ENTITY_SHAPE_TRIANGLE
 } from '$config';
 import { random } from 'lodash-es';
 import type { Observer, EntityColor } from '$types';
@@ -207,7 +209,7 @@ export function createMove(size: number = 6) {
 				cy: rPosition(),
 				...rAngle(),
 				radius: RADIUS,
-				shape: 'triangle',
+				shape: ENTITY_SHAPE_TRIANGLE,
 				color: ENTITY_COLOR_A
 			},
 			{
@@ -215,7 +217,7 @@ export function createMove(size: number = 6) {
 				cy: rPosition(),
 				...rAngle(),
 				radius: RADIUS,
-				shape: 'square',
+				shape: ENTITY_SHAPE_SQUARE,
 				color: ENTITY_COLOR_A
 			},
 			{
@@ -223,7 +225,7 @@ export function createMove(size: number = 6) {
 				cy: rPosition(),
 				...rAngle(),
 				radius: RADIUS,
-				shape: 'triangle',
+				shape: ENTITY_SHAPE_TRIANGLE,
 				color: ENTITY_COLOR_B
 			},
 			{
@@ -231,7 +233,7 @@ export function createMove(size: number = 6) {
 				cy: rPosition(),
 				...rAngle(),
 				radius: RADIUS,
-				shape: 'square',
+				shape: ENTITY_SHAPE_SQUARE,
 				color: ENTITY_COLOR_B
 			},
 			{
@@ -239,7 +241,7 @@ export function createMove(size: number = 6) {
 				cy: rPosition(),
 				...rAngle(),
 				radius: RADIUS,
-				shape: 'triangle',
+				shape: ENTITY_SHAPE_TRIANGLE,
 				color: ENTITY_COLOR_A
 			},
 			{
@@ -247,7 +249,7 @@ export function createMove(size: number = 6) {
 				cy: rPosition(),
 				...rAngle(),
 				radius: RADIUS,
-				shape: 'square',
+				shape: ENTITY_SHAPE_SQUARE,
 				color: ENTITY_COLOR_A
 			},
 			{
@@ -255,7 +257,7 @@ export function createMove(size: number = 6) {
 				cy: rPosition(),
 				...rAngle(),
 				radius: RADIUS,
-				shape: 'triangle',
+				shape: ENTITY_SHAPE_TRIANGLE,
 				color: ENTITY_COLOR_B
 			},
 			{
@@ -263,7 +265,7 @@ export function createMove(size: number = 6) {
 				cy: rPosition(),
 				...rAngle(),
 				radius: RADIUS,
-				shape: 'square',
+				shape: ENTITY_SHAPE_SQUARE,
 				color: ENTITY_COLOR_B
 			}
 		];
@@ -289,7 +291,7 @@ export function createMove(size: number = 6) {
 			}
 			let shape = 'circle';
 			if (form === 'alternately') {
-				shape = i % 2 ? 'square' : 'triangle';
+				shape = i % 2 ? ENTITY_SHAPE_SQUARE : ENTITY_SHAPE_TRIANGLE;
 			}
 			let color = fill;
 			if (fill === 'alternately') {
@@ -394,7 +396,7 @@ export function createMove(size: number = 6) {
 			ignore_color = undefined;
 		},
 		setRedIgnoreColor() {
-			ignore_color = 'blue';
+			ignore_color = ENTITY_COLOR_B;
 		},
 		get show_wall() {
 			return show_wall;

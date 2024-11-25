@@ -1,4 +1,10 @@
-import { OBSERVER_BOB, ENTITY_COLOR_A, ENTITY_COLOR_B } from '$config';
+import {
+	OBSERVER_BOB,
+	ENTITY_COLOR_A,
+	ENTITY_COLOR_B,
+	ENTITY_SHAPE_TRIANGLE,
+	ENTITY_SHAPE_SQUARE
+} from '$config';
 import type { Observer, EntityColor } from '$types';
 
 export function shuffleArray<T>(array: T[]): T[] {
@@ -41,14 +47,14 @@ export function createGuessFields(
 	return [Array(size).fill(Array(size).fill(fill))].flat(3);
 }
 
-type RichField = { color: string; figure: string; index: number };
+type RichField = { color: string; figure: string };
 
 export function createMixedFields(size: number = 6): RichField[] {
 	const numberOfEachType = (size * size) / 4;
 	const fields: RichField[] = [];
 	for (let i = 0; i < numberOfEachType; i++) {
 		[ENTITY_COLOR_A, ENTITY_COLOR_B].forEach((color) => {
-			['square', 'triangle'].forEach((figure) => {
+			[ENTITY_SHAPE_SQUARE, ENTITY_SHAPE_TRIANGLE].forEach((figure) => {
 				fields.push({ color, figure });
 			});
 		});
@@ -79,6 +85,7 @@ export function getFill(observer: Observer, color: EntityColor) {
 		case ENTITY_COLOR_B:
 			return 'fill-entity-b';
 		default:
+			console.warn(`Undefined color ${color}`);
 			return 'fill-slate-600';
 	}
 }

@@ -15,3 +15,7 @@ export const OBSERVER_BOB = 'bob';
 
 export const ENTITY_COLOR_A = 'color_a';
 export const ENTITY_COLOR_B = 'color_b';
+
+export const ENTITY_SHAPE_CIRCLE = 'circle';
+export const ENTITY_SHAPE_SQUARE = 'square';
+export const ENTITY_SHAPE_TRIANGLE = 'triangle';
