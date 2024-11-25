@@ -17,7 +17,7 @@
 				{#if count_found < GUESS_PARTICLE_COUNT}
 					{count_found} / {GUESS_PARTICLE_COUNT} particles found
 				{:else}
-					Good job
+					Good job!
 				{/if}
 			</span>
 		</div>
