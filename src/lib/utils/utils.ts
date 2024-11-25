@@ -1,3 +1,6 @@
+import { OBSERVER_BOB, ENTITY_COLOR_A, ENTITY_COLOR_B } from '$config';
+import type { Observer, EntityColor } from '$types';
+
 export function shuffleArray<T>(array: T[]): T[] {
 	for (let i = array.length - 1; i >= 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
@@ -44,7 +47,7 @@ export function createMixedFields(size: number = 6): RichField[] {
 	const numberOfEachType = (size * size) / 4;
 	const fields: RichField[] = [];
 	for (let i = 0; i < numberOfEachType; i++) {
-		['red', 'blue'].forEach((color) => {
+		[ENTITY_COLOR_A, ENTITY_COLOR_B].forEach((color) => {
 			['square', 'triangle'].forEach((figure) => {
 				fields.push({ color, figure });
 			});
@@ -66,14 +69,14 @@ export function fromCoords(x: number, y: number, size: number = 6) {
 	return y * size + x;
 }
 
-export function getFill(observer: 'alice' | 'bob' | undefined, color: 'blue' | 'red' | undefined) {
-	if (observer === 'bob') {
-		return 'fill-slate-300';
+export function getFill(observer: Observer, color: EntityColor) {
+	if (observer === OBSERVER_BOB) {
+		return 'fill-entity-mute';
 	}
 	switch (color) {
-		case 'blue':
+		case ENTITY_COLOR_A:
 			return 'fill-entity-a';
-		case 'red':
+		case ENTITY_COLOR_B:
 			return 'fill-entity-b';
 		default:
 			return 'fill-slate-600';

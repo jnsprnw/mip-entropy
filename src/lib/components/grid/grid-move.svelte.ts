@@ -1,7 +1,13 @@
-import { PADDING_GRID, LAYOUT_LINEAR } from '$config';
+import {
+	PADDING_GRID,
+	LAYOUT_LINEAR,
+	ENTITY_COLOR_A,
+	ENTITY_COLOR_B,
+	OBSERVER_ALICE,
+	OBSERVER_BOB
+} from '$config';
 import { random } from 'lodash-es';
-import type { Observer } from '$types';
-import { OBSERVER_ALICE, OBSERVER_BOB } from '$config';
+import type { Observer, EntityColor } from '$types';
 
 export const ID = 'move' as const;
 
@@ -40,7 +46,7 @@ export function createMove(size: number = 6) {
 	let allow_observer_switch = $state<boolean>(false);
 	let show_observer_switch = $state<boolean>(false);
 	let show_wall = $state<boolean>(false);
-	let ignore_color = $state<'blue' | 'red' | undefined>(undefined);
+	let ignore_color = $state<EntityColor>(undefined);
 
 	// Koordinaten der Wand
 	let wall_x1 = $state<number>(0);
@@ -202,7 +208,7 @@ export function createMove(size: number = 6) {
 				...rAngle(),
 				radius: RADIUS,
 				shape: 'triangle',
-				color: 'red'
+				color: ENTITY_COLOR_A
 			},
 			{
 				cx: rLeft(),
@@ -210,7 +216,7 @@ export function createMove(size: number = 6) {
 				...rAngle(),
 				radius: RADIUS,
 				shape: 'square',
-				color: 'red'
+				color: ENTITY_COLOR_A
 			},
 			{
 				cx: rRight(),
@@ -218,7 +224,7 @@ export function createMove(size: number = 6) {
 				...rAngle(),
 				radius: RADIUS,
 				shape: 'triangle',
-				color: 'blue'
+				color: ENTITY_COLOR_B
 			},
 			{
 				cx: rRight(),
@@ -226,7 +232,7 @@ export function createMove(size: number = 6) {
 				...rAngle(),
 				radius: RADIUS,
 				shape: 'square',
-				color: 'blue'
+				color: ENTITY_COLOR_B
 			},
 			{
 				cx: rLeft(),
@@ -234,7 +240,7 @@ export function createMove(size: number = 6) {
 				...rAngle(),
 				radius: RADIUS,
 				shape: 'triangle',
-				color: 'red'
+				color: ENTITY_COLOR_A
 			},
 			{
 				cx: rLeft(),
@@ -242,7 +248,7 @@ export function createMove(size: number = 6) {
 				...rAngle(),
 				radius: RADIUS,
 				shape: 'square',
-				color: 'red'
+				color: ENTITY_COLOR_A
 			},
 			{
 				cx: rRight(),
@@ -250,7 +256,7 @@ export function createMove(size: number = 6) {
 				...rAngle(),
 				radius: RADIUS,
 				shape: 'triangle',
-				color: 'blue'
+				color: ENTITY_COLOR_B
 			},
 			{
 				cx: rRight(),
@@ -258,7 +264,7 @@ export function createMove(size: number = 6) {
 				...rAngle(),
 				radius: RADIUS,
 				shape: 'square',
-				color: 'blue'
+				color: ENTITY_COLOR_B
 			}
 		];
 	}
@@ -287,7 +293,7 @@ export function createMove(size: number = 6) {
 			}
 			let color = fill;
 			if (fill === 'alternately') {
-				color = i % 2 ? 'red' : 'blue';
+				color = i % 2 ? ENTITY_COLOR_A : ENTITY_COLOR_B;
 			}
 			arr.push({
 				cx,

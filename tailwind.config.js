@@ -23,7 +23,8 @@ export default {
 				entity: {
 					DEFAULT: '#F9922D',
 					a: '#90B540', // green
-					b: '#F9922D' // orange
+					b: '#F9922D', // orange
+					mute: '#B3DCE2'
 				},
 				highlight: {
 					DEFAULT: '#E5322E'

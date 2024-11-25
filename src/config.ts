@@ -12,3 +12,6 @@ export const MODE_ORDER = 'order';
 
 export const OBSERVER_ALICE = 'alice';
 export const OBSERVER_BOB = 'bob';
+
+export const ENTITY_COLOR_A = 'color_a';
+export const ENTITY_COLOR_B = 'color_b';
