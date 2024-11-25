@@ -33,7 +33,6 @@
 	aria-valuemax="100"
 	aria-labelledby={gauge_id}
 >
-	>
 	<span
 		class="bg-entropy-bar h-full w-[5px] justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
 		aria-hidden="true"
