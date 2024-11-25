@@ -12,7 +12,7 @@
 	const y0 = $derived(y.at(0));
 	const y1 = $derived(y.at(-1));
 
-	const radius = 5;
+	const rx = 5;
 
 	const rect_width = $derived(x1 - x0);
 	const rect_height = $derived(y1 - y0);
@@ -24,7 +24,7 @@
 		y={y0}
 		width={rect_width}
 		height={rect_height}
-		rx={radius}
+		{rx}
 		stroke-linejoin="round"
 		class="fill-white"
 	></rect>
@@ -43,7 +43,7 @@
 		y={y0}
 		width={rect_width}
 		height={rect_height}
-		rx={radius}
+		{rx}
 		stroke-linejoin="round"
 		class="stroke-2 stroke-grid-outer fill-none"
 	></rect>
