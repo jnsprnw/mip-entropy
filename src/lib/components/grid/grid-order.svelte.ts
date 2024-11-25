@@ -1,7 +1,8 @@
 import { createMixedFields } from '$lib/utils/utils';
 import { orderBy } from 'lodash-es';
-import type { Observer, RichField } from '$types';
+import type { Observer, RichField, SortByKey } from '$types';
 import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
+import { sortBy, getFieldByPosition } from './utils-order';
 
 export const ID = 'order' as const;
 
@@ -10,7 +11,7 @@ export function createOrder(size: number = 6) {
 	let interval = $state<undefined | typeof setInterval>(undefined);
 
 	let observer = $state<Observer>(undefined);
-	const sort_by = $derived<typeof KEY_SORT_FIGURE | typeof KEY_SORT_COLOR>(
+	const sort_by = $derived<SortByKey>(
 		observer === OBSERVER_ALICE ? KEY_SORT_COLOR : KEY_SORT_FIGURE
 	);
 
@@ -21,28 +22,7 @@ export function createOrder(size: number = 6) {
 	const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
 
-	function getField(position: number): RichField | undefined {
-		return fields.find(({ index }) => index === position);
-	}
-
-	const entropy = $derived.by(() => {
-		let count = 0;
-		for (let i = 0; i < fields.length - 1; i++) {
-			if (typeof observer === 'undefined') {
-				if (
-					getField(i)?.color !== getField(i + 1)?.color ||
-					getField(i)?.figure !== getField(i + 1)?.figure
-				) {
-					count++;
-				}
-			} else {
-				if (getField(i)?.[sort_by] !== getField(i + 1)?.[sort_by]) {
-					count++;
-				}
-			}
-		}
-		return count - 1;
-	});
+	const entropy = $derived<number>(sortBy(fields, observer, sort_by));
 
 	const max_entropy = size * size - 1;
 
@@ -90,8 +70,8 @@ export function createOrder(size: number = 6) {
 			console.log('Sort items', is_sorted);
 			if (!is_sorted) {
 				for (let i = 0; i < fields.length; i++) {
-					const current_field = getField(i);
-					const next_field = getField(i + 1);
+					const current_field = getFieldByPosition(fields, i);
+					const next_field = getFieldByPosition(fields, i + 1);
 					if (typeof current_field === 'undefined') {
 						continue;
 					}

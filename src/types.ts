@@ -24,3 +24,5 @@ export type EntityColor = typeof ENTITY_COLOR_A | typeof ENTITY_COLOR_B | undefi
 export type SimpleField = { fill: boolean | undefined } | undefined;
 
 export type RichField = { index?: number; [KEY_SORT_COLOR]: string; [KEY_SORT_FIGURE]: string };
+
+export type SortByKey = typeof KEY_SORT_FIGURE | typeof KEY_SORT_COLOR;
