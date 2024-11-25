@@ -4,7 +4,10 @@
 	import Gauge from './Gauge.svelte';
 </script>
 
-<main id="stage" class="p-4 grid items-center justify-items-center justify-center">
+<main
+	id="stage"
+	class="p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
+>
 	<Observer />
 	<Gauge />
 	<div class="col-start-3 row-start-1 w-full h-full p-2">
