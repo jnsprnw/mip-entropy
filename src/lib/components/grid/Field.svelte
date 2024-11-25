@@ -33,9 +33,9 @@
 		{:else if grid.observer === 'alice'}
 			<Circle {color} isBlur={true} />
 		{:else if opt.figure === 'square'}
-			<Square {color} />
+			<Square {color} size={entity_size} />
 		{:else if opt.figure === 'triangle'}
-			<Triangle {color} />
+			<Triangle {color} size={entity_size} />
 		{/if}
 	{/if}
 	{#if grid.mode === MODE_GUESS && !grid.guesses[position]}

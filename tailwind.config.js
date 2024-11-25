@@ -21,7 +21,9 @@ export default {
 					bar: '#E5322E'
 				},
 				entity: {
-					DEFAULT: '#F9922D'
+					DEFAULT: '#F9922D',
+					a: '#90B540', // green
+					b: '#F9922D' // orange
 				},
 				highlight: {
 					DEFAULT: '#E5322E'

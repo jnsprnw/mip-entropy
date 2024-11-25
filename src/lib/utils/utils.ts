@@ -72,9 +72,9 @@ export function getFill(observer: 'alice' | 'bob' | undefined, color: 'blue' | '
 	}
 	switch (color) {
 		case 'blue':
-			return 'fill-violet-300';
+			return 'fill-entity-a';
 		case 'red':
-			return 'fill-emerald-300';
+			return 'fill-entity-b';
 		default:
 			return 'fill-slate-600';
 	}
