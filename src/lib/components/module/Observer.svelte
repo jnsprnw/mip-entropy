@@ -22,10 +22,6 @@
 	></div>
 {/if}
 
-{#if is_visible_alice}
-	<div class="col-start-1 row-start-1 p-5"><Alice /></div>
-{/if}
+<div class="col-start-1 row-start-1 p-5" class:opacity-50={!is_visible_alice}><Alice /></div>
 
-{#if is_visible_bob}
-	<div class="col-start-5 row-start-1 p-5"><Bob /></div>
-{/if}
+<div class="col-start-5 row-start-1 p-5" class:opacity-50={!is_visible_bob}><Bob /></div>

@@ -3,13 +3,18 @@
 	import Observer from './Observer.svelte';
 	import Gauge from './Gauge.svelte';
 	import Actions from './actions/Actions.svelte';
+	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	const gridState = getGridState();
+	import { ID as id_order } from '$lib/components/grid/grid-order.svelte';
 </script>
 
 <main
 	id="stage"
 	class="p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
 >
-	<Observer />
+	{#if gridState.currentState === id_order}
+		<Observer />
+	{/if}
 	<Gauge />
 	<div class="col-start-3 row-start-1 w-full h-full p-2">
 		<Grid />

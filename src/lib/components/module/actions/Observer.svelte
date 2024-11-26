@@ -7,7 +7,6 @@
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
 	const { setObserver, allow_observer_switch, hasObserver, observer } = $derived(grid);
-
 	const button_area = $derived(observer === OBSERVER_ALICE ? 'col-start-4' : 'col-start-1');
 
 	const { other } = $derived(getObserverDetail(observer));
