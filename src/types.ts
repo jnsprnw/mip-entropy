@@ -7,7 +7,9 @@ import {
 	OBSERVER_ALICE,
 	OBSERVER_BOB,
 	ENTITY_COLOR_A,
-	ENTITY_COLOR_B
+	ENTITY_COLOR_B,
+	ENTROPY_LOW,
+	ENTROPY_HIGH
 } from '$config';
 
 export type GridType = typeof id_simple | typeof id_order | typeof id_move;
@@ -26,3 +28,5 @@ export type SimpleField = { fill: boolean | undefined } | undefined;
 export type RichField = { index?: number; [KEY_SORT_COLOR]: string; [KEY_SORT_FIGURE]: string };
 
 export type SortByKey = typeof KEY_SORT_FIGURE | typeof KEY_SORT_COLOR;
+
+export type EntropyLevel = typeof ENTROPY_LOW | typeof ENTROPY_HIGH | number;

@@ -9,6 +9,8 @@ import {
 import { range } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
 import { MODE_GUESS, MODE_LOOP, ENTROPY_LOW, ENTROPY_HIGH, GRID_SIZE } from '$config';
+import type { EntropyLevel } from '$types';
+import { getEntropyValue } from './utils-simple';
 
 export const ID = 'simple' as const;
 
@@ -27,20 +29,10 @@ export function createSimple() {
 	let count_found = $state<number>(0);
 	let show_count = $state<boolean>(true);
 
-	// const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
 
-	let entropy_level = $state<typeof ENTROPY_LOW | typeof ENTROPY_HIGH | number>(ENTROPY_LOW);
-	const entropy_value = $derived.by(() => {
-		switch (entropy_level) {
-			case ENTROPY_LOW:
-				return 0;
-			case ENTROPY_HIGH:
-				return 100;
-			default:
-				return entropy_level;
-		}
-	});
+	let entropy_level = $state<EntropyLevel>(ENTROPY_LOW);
+	const entropy_value = $derived(getEntropyValue(entropy_level));
 
 	function clearFields() {
 		fields = createFilledFields(GRID_SIZE);
