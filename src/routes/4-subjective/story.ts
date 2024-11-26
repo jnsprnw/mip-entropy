@@ -6,7 +6,7 @@ export const pages: Page[] = [
 	{
 		text: 'However, the concept of “order” can differ between observers. Here we have a room full of particles with different shapes and colors. The task is to organize the room by putting similar objects on the same side.',
 		type: id_order,
-		actions: ['removeObserver', 'stopLoop']
+		actions: ['setVisibleAlice', 'setVisibleBob', 'removeObserver', 'stopLoop']
 	},
 	{
 		text: 'First up is Alice, who has blurry vision and forgot her glasses. Alice can distinguish only the colors of the particles.',
