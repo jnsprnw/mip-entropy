@@ -6,7 +6,8 @@ import {
 	OBSERVER_ALICE,
 	OBSERVER_BOB,
 	ENTITY_SHAPE_SQUARE,
-	ENTITY_SHAPE_TRIANGLE
+	ENTITY_SHAPE_TRIANGLE,
+	GRID_SIZE
 } from '$config';
 import { random } from 'lodash-es';
 import type { Observer, EntityColor } from '$types';
@@ -37,7 +38,7 @@ type Particle = {
 	shape: string;
 };
 
-export function createMove(size: number = 6) {
+export function createMove() {
 	let mode = $state<'vertical' | 'diagonal'>('vertical');
 	let is_moving = $state<boolean>(false);
 	let has_weight = $state<boolean>(false);
@@ -364,7 +365,7 @@ export function createMove(size: number = 6) {
 	return {
 		layout: LAYOUT_LINEAR,
 		selectSide,
-		size,
+		size: GRID_SIZE,
 		radius: RADIUS,
 		move,
 		changeMode,

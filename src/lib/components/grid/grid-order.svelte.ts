@@ -1,13 +1,13 @@
 import { createMixedFields } from '$lib/utils/utils';
 import { orderBy } from 'lodash-es';
 import type { Observer, RichField, SortByKey } from '$types';
-import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
+import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB, GRID_SIZE } from '$config';
 import { sortBy, getFieldByPosition } from './utils-order';
 
 export const ID = 'order' as const;
 
-export function createOrder(size: number = 6) {
-	let fields = $state<RichField[]>(createMixedFields(size));
+export function createOrder() {
+	let fields = $state<RichField[]>(createMixedFields());
 	let interval = $state<undefined | typeof setInterval>(undefined);
 
 	let is_visible_bob = $state<boolean>(false);
@@ -33,7 +33,7 @@ export function createOrder(size: number = 6) {
 		sortBy(fields, null, KEY_SORT_FIGURE)
 	]);
 
-	const max_entropy = size * size - 1;
+	const max_entropy = GRID_SIZE * GRID_SIZE - 1;
 
 	const is_sorted = $derived(entropy === 0);
 
@@ -46,7 +46,7 @@ export function createOrder(size: number = 6) {
 
 	function shuffle() {
 		stopLoop();
-		fields = createMixedFields(size);
+		fields = createMixedFields();
 	}
 
 	function setAlice() {
@@ -161,7 +161,7 @@ export function createOrder(size: number = 6) {
 			return allow_observer_switch;
 		},
 		max_entropy,
-		size,
+		size: GRID_SIZE,
 		shuffle,
 		setObserver,
 		sort,

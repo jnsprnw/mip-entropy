@@ -25,3 +25,5 @@ export const KEY_SORT_FIGURE = 'figure';
 
 export const ENTROPY_HIGH = 'high';
 export const ENTROPY_LOW = 'low';
+
+export const GRID_SIZE = 6;

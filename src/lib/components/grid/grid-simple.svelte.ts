@@ -8,15 +8,15 @@ import {
 } from '$lib/utils/utils';
 import { range } from 'd3-array';
 import { scaleLinear } from 'd3-scale';
-import { MODE_GUESS, MODE_LOOP, ENTROPY_LOW, ENTROPY_HIGH } from '$config';
+import { MODE_GUESS, MODE_LOOP, ENTROPY_LOW, ENTROPY_HIGH, GRID_SIZE } from '$config';
 
 export const ID = 'simple' as const;
 
 export const GUESS_PARTICLE_COUNT = 9;
 
-export function createSimple(size: number = 6) {
-	let fields = $state(createFilledFields(size));
-	let guesses = $state(createGuessFields(size, true));
+export function createSimple() {
+	let fields = $state(createFilledFields(GRID_SIZE));
+	let guesses = $state(createGuessFields(GRID_SIZE, true));
 	let center = $state<undefined | number>(undefined);
 	let count_total = $state<number>(0);
 	let count_run = $state<number>(0);
@@ -44,7 +44,7 @@ export function createSimple(size: number = 6) {
 	});
 
 	function clearFields() {
-		fields = createFilledFields(size);
+		fields = createFilledFields(GRID_SIZE);
 	}
 
 	function findHigh(range_size: number = 6, setLevel: boolean = true) {
@@ -53,7 +53,7 @@ export function createSimple(size: number = 6) {
 		}
 
 		center = undefined;
-		const placements = randomPlacement(range_size, size, GUESS_PARTICLE_COUNT);
+		const placements = randomPlacement(range_size, GUESS_PARTICLE_COUNT);
 		fields = fields.map((_, n) => (placements.includes(n) ? { fill: true } : undefined));
 	}
 
@@ -99,7 +99,7 @@ export function createSimple(size: number = 6) {
 
 		do {
 			center += 1;
-			if (center >= size * size) {
+			if (center >= GRID_SIZE * GRID_SIZE) {
 				center = 0;
 			}
 		} while (!aroundPoint(center));
@@ -111,7 +111,7 @@ export function createSimple(size: number = 6) {
 		loop(16, findNextLow, 500, true);
 	}
 
-	const entropy_scale = $derived(scaleLinear().range([0, 100]).domain([3, size]));
+	const entropy_scale = $derived(scaleLinear().range([0, 100]).domain([3, GRID_SIZE]));
 
 	function toggleLowHigh() {
 		show_count = false;
@@ -121,7 +121,7 @@ export function createSimple(size: number = 6) {
 		clearInterval(interval);
 		let range_size = 3;
 		interval = setInterval(function () {
-			if (range_size < size) {
+			if (range_size < GRID_SIZE) {
 				range_size += 1;
 				entropy_level = entropy_scale(range_size);
 				findHigh(range_size, false);
@@ -132,9 +132,9 @@ export function createSimple(size: number = 6) {
 	}
 
 	function checkValidAroundPoint(position: number = 8) {
-		const x = getX(position, size);
-		const y = getY(position, size);
-		if (x <= 0 || x >= size - 1 || y <= 0 || y >= size - 1) {
+		const x = getX(position);
+		const y = getY(position);
+		if (x <= 0 || x >= GRID_SIZE - 1 || y <= 0 || y >= GRID_SIZE - 1) {
 			return false;
 		}
 		return { x, y };
@@ -167,7 +167,7 @@ export function createSimple(size: number = 6) {
 		setTimeout(() => {
 			canGuess = false;
 			mode = MODE_GUESS;
-			guesses = createGuessFields(size, false);
+			guesses = createGuessFields(GRID_SIZE, false);
 			count_guess = 0;
 			count_found = 0;
 			setTimeout(() => {
@@ -177,7 +177,7 @@ export function createSimple(size: number = 6) {
 		}, 200);
 	}
 
-	const validPositions = range(0, size * size).filter((_, i) => checkValidAroundPoint(i));
+	const validPositions = range(0, GRID_SIZE * GRID_SIZE).filter((_, i) => checkValidAroundPoint(i));
 	function guessLow() {
 		startGuess(findNextLow, validPositions[Math.floor(Math.random() * validPositions.length)]);
 	}
@@ -241,7 +241,7 @@ export function createSimple(size: number = 6) {
 		get entropy_level() {
 			return entropy_level;
 		},
-		size,
+		size: GRID_SIZE,
 		loopHigh,
 		loopLow,
 		guessLow,

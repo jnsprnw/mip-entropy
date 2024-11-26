@@ -5,7 +5,8 @@ import {
 	ENTITY_SHAPE_TRIANGLE,
 	ENTITY_SHAPE_SQUARE,
 	KEY_SORT_COLOR,
-	KEY_SORT_FIGURE
+	KEY_SORT_FIGURE,
+	GRID_SIZE
 } from '$config';
 import type { Observer, EntityColor, RichField, SimpleField } from '$types';
 
@@ -17,17 +18,15 @@ export function shuffleArray<T>(array: T[]): T[] {
 	return array;
 }
 
-function getLowerLeftIndices(location_size: number, size: number = 6): number[] {
-	const fieldSize = size; // Das 9x9-Feld
+function getLowerLeftIndices(location_size: number): number[] {
 	const indices: number[] = [];
 
-	if (location_size > 0 && location_size <= fieldSize) {
-		// Startzeile für das n*n-Feld im unteren linken Bereich
-		const startRow = fieldSize - location_size;
+	if (location_size > 0 && location_size <= GRID_SIZE) {
+		const startRow = GRID_SIZE - location_size;
 
-		for (let row = startRow; row < fieldSize; row++) {
+		for (let row = startRow; row < GRID_SIZE; row++) {
 			for (let col = 0; col < location_size; col++) {
-				indices.push(row * fieldSize + col);
+				indices.push(row * GRID_SIZE + col);
 			}
 		}
 	}
@@ -35,21 +34,14 @@ function getLowerLeftIndices(location_size: number, size: number = 6): number[] 
 	return indices;
 }
 
-export function randomPlacement(
-	location_size: number = 4,
-	size_grid: number = 6,
-	count: number = 9
-) {
-	const positions = getLowerLeftIndices(location_size, size_grid);
-	// Array.from({ length: n }, (_, index) => index);
+export function randomPlacement(location_size: number = 4, count: number = 9) {
+	const positions = getLowerLeftIndices(location_size);
 
-	// Zufällig mischen
 	for (let i = positions.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[positions[i], positions[j]] = [positions[j], positions[i]];
 	}
 
-	// Die ersten 'count' Positionen zurückgeben
 	return positions.slice(0, count);
 }
 
@@ -69,8 +61,8 @@ export function createGuessFields(
 	return [Array(size).fill(Array(size).fill(fill))].flat(3);
 }
 
-export function createMixedFields(size: number = 6): RichField[] {
-	const numberOfEachType = (size * size) / 4;
+export function createMixedFields(): RichField[] {
+	const numberOfEachType = (GRID_SIZE * GRID_SIZE) / 4;
 	const fields: RichField[] = [];
 	for (let i = 0; i < numberOfEachType; i++) {
 		[ENTITY_COLOR_A, ENTITY_COLOR_B].forEach((color) => {
@@ -83,16 +75,16 @@ export function createMixedFields(size: number = 6): RichField[] {
 	return shuffled.map((field, index) => ({ ...field, index }));
 }
 
-export function getX(position: number, size: number = 6) {
-	return position % size;
+export function getX(position: number) {
+	return position % GRID_SIZE;
 }
 
-export function getY(position: number, size: number = 6) {
-	return Math.floor(position / size);
+export function getY(position: number) {
+	return Math.floor(position / GRID_SIZE);
 }
 
-export function fromCoords(x: number, y: number, size: number = 6) {
-	return y * size + x;
+export function fromCoords(x: number, y: number) {
+	return y * GRID_SIZE + x;
 }
 
 export function getFill(observer: Observer, color: EntityColor) {

@@ -1,4 +1,4 @@
-import { PADDING_GRID, LAYOUT_LINEAR } from '$config';
+import { PADDING_GRID, GRID_SIZE } from '$config';
 import { setContext, getContext } from 'svelte';
 import { createOrder, ID as id_order } from './grid-order.svelte';
 import { createSimple, ID as id_simple } from './grid-simple.svelte';
@@ -29,7 +29,7 @@ export function createGrid() {
 		grid_height + PADDING_GRID.left + PADDING_GRID.right - PADDING_GRID.top - PADDING_GRID.bottom
 	);
 
-	const entity_size = $derived((grid_width / 6) * 0.4);
+	const entity_size = $derived((grid_width / GRID_SIZE) * 0.3);
 
 	return {
 		set height(value: number) {
