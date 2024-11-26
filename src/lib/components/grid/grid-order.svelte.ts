@@ -23,17 +23,12 @@ export function createOrder() {
 
 	const is_sorting = $derived(typeof interval !== 'undefined');
 
-	const count_filled = $derived(fields.filter((f) => f).length);
-	const count_fields = $derived(fields.length);
-
 	const entropy = $derived<number>(sortBy(fields, observer, sort_by));
 
 	const entropy_value = $derived([
 		sortBy(fields, null, KEY_SORT_COLOR),
 		sortBy(fields, null, KEY_SORT_FIGURE)
 	]);
-
-	const max_entropy = GRID_SIZE * GRID_SIZE - 1;
 
 	const is_sorted = $derived(entropy === 0);
 
@@ -50,11 +45,13 @@ export function createOrder() {
 	}
 
 	function setAlice() {
+		stopLoop();
 		is_visible_alice = true;
 		setObserver(OBSERVER_ALICE);
 	}
 
 	function setBob() {
+		stopLoop();
 		is_visible_bob = true;
 		setObserver(OBSERVER_BOB);
 	}
@@ -84,7 +81,7 @@ export function createOrder() {
 		allow_observer_switch = false;
 	}
 
-	function sort(time: number = 500) {
+	function sort() {
 		interval = setInterval(function () {
 			if (!is_sorted) {
 				for (let i = 0; i < fields.length; i++) {
@@ -114,7 +111,7 @@ export function createOrder() {
 			} else {
 				stopLoop();
 			}
-		}, time);
+		}, 500);
 	}
 
 	return {
@@ -136,12 +133,6 @@ export function createOrder() {
 		get entropy_value() {
 			return entropy_value;
 		},
-		get count_filled() {
-			return count_filled;
-		},
-		get count_fields() {
-			return count_fields;
-		},
 		get sort_by() {
 			return sort_by;
 		},
@@ -160,7 +151,6 @@ export function createOrder() {
 		get allow_observer_switch() {
 			return allow_observer_switch;
 		},
-		max_entropy,
 		shuffle,
 		setObserver,
 		sort,

@@ -29,8 +29,6 @@ export function createSimple() {
 	let count_found = $state<number>(0);
 	let show_count = $state<boolean>(true);
 
-	const count_fields = $derived(fields.length);
-
 	let entropy_level = $state<EntropyLevel>(ENTROPY_LOW);
 	const entropy_value = $derived(getEntropyValue(entropy_level));
 
@@ -216,9 +214,6 @@ export function createSimple() {
 		},
 		get count_found() {
 			return count_found;
-		},
-		get count_fields() {
-			return count_fields;
 		},
 		get show_count() {
 			return show_count;

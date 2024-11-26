@@ -11,7 +11,13 @@
 </script>
 
 {#if hasObserver}
-	<div in:fade class="col-start-1 col-span-5 row-start-2">
-		<Button disabled={!can_sort} label="{verb} for {label}" onclick={sort} isButtonSort={true} />
+	<div in:fade out:fade class="col-start-1 col-span-5 row-start-2">
+		<Button
+			isPrimary={true}
+			disabled={!can_sort}
+			label="{verb} for {label}"
+			onclick={sort}
+			isButtonSort={true}
+		/>
 	</div>
 {/if}

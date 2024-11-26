@@ -12,7 +12,7 @@
 	}
 	const { value, label = 'Entropy' }: Props = $props();
 
-	const scale = scaleLinear().domain([0, 100]).range([10, 100]);
+	const scale = scaleLinear().domain([0, 100]).range([2, 100]);
 
 	const progress = tweened(0, {
 		duration: 400,

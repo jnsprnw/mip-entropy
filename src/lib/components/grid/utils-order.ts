@@ -1,9 +1,14 @@
+import { scaleLinear } from 'd3-scale';
 import type { Observer, RichField, SortByKey } from '$types';
-import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
+import { GRID_SIZE, KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 
 export function getFieldByPosition(fields: RichField[], position: number): RichField | undefined {
 	return fields.find(({ index }) => index === position);
 }
+
+const entropx_max = GRID_SIZE * GRID_SIZE - 1;
+
+const entropy_scale = scaleLinear().range([0, 100]).domain([0, entropx_max]);
 
 export function sortBy(fields: RichField[], observer: Observer | null, sort_by_ley: SortByKey) {
 	let count = 0;
@@ -26,19 +31,28 @@ export function sortBy(fields: RichField[], observer: Observer | null, sort_by_l
 			}
 		}
 	}
-	return count - 1;
+	return entropy_scale(count - 1);
 }
+
+const LABEL_ALICE = 'Alice';
+const LABEL_BOB = 'Bob';
 
 export function getObserverDetail(observer: typeof OBSERVER_ALICE | typeof OBSERVER_BOB) {
 	if (observer === OBSERVER_ALICE) {
 		return {
-			label: 'Alice',
-			other: OBSERVER_BOB
+			label: LABEL_ALICE,
+			other: {
+				id: OBSERVER_BOB,
+				label: LABEL_BOB
+			}
 		};
 	} else {
 		return {
-			label: 'Bob',
-			other: OBSERVER_ALICE
+			label: LABEL_BOB,
+			other: {
+				id: OBSERVER_ALICE,
+				label: LABEL_ALICE
+			}
 		};
 	}
 }

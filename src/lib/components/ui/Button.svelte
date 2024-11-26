@@ -13,6 +13,7 @@
 		isButtonPrevious?: boolean;
 		isButtonSort?: boolean;
 		isButtonView?: boolean;
+		isPrimary?: boolean;
 	}
 	const {
 		onclick,
@@ -22,7 +23,8 @@
 		isButtonNext = false,
 		isButtonPrevious = false,
 		isButtonSort = false,
-		isButtonView = false
+		isButtonView = false,
+		isPrimary = false
 	}: Props = $props();
 </script>
 
@@ -34,6 +36,7 @@
 	class:bg-button-secondary={!isActive}
 	class:disabled:bg-button-mute={!isActive}
 	class:disabled:bg-amber-700={isActive}
+	class:bg-button-primary={isPrimary}
 	{onclick}
 >
 	{#if isButtonPrevious}
