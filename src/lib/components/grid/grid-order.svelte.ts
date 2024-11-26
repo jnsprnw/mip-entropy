@@ -60,6 +60,10 @@ export function createOrder() {
 		is_visible_alice = true;
 	}
 
+	function setInvisibleAlice() {
+		is_visible_alice = false;
+	}
+
 	function setVisibleBob() {
 		is_visible_bob = true;
 	}
@@ -165,6 +169,7 @@ export function createOrder() {
 		allowObserverSwitch,
 		disallowObserverSwitch,
 		setVisibleAlice,
+		setInvisibleAlice,
 		setVisibleBob,
 		setInvisibleBob
 	};
