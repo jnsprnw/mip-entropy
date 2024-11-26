@@ -365,7 +365,6 @@ export function createMove() {
 	return {
 		layout: LAYOUT_LINEAR,
 		selectSide,
-		size: GRID_SIZE,
 		radius: RADIUS,
 		move,
 		changeMode,

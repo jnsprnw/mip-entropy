@@ -26,7 +26,6 @@ export function createSimple() {
 	let count_guess = $state<number>(0);
 	let count_found = $state<number>(0);
 	let show_count = $state<boolean>(true);
-	let is_spreading = $state<boolean>(false);
 
 	// const count_filled = $derived(fields.filter((f) => f).length);
 	const count_fields = $derived(fields.length);
@@ -117,7 +116,7 @@ export function createSimple() {
 		show_count = false;
 		mode = MODE_LOOP;
 		canGuess = false;
-		findNextLow(22);
+		findNextLow(22); // Bottom left corner
 		clearInterval(interval);
 		let range_size = 3;
 		interval = setInterval(function () {
@@ -202,9 +201,6 @@ export function createSimple() {
 	}
 
 	return {
-		// get id() {
-		// 	return ID;
-		// },
 		get fields() {
 			return fields;
 		},
@@ -241,7 +237,6 @@ export function createSimple() {
 		get entropy_level() {
 			return entropy_level;
 		},
-		size: GRID_SIZE,
 		loopHigh,
 		loopLow,
 		guessLow,

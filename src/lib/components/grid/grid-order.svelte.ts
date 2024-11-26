@@ -161,7 +161,6 @@ export function createOrder() {
 			return allow_observer_switch;
 		},
 		max_entropy,
-		size: GRID_SIZE,
 		shuffle,
 		setObserver,
 		sort,
