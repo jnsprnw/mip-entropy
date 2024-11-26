@@ -14,15 +14,9 @@
 	</div>
 {:else if Array.isArray(entropy_value) && entropy_value.length === 2}
 	<div class="col-start-2 row-start-1 w-full p-2 h-full" class:opacity-50={!is_visible_alice}>
-		<Gauge
-			value={entropy_value[0]}
-			label="Entropy according to {getObserverDetail(OBSERVER_ALICE).label}"
-		/>
+		<Gauge value={entropy_value[0]} label={getObserverDetail(OBSERVER_ALICE).label} />
 	</div>
 	<div class="col-start-4 row-start-1 w-full p-2 h-full" class:opacity-50={!is_visible_bob}>
-		<Gauge
-			value={entropy_value[1]}
-			label="Entropy according to {getObserverDetail(OBSERVER_BOB).label}"
-		/>
+		<Gauge value={entropy_value[1]} label={getObserverDetail(OBSERVER_BOB).label} />
 	</div>
 {/if}

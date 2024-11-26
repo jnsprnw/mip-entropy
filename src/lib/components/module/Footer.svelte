@@ -14,7 +14,7 @@
 
 <menu class="bg-bg-dark flex items-center">
 	<div
-		class="w-full px-2 py-2 max-w-[920px] mx-auto grid grid-cols-3 justify-items-center items-center gap-x-4"
+		class="w-full sm:px-2 py-2 max-w-[920px] mx-auto grid grid-cols-3 justify-items-center items-center gap-x-4"
 	>
 		<Button isButtonPrevious={true} onclick={prevPage} disabled={is_first_page} label="Previous" />
 		<span class="text-accent-light">{current_page_number} / {total_pages}</span>

@@ -10,7 +10,7 @@
 	import { PADDING_GRID, LAYOUT_LINEAR, GRID_SIZE } from '$config';
 
 	const gridState = getGridState();
-	const { grid, width } = $derived(gridState);
+	const { grid, height } = $derived(gridState);
 
 	const scale = $derived(grid.layout === LAYOUT_LINEAR ? scaleLinear() : scaleBand());
 
@@ -22,9 +22,9 @@
 	// );
 </script>
 
-<div class="h-full" bind:clientHeight={gridState.height}>
-	{#if width}
-		<div class="grid-container h-full relative" style="width: {width}px">
+<div class="w-full flex items-center h-full" bind:clientWidth={gridState.width}>
+	{#if height}
+		<div class="grid-container w-full relative" style="height: {height}px">
 			<LayerCake
 				padding={PADDING_GRID}
 				xDomain={domain}

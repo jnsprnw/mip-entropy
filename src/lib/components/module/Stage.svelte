@@ -10,7 +10,7 @@
 
 <main
 	id="stage"
-	class="p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
+	class="sm:p-2 md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
 >
 	{#if gridState.currentState === id_order}
 		<Observer />
@@ -25,6 +25,6 @@
 <style>
 	#stage {
 		grid-template-rows: 5fr 1fr;
-		grid-template-columns: 2fr 1fr 3fr 1fr 2fr;
+		grid-template-columns: 2fr 1fr 5fr 1fr 2fr;
 	}
 </style>
