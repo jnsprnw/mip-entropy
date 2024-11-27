@@ -62,7 +62,7 @@
 </svelte:head>
 
 <section class="grid grid-rows-[2fr_5fr_1fr] h-screen gap-y-2">
-	<header class="sm:px-2 sm:pt-2 flex flex-col gap-y-4 max-w-[920px] mx-auto">
+	<header class="sm:px-2 w-full sm:pt-2 flex flex-col gap-y-4 max-w-[920px] mx-auto">
 		<h2 class="text-accent-dark font-bold text-xl md:text-3xl">{title}</h2>
 		<p class="font-serif text-base md:text-xl">{story.currentText}</p>
 	</header>
