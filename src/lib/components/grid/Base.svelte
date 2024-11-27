@@ -32,7 +32,7 @@
 		stroke-linejoin="round"
 		class="fill-white"
 	></rect>
-	{#if grid.mode === MODE_GUESS}
+	{#if grid.mode !== MODE_GUESS}
 		{#each $xDomain as tick, i}
 			{#if i !== 0}
 				<path d="M {$xScale(tick)} {y0} V {y1}" class="stroke stroke-grid-inner" />
