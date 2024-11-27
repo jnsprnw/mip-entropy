@@ -11,8 +11,10 @@
 	import SideSelection from './interactives/SideSelection.svelte';
 
 	const gridState = getGridState();
-	const { grid, height } = $derived(gridState);
-
+	const { grid, height, currentState } = $derived(gridState);
+	import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
+	import { ID as id_simple } from '$lib/components/grid/grid-simple.svelte';
+	import Guess from './interactives/Guess.svelte';
 	const scale = $derived(grid.layout === LAYOUT_LINEAR ? scaleLinear() : scaleBand());
 
 	const domain = $derived(grid.layout === LAYOUT_LINEAR ? [0, 1] : range(0, GRID_SIZE));
@@ -42,9 +44,12 @@
 						<Fields />
 					{/if}
 				</Svg>
-				<Html>
-					<SideSelection />
-				</Html>
+				{#if currentState === id_move || currentState === id_simple}
+					<Html>
+						<SideSelection />
+						<Guess />
+					</Html>
+				{/if}
 			</LayerCake>
 		</div>
 	{/if}

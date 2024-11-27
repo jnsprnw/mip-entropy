@@ -1,5 +1,9 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
+	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	const gridState = getGridState();
+	const { grid } = $derived(gridState);
+	import { MODE_GUESS } from '$config';
 
 	const { yRange, xRange, xScale, xDomain, yScale, yDomain } = getContext('LayerCake');
 
@@ -28,16 +32,18 @@
 		stroke-linejoin="round"
 		class="fill-white"
 	></rect>
-	{#each $xDomain as tick, i}
-		{#if i !== 0}
-			<path d="M {$xScale(tick)} {y0} V {y1}" class="stroke stroke-grid-inner" />
-		{/if}
-	{/each}
-	{#each $yDomain as tick, i}
-		{#if i !== 0}
-			<path d="M {x0} {$yScale(tick)} H {x1}" class="stroke stroke-grid-inner" />
-		{/if}
-	{/each}
+	{#if grid.mode === MODE_GUESS}
+		{#each $xDomain as tick, i}
+			{#if i !== 0}
+				<path d="M {$xScale(tick)} {y0} V {y1}" class="stroke stroke-grid-inner" />
+			{/if}
+		{/each}
+		{#each $yDomain as tick, i}
+			{#if i !== 0}
+				<path d="M {x0} {$yScale(tick)} H {x1}" class="stroke stroke-grid-inner" />
+			{/if}
+		{/each}
+	{/if}
 	<rect
 		x={x0}
 		y={y0}
