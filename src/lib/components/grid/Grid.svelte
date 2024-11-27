@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { LayerCake, Svg } from 'layercake';
+	import { LayerCake, Svg, Html } from 'layercake';
 	import { scaleBand, scaleLinear } from 'd3-scale';
 	import { range } from 'd3-array';
 	import Base from './Base.svelte';
@@ -8,6 +8,7 @@
 	import Pulley from './Pulley.svelte';
 	import { getGridState } from './grid-state.svelte';
 	import { PADDING_GRID, LAYOUT_LINEAR, GRID_SIZE } from '$config';
+	import SideSelection from './interactives/SideSelection.svelte';
 
 	const gridState = getGridState();
 	const { grid, height } = $derived(gridState);
@@ -41,6 +42,9 @@
 						<Fields />
 					{/if}
 				</Svg>
+				<Html>
+					<SideSelection />
+				</Html>
 			</LayerCake>
 		</div>
 	{/if}

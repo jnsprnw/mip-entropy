@@ -36,4 +36,4 @@ export const ENTROPY_LOW = 'low';
 
 export const GRID_SIZE = 6;
 
-export const WALL_WIDTH = 10;
+export const WALL_WIDTH = 8;

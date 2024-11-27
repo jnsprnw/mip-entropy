@@ -209,7 +209,7 @@ export function createMove() {
 	}
 
 	function resetParticleOneSide() {
-		resetParticles(4, 'left');
+		resetParticles(5, 'left');
 	}
 
 	function rLeft() {
@@ -305,7 +305,7 @@ export function createMove() {
 		fill?: 'red' | 'blue' | 'alternately' | undefined,
 		form?: undefined | 'alternately'
 	) {
-		const scaleY = scalePoint().range([0, 1]).domain(range(count).map(String)).padding(0.4);
+		const scaleY = scalePoint().range([0, 1]).domain(range(count).map(String)).padding(0.6);
 		const arr: Particle[] = [];
 		const random_side = Math.random() > 0.5 ? 'right' : 'left';
 		for (let i = 0; i < count; i++) {
