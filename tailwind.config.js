@@ -36,6 +36,10 @@ export default {
 					secondary: '#00B2E2',
 					primary: '#005CDE',
 					mute: '#BFDBF5'
+				},
+				wall: {
+					DEFAULT: '#6078BA',
+					cord: '#E5322E'
 				}
 			}
 		}

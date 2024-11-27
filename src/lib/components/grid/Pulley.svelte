@@ -3,6 +3,8 @@
 	import { getGridState } from './grid-state.svelte';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
+	import Package from '$lib/icons/Package.svelte';
+	import { WEIGHT_WIDTH } from '$config';
 
 	const { xScale, yScale, width, xRange, yRange } = getContext('LayerCake');
 
@@ -43,36 +45,37 @@
 
 {#if grid.has_weight}
 	<g>
-		<circle cx={cx_1} {cy} r={radius - 1.5} class="fill-slate-300 stroke-2 stroke-blue-900" />
-		<circle cx={cx_2} {cy} r={radius - 1.5} class="fill-slate-300 stroke-2 stroke-blue-900" />
+		<!-- <circle cx={cx_1} {cy} r={radius - 1.5} class="fill-slate-300 stroke-2 stroke-blue-900" /> -->
+
 		{#if selected_side === 'left'}
 			<path
 				d="
-				M {$xScale(wall_x2)} {cord_y}
-				L {cx_1 + radius} {cy}
-				C {cx_1 + radius} {cy}, {cx_1 + radius} {cy - radius}, {cx_1} {cy - radius}
+				M {$xScale(wall_x2)} {cy - radius}
 				L {cx_2} {cy - radius}
 				C {cx_2} {cy - radius}, {cx_2 - radius} {cy - radius}, {cx_2 - radius} {cy}
 				L {weight_x} {cord_y}
 				L {weight_x} {weight_y}
 			"
-				class="fill-none stroke-2 stroke-amber-500"
+				class="fill-none stroke-2 stroke-wall-cord"
 			/>
 		{:else}
 			<path
 				d="
-				M {$xScale(wall_x2)} {cord_y}
-				L {cx_1 - radius} {cy}
-				C {cx_1 - radius} {cy}, {cx_1 - radius} {cy - radius}, {cx_1} {cy - radius}
+				M {$xScale(wall_x2)} {cy - radius}
 				L {cx_2} {cy - radius}
 				C {cx_2} {cy - radius}, {cx_2 + radius} {cy - radius}, {cx_2 + radius} {cy}
 				L {weight_x} {cord_y}
 				L {weight_x} {weight_y}
 			"
-				class="fill-none stroke-2 stroke-amber-500"
+				class="fill-none stroke-2 stroke-wall-cord"
 			/>
 		{/if}
-		<path
+		<g style="transform: translate({cx_2}px, {cy}px);">
+			<circle r={radius + 4} class="fill-[#2B3C83]" />
+			<circle r={radius} class="fill-[#2B3C83] stroke-[#00AAE9] stroke-[1.5px]" />
+			<circle r="2" class="fill-[#00AAE9]" />
+		</g>
+		<!-- <path
 			d="
 				M {weight_x - 20 / 2} {weight_y}
 				L {weight_x + 20 / 2} {weight_y}
@@ -82,7 +85,10 @@
 			"
 			stroke-linejoin="round"
 			class="stroke-2 stroke-blue-900 fill fill-slate-300"
-		/>
+		/> -->
+		<g style="transform: translate({weight_x - WEIGHT_WIDTH / 2}px, {weight_y}px);">
+			<Package />
+		</g>
 	</g>
 {:else if grid.can_select}
 	<g onclick={() => grid.selectSide('left')} class="cursor-pointer group">

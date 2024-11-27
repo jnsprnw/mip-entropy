@@ -1,7 +1,15 @@
 export const MODE_GUESS = 'guess';
 export const MODE_LOOP = 'loop';
 
-export const PADDING_GRID = { bottom: 10, left: 50, top: 30, right: 50 };
+export const WEIGHT_WIDTH = 62;
+export const WEIGHT_HEIGHT = 49;
+
+export const PADDING_GRID = {
+	bottom: 10,
+	left: WEIGHT_WIDTH,
+	top: WEIGHT_HEIGHT,
+	right: WEIGHT_WIDTH
+};
 
 export const LAYOUT_LINEAR = 'linear';
 export const LAYOUT_POINT = 'point';
@@ -27,3 +35,5 @@ export const ENTROPY_HIGH = 'high';
 export const ENTROPY_LOW = 'low';
 
 export const GRID_SIZE = 6;
+
+export const WALL_WIDTH = 10;

@@ -27,7 +27,7 @@
 		{@const y = $yScale(cy)}
 		{@const color = getFill(observer, fill)}
 		{#if observer === OBSERVER_ALICE || shape === ENTITY_SHAPE_CIRCLE}
-			<Circle cx={x} cy={y} {r} {color} isBlur={true} />
+			<Circle cx={x} cy={y} {r} {color} isBlur={observer === OBSERVER_ALICE} />
 		{:else if shape === ENTITY_SHAPE_SQUARE}
 			<Square {x} {y} size={r} {color} />
 		{:else if shape === ENTITY_SHAPE_TRIANGLE}

@@ -42,5 +42,9 @@
 		class="bg-highlight w-2/5 justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
 		aria-hidden="true"
 	></span>
-	<span id={gauge_id} class="text-highlight font-semibold text-center text-xs/none">{label}</span>
+	<span
+		id={gauge_id}
+		class="text-highlight font-semibold text-center text-xs/none sm:text-sm/none md:text-lg/none"
+		>{label}</span
+	>
 </div>

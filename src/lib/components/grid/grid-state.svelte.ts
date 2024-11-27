@@ -25,9 +25,13 @@ export function createGrid() {
 		}
 	});
 
-	const grid_height = $derived(
-		grid_width - PADDING_GRID.left - PADDING_GRID.right + PADDING_GRID.top + PADDING_GRID.bottom
-	);
+	const grid_width_inner = $derived.by(() => {
+		const width = grid_width - PADDING_GRID.left - PADDING_GRID.right;
+		gridState.width = width;
+		return width;
+	});
+
+	const grid_height = $derived(grid_width_inner + PADDING_GRID.top + PADDING_GRID.bottom);
 
 	const entity_size = $derived((grid_height / GRID_SIZE) * 0.3);
 

@@ -7,10 +7,12 @@ import {
 	OBSERVER_BOB,
 	ENTITY_SHAPE_SQUARE,
 	ENTITY_SHAPE_TRIANGLE,
-	GRID_SIZE
+	WALL_WIDTH
 } from '$config';
 import { random } from 'lodash-es';
 import type { Observer, EntityColor } from '$types';
+import { scaleLinear, scalePoint } from 'd3-scale';
+import { range } from 'd3-array';
 
 export const ID = 'move' as const;
 
@@ -45,11 +47,16 @@ export function createMove() {
 	let selected_side = $state<'left' | 'right' | null>(null);
 	let particles = $state<Particle[]>([]);
 	let can_select = $state<boolean>(false);
-	let observer = $state<Observer>(OBSERVER_ALICE);
+	let observer = $state<Observer>(undefined);
 	let allow_observer_switch = $state<boolean>(false);
 	let show_observer_switch = $state<boolean>(false);
 	let show_wall = $state<boolean>(false);
 	let ignore_color = $state<EntityColor>(undefined);
+
+	let width = $state<number>(0);
+	const scale = $derived(scaleLinear().domain([0, 1]).range([0, width]));
+	const wall_width_scaled = $derived(scale.invert(WALL_WIDTH / 2));
+	const wall_offset_scaled = $derived(scale.invert(10));
 
 	// Koordinaten der Wand
 	let wall_x1 = $state<number>(0);
@@ -66,12 +73,17 @@ export function createMove() {
 			particle.cx += particle.dx;
 			particle.cy += particle.dy;
 
-			// The wall was hit on the right hand side
+			// The wall was hit on the right hand side. Particle is on the left side of the wall.
 			const wall_hit_right =
-				particle.color !== ignore_color && particle.cx - RADIUS <= wall_x1 && particle.cx > wall_x1;
+				particle.color !== ignore_color &&
+				particle.cx - RADIUS <= wall_x1 + wall_width_scaled &&
+				particle.cx > wall_x1;
+
 			// The wall was hit on the right hand side
 			const wall_hit_left =
-				particle.color !== ignore_color && particle.cx + RADIUS >= wall_x1 && particle.cx < wall_x1;
+				particle.color !== ignore_color &&
+				particle.cx + RADIUS >= wall_x1 - wall_width_scaled &&
+				particle.cx < wall_x1;
 
 			// The wall or outer bounds are hit
 			if (particle.cx - RADIUS < 0 || wall_hit_right || wall_hit_left || particle.cx + RADIUS > 1) {
@@ -83,7 +95,7 @@ export function createMove() {
 					(wall_hit_left && selected_side === 'left')) &&
 				has_weight
 			) {
-				moveWall(wall_hit_right, true);
+				moveWall(wall_hit_right);
 			}
 
 			// The outer bounds are hit
@@ -110,6 +122,12 @@ export function createMove() {
 		// startMoving();
 	}
 
+	function selectRightSide() {
+		selected_side = 'right';
+		has_weight = true;
+		// startMoving();
+	}
+
 	function resetSide() {
 		selected_side = null;
 		has_weight = false;
@@ -124,28 +142,51 @@ export function createMove() {
 		is_moving = false;
 	}
 
-	function moveWall(wall_hit_right: boolean, isVertical: boolean) {
-		let addition = 0.01 * (wall_hit_right ? -1 : 1);
-		// The addition is limited by the wall position. This prevents the wall from moving beyond the outer bounds.
-		if (wall_hit_right) {
-			// The addition is not greater than the distance of the wall to the left outer bound
-			addition = Math.min(wall_x1, wall_x2, addition);
-		} else {
-			// The addition is not greater than the distance of the wall to the right outer bound
-			addition = Math.min(1 - wall_x1, 1 - wall_x2, addition);
-		}
+	const WALL_SPEED = 0.01;
 
-		if (wall_x1 < 1 && wall_x1 > 0 && wall_x2 < 1 && wall_x2 > 0) {
-			wall_x1 += addition;
-			// wall_x1 = Math.min(1, Math.max(0, wall_x1));
-			if (isVertical) {
-				wall_x2 = wall_x1;
+	function moveWall(
+		wall_hit_right: boolean,
+		without_highlight: boolean = false,
+		speed: number = WALL_SPEED
+	) {
+		if (
+			wall_x1 > wall_width_scaled + wall_offset_scaled &&
+			wall_x1 < 1 - wall_width_scaled - wall_offset_scaled
+		) {
+			if (wall_hit_right) {
+				// The addition is not greater than the distance of the wall to the left outer bound
+				wall_x1 = Math.max(wall_width_scaled, wall_x1 - speed);
 			} else {
-				wall_x2 += addition;
+				// The addition is not greater than the distance of the wall to the right outer bound
+				wall_x1 = Math.min(1 - wall_width_scaled, wall_x1 + speed);
+			}
+			wall_x2 = wall_x1;
+
+			if (!without_highlight) {
+				wall_highlight = true;
+				setTimeout(() => (wall_highlight = false), 100);
 			}
 		}
-		wall_highlight = true;
-		setTimeout(() => (wall_highlight = false), 100);
+	}
+
+	let interval: number | undefined;
+
+	function animateWallMovement() {
+		let direction: boolean = true;
+		let counter: number = 0;
+		interval = setInterval(function () {
+			if (counter > 50 || counter < 0) {
+				direction = !direction;
+			}
+			counter = counter + (direction ? 1 : -1);
+			moveWall(direction, true, 0.005);
+		}, 30);
+
+		// setTimeout(() => moveWall(false, true), 100);
+	}
+
+	function stopAnimateWallMovement() {
+		clearInterval(interval);
 	}
 
 	function changeMode() {
@@ -158,22 +199,17 @@ export function createMove() {
 	}
 
 	function resetWall() {
-		if (mode === 'vertical') {
-			wall_x1 = 0.5;
-			wall_x2 = 0.5;
-		} else {
-			wall_x1 = 0.2;
-			wall_x2 = 0.8;
-		}
-		if (!particles.length) {
-			resetParticleOneSide();
-			// resetParticles(4, undefined, 'alternately', 'alternately');
-		}
+		wall_x1 = 0.5;
+		wall_x2 = 0.5;
+		// if (!particles.length) {
+		// 	resetParticleOneSide();
+		// 	// resetParticles(4, undefined, 'alternately', 'alternately');
+		// }
 		// resetBall();
 	}
 
 	function resetParticleOneSide() {
-		resetParticles(4, 'random');
+		resetParticles(4, 'left');
 	}
 
 	function rLeft() {
@@ -181,15 +217,6 @@ export function createMove() {
 	}
 	function rRight() {
 		return random(0.6, 0.9);
-	}
-	function rTop() {
-		return random(0.2, 0.4);
-	}
-	function rBottom() {
-		return random(0.6, 0.8);
-	}
-	function rMiddle() {
-		return random(0.4, 0.6);
 	}
 	function rPosition() {
 		return random(0.1, 0.9);
@@ -278,6 +305,7 @@ export function createMove() {
 		fill?: 'red' | 'blue' | 'alternately' | undefined,
 		form?: undefined | 'alternately'
 	) {
+		const scaleY = scalePoint().range([0, 1]).domain(range(count).map(String)).padding(0.4);
 		const arr: Particle[] = [];
 		const random_side = Math.random() > 0.5 ? 'right' : 'left';
 		for (let i = 0; i < count; i++) {
@@ -294,13 +322,13 @@ export function createMove() {
 			if (form === 'alternately') {
 				shape = i % 2 ? ENTITY_SHAPE_SQUARE : ENTITY_SHAPE_TRIANGLE;
 			}
-			let color = fill;
+			let color = fill ?? ENTITY_COLOR_A;
 			if (fill === 'alternately') {
 				color = i % 2 ? ENTITY_COLOR_A : ENTITY_COLOR_B;
 			}
 			arr.push({
 				cx,
-				cy: random(0.1, 0.3),
+				cy: scaleY(String(i)),
 				angle,
 				dx: Math.cos(angle) * SPEED,
 				dy: Math.sin(angle) * SPEED,
@@ -391,12 +419,20 @@ export function createMove() {
 		showWall,
 		hideWall,
 		selectLeftSide,
+		selectRightSide,
 		resetSide,
+		moveWall,
+		animateWallMovement,
+		stopAnimateWallMovement,
+		resetParticleOneSide,
 		setNoIgnoreColor() {
 			ignore_color = undefined;
 		},
 		setRedIgnoreColor() {
 			ignore_color = ENTITY_COLOR_B;
+		},
+		set width(value: number) {
+			width = value;
 		},
 		get show_wall() {
 			return show_wall;
