@@ -129,9 +129,9 @@ export function createMove() {
 	}
 
 	function resetSide() {
+		is_moving = false;
 		selected_side = null;
 		has_weight = false;
-		is_moving = false;
 		resetWall();
 		resetParticleOneSide();
 	}
