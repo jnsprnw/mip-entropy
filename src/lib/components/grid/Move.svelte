@@ -19,7 +19,7 @@
 			d="M {$xScale(wall_x)} {$yScale(0) - 1} V {$yScale(1) - PADDING_GRID.top}"
 			style="stroke-width: {WALL_WIDTH}px;"
 			class:stroke-wall={!wall_highlight}
-			class:stroke-amber-600={wall_highlight}
+			class:stroke-accent-dark={wall_highlight}
 		/>
 	{/if}
 </g>

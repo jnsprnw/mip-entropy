@@ -131,6 +131,9 @@ export function createMove() {
 	function resetSide() {
 		selected_side = null;
 		has_weight = false;
+		is_moving = false;
+		resetWall();
+		resetParticleOneSide();
 	}
 
 	function startMoving() {
@@ -143,6 +146,19 @@ export function createMove() {
 	}
 
 	const WALL_SPEED = 0.01;
+
+	const is_wall_ended = $derived(
+		wall_x1 <= wall_width_scaled + wall_offset_scaled ||
+			wall_x1 >= 1 - wall_width_scaled - wall_offset_scaled
+	);
+
+	const can_wall_be_moved = $derived(
+		particles.some(
+			({ cx }) =>
+				(cx - RADIUS < wall_x1 + wall_width_scaled && selected_side === 'left') ||
+				(cx + RADIUS > wall_x1 - wall_width_scaled && selected_side === 'right')
+		)
+	);
 
 	function moveWall(
 		wall_hit_right: boolean,
@@ -209,7 +225,7 @@ export function createMove() {
 	}
 
 	function resetParticleOneSide() {
-		resetParticles(5, 'left');
+		resetParticles(5, 'random');
 	}
 
 	function rLeft() {
@@ -312,7 +328,7 @@ export function createMove() {
 			const angle = Math.random() * 2 * Math.PI;
 			let cx: number = i % 2 ? 0.75 : 0.25;
 			if (side === 'random') {
-				cx = random_side === 'left' ? random(0.2, 0.4) : random(0.6, 0.8);
+				cx = random_side === 'left' ? 0.25 : 0.75;
 			} else if (side === 'left') {
 				cx = 0.25;
 			} else if (side === 'right') {
@@ -433,6 +449,12 @@ export function createMove() {
 		},
 		set width(value: number) {
 			width = value;
+		},
+		get is_wall_ended() {
+			return is_wall_ended;
+		},
+		get can_wall_be_moved() {
+			return can_wall_be_moved;
 		},
 		get show_wall() {
 			return show_wall;
