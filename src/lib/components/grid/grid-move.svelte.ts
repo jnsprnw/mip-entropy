@@ -1,5 +1,4 @@
 import {
-	LAYOUT_LINEAR,
 	ENTITY_COLOR_A,
 	ENTITY_COLOR_B,
 	OBSERVER_ALICE,
@@ -400,7 +399,7 @@ export function createMove() {
 	}
 
 	return {
-		layout: LAYOUT_LINEAR,
+		isLinear: true,
 		selectSide,
 		radius: RADIUS,
 		move,

@@ -7,7 +7,7 @@
 	import Move from './Move.svelte';
 	import Pulley from './Pulley.svelte';
 	import { getGridState } from '$grid/grid-state.svelte';
-	import { LAYOUT_LINEAR, GRID_SIZE } from '$config';
+	import { GRID_SIZE } from '$config';
 	import SideSelection from './interactives/SideSelection.svelte';
 
 	const gridState = getGridState();
@@ -15,9 +15,9 @@
 	import { ID as id_move } from '$grid/grid-move.svelte';
 	import { ID as id_simple } from '$grid/grid-simple.svelte';
 	import Guess from './interactives/Guess.svelte';
-	const scale = $derived(grid.layout === LAYOUT_LINEAR ? scaleLinear() : scaleBand());
+	const scale = $derived(grid.isLinear ? scaleLinear() : scaleBand());
 
-	const domain = $derived(grid.layout === LAYOUT_LINEAR ? [0, 1] : range(0, GRID_SIZE));
+	const domain = $derived(grid.isLinear ? [0, 1] : range(0, GRID_SIZE));
 </script>
 
 <div class="w-full flex items-center h-full" bind:clientWidth={gridState.width}>
@@ -26,7 +26,7 @@
 			<LayerCake {padding} xDomain={domain} yDomain={domain} xScale={scale} yScale={scale}>
 				<Svg>
 					<Base />
-					{#if grid.layout === LAYOUT_LINEAR}
+					{#if grid.isLinear}
 						<Move />
 						<Pulley />
 					{:else}

@@ -20,9 +20,6 @@ export const PADDING_GRID: Padding = {
 	right: 10
 };
 
-export const LAYOUT_LINEAR = 'linear';
-export const LAYOUT_POINT = 'point';
-
 export const MODE_SIMPLE = 'simple';
 export const MODE_MOVE = 'move';
 export const MODE_ORDER = 'order';
