@@ -3,6 +3,7 @@
 	import Sort from './Sort.svelte';
 	import Observer from './Observer.svelte';
 	import Guess from './Guess.svelte';
+	import Counter from './Counter.svelte';
 	import Side from './Side.svelte';
 	const gridState = getGridState();
 	import { ID as id_order } from '$grid/grid-order.svelte';
@@ -19,6 +20,7 @@
 	</div>
 {:else if gridState.currentState === id_simple}
 	<Guess />
+	<Counter />
 {:else if gridState.currentState === id_move}
 	<Side />
 {/if}
