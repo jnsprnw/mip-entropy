@@ -6,7 +6,7 @@
 	import { ID as id_simple } from '$lib/components/grid/grid-simple.svelte';
 	import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
 
-	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 
 	const grid = getGridState();
 	const { currentState } = $derived(grid);

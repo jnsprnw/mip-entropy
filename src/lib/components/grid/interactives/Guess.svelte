@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getGridState } from '../grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
 	import { MODE_GUESS, GRID_SIZE } from '$config';

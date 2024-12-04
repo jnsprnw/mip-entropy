@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getFill } from '$lib/utils/utils';
 	import { getContext } from 'svelte';
-	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	import Square from '$lib/components/grid/shapes/Square.svelte';
 	import Circle from '$lib/components/grid/shapes/Circle.svelte';
 	import Triangle from '$lib/components/grid/shapes/Triangle.svelte';

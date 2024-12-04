@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getGridState } from './grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	import Field from './Field.svelte';
 
 	const gridState = getGridState();

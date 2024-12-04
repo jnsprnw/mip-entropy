@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	import Gauge from '$lib/components/gauge/Gauge.svelte';
 	import { getObserverDetail } from '$lib/components/grid/utils-order';
 	import { OBSERVER_ALICE, OBSERVER_BOB } from '$config';

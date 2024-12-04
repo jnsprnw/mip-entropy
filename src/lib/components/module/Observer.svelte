@@ -2,7 +2,7 @@
 	import Alice from '$lib/icons/Alice.svelte';
 	import Bob from '$lib/icons/Bob.svelte';
 	import { fade } from 'svelte/transition';
-	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	import { OBSERVER_ALICE } from '$config';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);

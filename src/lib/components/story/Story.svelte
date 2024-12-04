@@ -2,7 +2,7 @@
 	import { setStoryState } from './story-state.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Grid from '$lib/components/grid/Grid.svelte';
-	import { setGridState } from '$lib/components/grid/grid-state.svelte';
+	import { setGridState } from '$grid/grid-state.svelte';
 	import { onMount } from 'svelte';
 	import Menu from '$lib/components/menu/Menu.svelte';
 

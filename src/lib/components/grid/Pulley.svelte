@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { getGridState } from './grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	const gridState = getGridState();
 	const { grid, padding } = $derived(gridState);
 	import Package from '$lib/icons/Package.svelte';

@@ -6,7 +6,7 @@
 	import Fields from './Fields.svelte';
 	import Move from './Move.svelte';
 	import Pulley from './Pulley.svelte';
-	import { getGridState } from './grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	import { LAYOUT_LINEAR, GRID_SIZE } from '$config';
 	import SideSelection from './interactives/SideSelection.svelte';
 

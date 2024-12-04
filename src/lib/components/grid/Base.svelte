@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getContext } from 'svelte';
-	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
 	import { MODE_GUESS } from '$config';

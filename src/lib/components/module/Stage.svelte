@@ -3,7 +3,7 @@
 	import Observer from './Observer.svelte';
 	import Gauge from './Gauge.svelte';
 	import Actions from './actions/Actions.svelte';
-	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	const gridState = getGridState();
 	import { ID as id_order } from '$lib/components/grid/grid-order.svelte';
 </script>

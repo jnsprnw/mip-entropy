@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getGridState } from '$lib/components/grid/grid-state.svelte';
+	import { getGridState } from '$grid/grid-state.svelte';
 	import Sort from './Sort.svelte';
 	import Observer from './Observer.svelte';
 	import Guess from './Guess.svelte';
