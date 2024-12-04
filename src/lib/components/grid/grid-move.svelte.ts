@@ -7,7 +7,9 @@ import {
 	OBSERVER_BOB,
 	ENTITY_SHAPE_SQUARE,
 	ENTITY_SHAPE_TRIANGLE,
-	WALL_WIDTH
+	WALL_WIDTH,
+	SIDE_LEFT,
+	SIDE_RIGHT
 } from '$config';
 import { random } from 'lodash-es';
 import type { Observer, EntityColor } from '$types';
@@ -41,10 +43,9 @@ type Particle = {
 };
 
 export function createMove() {
-	let mode = $state<'vertical' | 'diagonal'>('vertical');
 	let is_moving = $state<boolean>(false);
 	let has_weight = $state<boolean>(false);
-	let selected_side = $state<'left' | 'right' | null>(null);
+	let selected_side = $state<typeof SIDE_LEFT | typeof SIDE_RIGHT | null>(null);
 	let particles = $state<Particle[]>([]);
 	let can_select = $state<boolean>(false);
 	let observer = $state<Observer>(undefined);
@@ -91,8 +92,8 @@ export function createMove() {
 			}
 
 			if (
-				((wall_hit_right && selected_side === 'right') ||
-					(wall_hit_left && selected_side === 'left')) &&
+				((wall_hit_right && selected_side === SIDE_RIGHT) ||
+					(wall_hit_left && selected_side === SIDE_LEFT)) &&
 				has_weight
 			) {
 				moveWall(wall_hit_right);
@@ -110,20 +111,20 @@ export function createMove() {
 		}
 	}
 
-	function selectSide(side: 'left' | 'right' | null) {
+	function selectSide(side: typeof SIDE_LEFT | typeof SIDE_RIGHT | null) {
 		selected_side = side;
-		has_weight = side === 'left' || side === 'right';
+		has_weight = side === SIDE_LEFT || side === SIDE_RIGHT;
 		startMoving();
 	}
 
 	function selectLeftSide() {
-		selected_side = 'left';
+		selected_side = SIDE_LEFT;
 		has_weight = true;
 		// startMoving();
 	}
 
 	function selectRightSide() {
-		selected_side = 'right';
+		selected_side = SIDE_RIGHT;
 		has_weight = true;
 		// startMoving();
 	}
@@ -155,8 +156,8 @@ export function createMove() {
 	const can_wall_be_moved = $derived(
 		particles.some(
 			({ cx }) =>
-				(cx - RADIUS < wall_x1 + wall_width_scaled && selected_side === 'left') ||
-				(cx + RADIUS > wall_x1 - wall_width_scaled && selected_side === 'right')
+				(cx - RADIUS < wall_x1 + wall_width_scaled && selected_side === SIDE_LEFT) ||
+				(cx + RADIUS > wall_x1 - wall_width_scaled && selected_side === SIDE_RIGHT)
 		)
 	);
 
@@ -203,11 +204,6 @@ export function createMove() {
 
 	function stopAnimateWallMovement() {
 		clearInterval(interval);
-	}
-
-	function changeMode() {
-		mode = mode === 'vertical' ? 'diagonal' : 'vertical';
-		resetWall();
 	}
 
 	function changeShadow() {
@@ -317,21 +313,21 @@ export function createMove() {
 
 	function resetParticles(
 		count: number = 2,
-		side: 'left' | 'right' | 'random' | undefined = undefined,
+		side: typeof SIDE_LEFT | typeof SIDE_RIGHT | 'random' | undefined = undefined,
 		fill?: 'red' | 'blue' | 'alternately' | undefined,
 		form?: undefined | 'alternately'
 	) {
 		const scaleY = scalePoint().range([0, 1]).domain(range(count).map(String)).padding(0.6);
 		const arr: Particle[] = [];
-		const random_side = Math.random() > 0.5 ? 'right' : 'left';
+		const random_side = Math.random() > 0.5 ? SIDE_RIGHT : SIDE_LEFT;
 		for (let i = 0; i < count; i++) {
 			const angle = Math.random() * 2 * Math.PI;
 			let cx: number = i % 2 ? 0.75 : 0.25;
 			if (side === 'random') {
-				cx = random_side === 'left' ? 0.25 : 0.75;
-			} else if (side === 'left') {
+				cx = random_side === SIDE_LEFT ? 0.25 : 0.75;
+			} else if (side === SIDE_LEFT) {
 				cx = 0.25;
-			} else if (side === 'right') {
+			} else if (side === SIDE_RIGHT) {
 				cx = 0.75;
 			}
 			let shape = 'circle';
@@ -411,7 +407,6 @@ export function createMove() {
 		selectSide,
 		radius: RADIUS,
 		move,
-		changeMode,
 		changeShadow,
 		resetWall,
 		// resetBall,
@@ -491,9 +486,6 @@ export function createMove() {
 		},
 		get wall_highlight() {
 			return wall_highlight;
-		},
-		get mode() {
-			return mode;
 		},
 		get has_shadow() {
 			return has_shadow;

@@ -37,3 +37,6 @@ export const ENTROPY_LOW = 'low';
 export const GRID_SIZE = 6;
 
 export const WALL_WIDTH = 8;
+
+export const SIDE_LEFT = 'left';
+export const SIDE_RIGHT = 'right';
