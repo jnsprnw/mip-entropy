@@ -11,8 +11,12 @@
 </script>
 
 {#if gridState.currentState === id_order}
-	<Sort />
-	<Observer />
+	<div
+		class="grid w-full h-full col-start-1 row-start-2 col-span-3 md:col-start-1 md:col-span-5 md:grid-cols-subgrid max-md:grid-cols-3"
+	>
+		<Sort />
+		<Observer />
+	</div>
 {:else if gridState.currentState === id_simple}
 	<Guess />
 {:else if gridState.currentState === id_move}
