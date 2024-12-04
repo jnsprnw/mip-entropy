@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { getFill, getX, getY } from '$lib/utils/utils';
-	import { fade } from 'svelte/transition';
 	import { getContext } from 'svelte';
-	import { MODE_GUESS } from '$config';
 	import Square from '$lib/components/grid/shapes/Square.svelte';
 	import Circle from '$lib/components/grid/shapes/Circle.svelte';
 	import Triangle from '$lib/components/grid/shapes/Triangle.svelte';
@@ -17,15 +15,16 @@
 
 	const color = $derived(getFill(grid.observer, opt?.color));
 
-	const step = $derived($xScale.step());
 	const xBandwidth = $derived($xScale.bandwidth() / 2);
 	const yBandwidth = $derived($yScale.bandwidth() / 2);
+
+	$inspect(grid);
 </script>
 
 <g
 	style="transform: translate({$xScale(getX(position)) + xBandwidth}px, {$yScale(getY(position)) +
 		yBandwidth}px);"
-	class="transition-transform"
+	class:transition-transform={grid.is_sorting}
 >
 	{#if typeof opt !== 'undefined'}
 		{#if typeof opt?.fill === 'boolean'}
