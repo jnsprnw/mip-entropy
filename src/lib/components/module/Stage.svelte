@@ -9,8 +9,7 @@
 </script>
 
 <main
-	id="stage"
-	class="w-full aspect-video sm:p-2 grid-cols-[1fr_5fr_1fr] md:grid-cols-[2fr_1fr_5fr_1fr_2fr] md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
+	class="w-full aspect-video sm:p-2 grid-rows-[1fr_50px] grid-cols-[1fr_5fr_1fr] md:grid-cols-[2fr_1fr_5fr_1fr_2fr] md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
 >
 	{#if gridState.currentState === id_order}
 		<Observer />
@@ -21,9 +20,3 @@
 	</div>
 	<Actions />
 </main>
-
-<style>
-	#stage {
-		grid-template-rows: 1fr 50px;
-	}
-</style>
