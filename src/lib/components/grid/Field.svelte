@@ -17,8 +17,6 @@
 
 	const xBandwidth = $derived($xScale.bandwidth() / 2);
 	const yBandwidth = $derived($yScale.bandwidth() / 2);
-
-	$inspect(grid);
 </script>
 
 <g
