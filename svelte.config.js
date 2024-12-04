@@ -18,7 +18,8 @@ const config = {
 			$grid: 'src/lib/components/grid',
 			$icons: 'src/lib/icons',
 			$ui: 'src/lib/components/ui',
-			$menu: 'src/lib/components/menu'
+			$menu: 'src/lib/components/menu',
+			$story: 'src/lib/components/story'
 		}
 	}
 };

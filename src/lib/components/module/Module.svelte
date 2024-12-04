@@ -2,7 +2,7 @@
 	import type { Page } from '$types';
 	import Stage from './Stage.svelte';
 	import Footer from './Footer.svelte';
-	import { setStoryState } from '$lib/components/story/story-state.svelte';
+	import { setStoryState } from '$story/story-state.svelte';
 	import { setGridState } from '$grid/grid-state.svelte';
 	import { onMount } from 'svelte';
 	import { checkGridTypeIDs } from '$grid/grid-utils';

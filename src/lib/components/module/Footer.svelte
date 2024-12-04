@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getStoryState } from '$lib/components/story/story-state.svelte';
+	import { getStoryState } from '$story/story-state.svelte';
 	import Button from '$ui/Button.svelte';
 
 	interface Props {
