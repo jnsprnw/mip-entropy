@@ -7,11 +7,11 @@
 	import Move from './Move.svelte';
 	import Pulley from './Pulley.svelte';
 	import { getGridState } from './grid-state.svelte';
-	import { PADDING_GRID, LAYOUT_LINEAR, GRID_SIZE } from '$config';
+	import { LAYOUT_LINEAR, GRID_SIZE } from '$config';
 	import SideSelection from './interactives/SideSelection.svelte';
 
 	const gridState = getGridState();
-	const { grid, height, currentState } = $derived(gridState);
+	const { grid, height, currentState, padding } = $derived(gridState);
 	import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
 	import { ID as id_simple } from '$lib/components/grid/grid-simple.svelte';
 	import Guess from './interactives/Guess.svelte';
@@ -23,13 +23,7 @@
 <div class="w-full flex items-center h-full bg-red-50" bind:clientWidth={gridState.width}>
 	{#if height}
 		<div class="grid-container w-full relative" style="height: {height}px">
-			<LayerCake
-				padding={PADDING_GRID}
-				xDomain={domain}
-				yDomain={domain}
-				xScale={scale}
-				yScale={scale}
-			>
+			<LayerCake {padding} xDomain={domain} yDomain={domain} xScale={scale} yScale={scale}>
 				<Svg>
 					<Base />
 					{#if grid.layout === LAYOUT_LINEAR}

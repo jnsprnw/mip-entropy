@@ -1,5 +1,4 @@
 import {
-	PADDING_GRID,
 	LAYOUT_LINEAR,
 	ENTITY_COLOR_A,
 	ENTITY_COLOR_B,
@@ -19,8 +18,6 @@ import { range } from 'd3-array';
 export const ID = 'move' as const;
 
 const pulley_radius = 10;
-const pulley_off_x = PADDING_GRID.left / 2;
-const pulley_off_y = PADDING_GRID.top / 2;
 
 // Bewegungsgeschwindigkeit
 const SPEED = 0.02;
@@ -413,8 +410,6 @@ export function createMove() {
 		wall_y1,
 		wall_y2,
 		pulley_radius,
-		pulley_off_x,
-		pulley_off_y,
 		startMoving,
 		stopMoving,
 		allowSelectSide,

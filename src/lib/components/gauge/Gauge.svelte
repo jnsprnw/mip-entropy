@@ -2,7 +2,9 @@
 	import { scaleLinear } from 'd3-scale';
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-	import { PADDING_GRID } from '$config';
+	import { getGridState } from '$grid/grid-state.svelte';
+	const gridState = getGridState();
+	const { padding } = $derived(gridState);
 
 	const gauge_id = crypto.randomUUID();
 
@@ -26,7 +28,7 @@
 
 <div
 	class="grid grid-rows-[1fr_auto] gap-y-2 w-full h-full justify-items-center"
-	style="padding-top: {PADDING_GRID.top}px; box-sizing: border-box;"
+	style="padding-top: {padding.top}px; box-sizing: border-box;"
 	role="meter"
 	aria-valuenow={value}
 	aria-valuemin="0"

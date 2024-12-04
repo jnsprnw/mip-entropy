@@ -30,3 +30,10 @@ export type RichField = { index?: number; [KEY_SORT_COLOR]: string; [KEY_SORT_FI
 export type SortByKey = typeof KEY_SORT_FIGURE | typeof KEY_SORT_COLOR;
 
 export type EntropyLevel = typeof ENTROPY_LOW | typeof ENTROPY_HIGH | number;
+
+export type Padding = {
+	top: number;
+	right: number;
+	bottom: number;
+	left: number;
+};

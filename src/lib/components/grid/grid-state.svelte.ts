@@ -1,9 +1,9 @@
-import { PADDING_GRID, GRID_SIZE } from '$config';
+import { PADDING_GRID, PADDING_GRID_WITH_WEIGHT, GRID_SIZE } from '$config';
 import { setContext, getContext } from 'svelte';
 import { createOrder, ID as id_order } from './grid-order.svelte';
 import { createSimple, ID as id_simple } from './grid-simple.svelte';
 import { createMove, ID as id_move } from './grid-move.svelte';
-import type { GridType } from '$types';
+import type { GridType, Padding } from '$types';
 
 const GRID_KEY = Symbol('grid');
 
@@ -25,13 +25,22 @@ export function createGrid() {
 		}
 	});
 
+	const padding: Padding = $derived.by(() => {
+		switch (currentState) {
+			case id_move:
+				return PADDING_GRID_WITH_WEIGHT;
+			default:
+				return PADDING_GRID;
+		}
+	});
+
 	const grid_width_inner = $derived.by(() => {
-		const width = grid_width - PADDING_GRID.left - PADDING_GRID.right;
+		const width = grid_width - padding.left - padding.right;
 		gridState.width = width;
 		return width;
 	});
 
-	const grid_height = $derived(grid_width_inner + PADDING_GRID.top + PADDING_GRID.bottom);
+	const grid_height = $derived(grid_width_inner + padding.top + padding.bottom);
 
 	const entity_size = $derived((grid_height / GRID_SIZE) * 0.3);
 
@@ -56,6 +65,9 @@ export function createGrid() {
 		},
 		get currentState(): string {
 			return currentState.toString();
+		},
+		get padding(): Padding {
+			return padding;
 		}
 	};
 }

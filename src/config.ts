@@ -1,14 +1,23 @@
+import type { Padding } from '$types';
+
 export const MODE_GUESS = 'guess';
 export const MODE_LOOP = 'loop';
 
 export const WEIGHT_WIDTH = 62;
 export const WEIGHT_HEIGHT = 49;
 
-export const PADDING_GRID = {
+export const PADDING_GRID_WITH_WEIGHT: Padding = {
 	bottom: 10,
 	left: WEIGHT_WIDTH,
 	top: WEIGHT_HEIGHT,
 	right: WEIGHT_WIDTH
+};
+
+export const PADDING_GRID: Padding = {
+	bottom: 10,
+	left: 10,
+	top: 10,
+	right: 10
 };
 
 export const LAYOUT_LINEAR = 'linear';

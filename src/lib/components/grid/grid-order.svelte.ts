@@ -1,7 +1,7 @@
 import { createMixedFields } from '$lib/utils/utils';
 import { orderBy } from 'lodash-es';
 import type { Observer, RichField, SortByKey } from '$types';
-import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB, GRID_SIZE } from '$config';
+import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 import { sortBy, getFieldByPosition } from './utils-order';
 
 export const ID = 'order' as const;

@@ -14,7 +14,8 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			$config: 'src/config.ts',
-			$types: 'src/types.ts'
+			$types: 'src/types.ts',
+			$grid: 'src/lib/components/grid'
 		}
 	}
 };
