@@ -2,7 +2,7 @@
 	import { getGridState } from '$grid/grid-state.svelte';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
-	import Button from '$lib/components/ui/Button.svelte';
+	import Button from '$ui/Button.svelte';
 </script>
 
 {#if !grid.has_weight && grid.can_select}

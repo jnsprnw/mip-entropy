@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { setStoryState } from './story-state.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Button from '$ui/Button.svelte';
 	import Grid from '$grid/Grid.svelte';
 	import { setGridState } from '$grid/grid-state.svelte';
 	import { onMount } from 'svelte';
-	import Menu from '$lib/components/menu/Menu.svelte';
+	import Menu from '$menu/Menu.svelte';
 
 	import { ID as id_order } from '$grid/grid-order.svelte';
 	import { ID as id_simple } from '$grid/grid-simple.svelte';

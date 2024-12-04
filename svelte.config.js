@@ -15,7 +15,10 @@ const config = {
 		alias: {
 			$config: 'src/config.ts',
 			$types: 'src/types.ts',
-			$grid: 'src/lib/components/grid'
+			$grid: 'src/lib/components/grid',
+			$icons: 'src/lib/icons',
+			$ui: 'src/lib/components/ui',
+			$menu: 'src/lib/components/menu'
 		}
 	}
 };

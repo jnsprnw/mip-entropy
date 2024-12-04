@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getStoryState } from '$lib/components/story/story-state.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Button from '$ui/Button.svelte';
 
 	interface Props {
 		prevPage: () => void;

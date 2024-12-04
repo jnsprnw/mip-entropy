@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Simple from '$lib/components/menu/Simple.svelte';
-	import Order from '$lib/components/menu/Order.svelte';
-	import Move from '$lib/components/menu/Move.svelte';
+	import Simple from '$menu/Simple.svelte';
+	import Order from '$menu/Order.svelte';
+	import Move from '$menu/Move.svelte';
 	import { ID as id_order } from '$grid/grid-order.svelte';
 	import { ID as id_simple } from '$grid/grid-simple.svelte';
 	import { ID as id_move } from '$grid/grid-move.svelte';

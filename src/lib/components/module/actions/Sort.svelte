@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getGridState } from '$grid/grid-state.svelte';
-	import Button from '$lib/components/ui/Button.svelte';
+	import Button from '$ui/Button.svelte';
 	const gridState = getGridState();
 	import { fade } from 'svelte/transition';
 	const { grid } = $derived(gridState);

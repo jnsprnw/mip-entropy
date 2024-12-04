@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Right from '$lib/icons/Right.svelte';
-	import Left from '$lib/icons/Left.svelte';
-	import Sort from '$lib/icons/Sort.svelte';
-	import Eye from '$lib/icons/Eye.svelte';
+	import Right from '$icons/Right.svelte';
+	import Left from '$icons/Left.svelte';
+	import Sort from '$icons/Sort.svelte';
+	import Eye from '$icons/Eye.svelte';
 
 	interface Props {
 		onclick: () => void;

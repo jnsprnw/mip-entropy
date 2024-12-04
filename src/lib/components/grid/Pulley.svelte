@@ -3,7 +3,7 @@
 	import { getGridState } from '$grid/grid-state.svelte';
 	const gridState = getGridState();
 	const { grid, padding } = $derived(gridState);
-	import Package from '$lib/icons/Package.svelte';
+	import Package from '$icons/Package.svelte';
 	import { WEIGHT_WIDTH } from '$config';
 
 	const { xScale, yScale, width } = getContext('LayerCake');
