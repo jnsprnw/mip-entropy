@@ -20,7 +20,7 @@
 	const domain = $derived(grid.layout === LAYOUT_LINEAR ? [0, 1] : range(0, GRID_SIZE));
 </script>
 
-<div class="w-full flex items-center h-full bg-red-50" bind:clientWidth={gridState.width}>
+<div class="w-full flex items-center h-full" bind:clientWidth={gridState.width}>
 	{#if height}
 		<div class="grid-container w-full relative" style="height: {height}px">
 			<LayerCake {padding} xDomain={domain} yDomain={domain} xScale={scale} yScale={scale}>
