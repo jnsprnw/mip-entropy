@@ -37,3 +37,17 @@ export type Padding = {
 	bottom: number;
 	left: number;
 };
+
+export type Particle = {
+	// Koordinaten des Balls
+	cx: number;
+	cy: number;
+	// Winkel der Bewegung
+	angle: number;
+	// Beweungsrichtung
+	dx: number;
+	dy: number;
+	radius: number;
+	color: string | undefined;
+	shape: string;
+};

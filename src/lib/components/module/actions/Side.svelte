@@ -3,8 +3,7 @@
 	import Button from '$ui/Button.svelte';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
-	const { selected_side, canGuess, resetSide, can_select, is_wall_ended, can_wall_be_moved } =
-		$derived(grid);
+	const { selected_side, canGuess, resetSide, can_select, is_wall_ended } = $derived(grid);
 </script>
 
 {#if typeof selected_side !== 'undefined' && can_select}
@@ -12,9 +11,6 @@
 		<div class="flex flex-col transition-opacity" class:opacity-50={!canGuess}>
 			{#if is_wall_ended}
 				<span class="text-xs">Good job!</span>
-			{/if}
-			{#if selected_side && !can_wall_be_moved}
-				<span class="text-xs">The wall won’t move</span>
 			{/if}
 		</div>
 		<Button label="Reset selection" disabled={!selected_side} onclick={resetSide} />

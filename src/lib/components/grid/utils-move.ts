@@ -1,3 +1,5 @@
+import type { Particle } from '$types';
+
 export function intersectsWall(
 	x: number,
 	y: number,
@@ -61,4 +63,32 @@ export function isWallLeft(
 
 	// Wenn das Kreuzprodukt positiv ist, befindet sich der Ball rechts von der Wand
 	return crossProduct > 0;
+}
+
+export function checkIfWallHitRight(
+	particle: Particle,
+	radius: number,
+	wall_x: number,
+	wall_width: number,
+	ignore_color: string | undefined
+) {
+	return (
+		particle.color !== ignore_color &&
+		particle.cx - radius <= wall_x + wall_width &&
+		particle.cx > wall_x
+	);
+}
+
+export function checkIfWallHitLeft(
+	particle: Particle,
+	radius: number,
+	wall_x: number,
+	wall_width: number,
+	ignore_color: string | undefined
+) {
+	return (
+		particle.color !== ignore_color &&
+		particle.cx + radius >= wall_x - wall_width &&
+		particle.cx < wall_x
+	);
 }

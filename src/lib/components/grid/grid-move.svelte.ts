@@ -10,33 +10,20 @@ import {
 	SIDE_RIGHT
 } from '$config';
 import { random } from 'lodash-es';
-import type { Observer, EntityColor } from '$types';
+import type { Observer, EntityColor, Particle } from '$types';
 import { scaleLinear, scalePoint } from 'd3-scale';
 import { range } from 'd3-array';
+import { checkIfWallHitRight, checkIfWallHitLeft } from './utils-move';
 
 export const ID = 'move' as const;
 
-const pulley_radius = 10;
+// const pulley_radius = 10;
 
 // Bewegungsgeschwindigkeit
 const SPEED = 0.02;
 
 // Radius des Balls
 const RADIUS = 0.03;
-
-type Particle = {
-	// Koordinaten des Balls
-	cx: number;
-	cy: number;
-	// Winkel der Bewegung
-	angle: number;
-	// Beweungsrichtung
-	dx: number;
-	dy: number;
-	radius: number;
-	color: string | undefined;
-	shape: string;
-};
 
 export function createMove() {
 	let is_moving = $state<boolean>(false);
@@ -54,6 +41,7 @@ export function createMove() {
 	const scale = $derived(scaleLinear().domain([0, 1]).range([0, width]));
 	const wall_width_scaled = $derived(scale.invert(WALL_WIDTH / 2));
 	const wall_offset_scaled = $derived(scale.invert(10));
+	const pulley_radius = $derived(Math.max(scale.invert(10), 6));
 
 	// Koordinaten der Wand
 	let wall_x1 = $state<number>(0);
@@ -71,27 +59,35 @@ export function createMove() {
 			particle.cy += particle.dy;
 
 			// The wall was hit on the right hand side. Particle is on the left side of the wall.
-			const wall_hit_right =
-				particle.color !== ignore_color &&
-				particle.cx - RADIUS <= wall_x1 + wall_width_scaled &&
-				particle.cx > wall_x1;
+			const wall_hit_right = checkIfWallHitRight(
+				particle,
+				RADIUS,
+				wall_x1,
+				wall_width_scaled,
+				ignore_color
+			);
 
 			// The wall was hit on the right hand side
 			const wall_hit_left =
-				particle.color !== ignore_color &&
-				particle.cx + RADIUS >= wall_x1 - wall_width_scaled &&
-				particle.cx < wall_x1;
+				!wall_hit_right &&
+				checkIfWallHitLeft(particle, RADIUS, wall_x1, wall_width_scaled, ignore_color);
 
 			// The wall or outer bounds are hit
 			if (particle.cx - RADIUS < 0 || wall_hit_right || wall_hit_left || particle.cx + RADIUS > 1) {
 				particle.dx = -particle.dx;
 			}
 
-			if (
-				((wall_hit_right && selected_side === SIDE_RIGHT) ||
-					(wall_hit_left && selected_side === SIDE_LEFT)) &&
-				has_weight
-			) {
+			// This moves the wall if the particle has weight and hits the wall from the selected side
+			// if (
+			// 	((wall_hit_right && selected_side === SIDE_RIGHT) ||
+			// 		(wall_hit_left && selected_side === SIDE_LEFT)) &&
+			// 	has_weight
+			// ) {
+			// 	moveWall(wall_hit_right);
+			// }
+
+			// This moves the wall if the particle has weight and hits the wall from any side
+			if ((wall_hit_right || wall_hit_left) && has_weight) {
 				moveWall(wall_hit_right);
 			}
 
@@ -116,13 +112,11 @@ export function createMove() {
 	function selectLeftSide() {
 		selected_side = SIDE_LEFT;
 		has_weight = true;
-		// startMoving();
 	}
 
 	function selectRightSide() {
 		selected_side = SIDE_RIGHT;
 		has_weight = true;
-		// startMoving();
 	}
 
 	function resetSide() {
@@ -145,17 +139,17 @@ export function createMove() {
 	const WALL_SPEED = 0.01;
 
 	const is_wall_ended = $derived(
-		wall_x1 <= wall_width_scaled + wall_offset_scaled ||
-			wall_x1 >= 1 - wall_width_scaled - wall_offset_scaled
+		(wall_x1 <= wall_width_scaled + wall_offset_scaled && selected_side === SIDE_RIGHT) ||
+			(wall_x1 >= 1 - wall_width_scaled - wall_offset_scaled && selected_side === SIDE_LEFT)
 	);
 
-	const can_wall_be_moved = $derived(
-		particles.some(
-			({ cx }) =>
-				(cx - RADIUS < wall_x1 + wall_width_scaled && selected_side === SIDE_LEFT) ||
-				(cx + RADIUS > wall_x1 - wall_width_scaled && selected_side === SIDE_RIGHT)
-		)
-	);
+	// const can_wall_be_moved = $derived(
+	// 	particles.some(
+	// 		({ cx }) =>
+	// 			(cx - RADIUS < wall_x1 + wall_width_scaled && selected_side === SIDE_LEFT) ||
+	// 			(cx + RADIUS > wall_x1 - wall_width_scaled && selected_side === SIDE_RIGHT)
+	// 	)
+	// );
 
 	function moveWall(
 		wall_hit_right: boolean,
@@ -194,8 +188,6 @@ export function createMove() {
 			counter = counter + (direction ? 1 : -1);
 			moveWall(direction, true, 0.005);
 		}, 30);
-
-		// setTimeout(() => moveWall(false, true), 100);
 	}
 
 	function stopAnimateWallMovement() {
@@ -408,7 +400,6 @@ export function createMove() {
 		// resetBall,
 		wall_y1,
 		wall_y2,
-		pulley_radius,
 		startMoving,
 		stopMoving,
 		allowSelectSide,
@@ -436,14 +427,14 @@ export function createMove() {
 		setRedIgnoreColor() {
 			ignore_color = ENTITY_COLOR_B;
 		},
+		get pulley_radius() {
+			return pulley_radius;
+		},
 		set width(value: number) {
 			width = value;
 		},
 		get is_wall_ended() {
 			return is_wall_ended;
-		},
-		get can_wall_be_moved() {
-			return can_wall_be_moved;
 		},
 		get show_wall() {
 			return show_wall;

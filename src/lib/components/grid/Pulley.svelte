@@ -4,7 +4,7 @@
 	const gridState = getGridState();
 	const { grid, padding } = $derived(gridState);
 	import Package from '$icons/Package.svelte';
-	import { WEIGHT_WIDTH } from '$config';
+	import { WEIGHT_WIDTH, SIDE_LEFT } from '$config';
 
 	const { xScale, yScale, width } = getContext('LayerCake');
 
@@ -14,23 +14,23 @@
 
 	// The pulley that is outside and based on the ball’s side
 	const cx_2 = $derived(
-		$xScale(selected_side === 'left' ? 0 : 1) +
-			(padding.left / 2) * (selected_side === 'left' ? -1 : 1)
+		$xScale(selected_side === SIDE_LEFT ? 0 : 1) +
+			(padding.left / 2) * (selected_side === SIDE_LEFT ? -1 : 1)
 	);
 
 	const cord_y = $derived($yScale(1));
 
 	const distance = $derived(
-		(1 / $width) * (selected_side === 'left' ? $width - $xScale(wall_x2) : $xScale(wall_x2))
+		(1 / $width) * (selected_side === SIDE_LEFT ? $width - $xScale(wall_x2) : $xScale(wall_x2))
 	);
 
-	const weight_x = $derived(cx_2 + radius * (selected_side === 'left' ? -1 : 1));
-	const weight_y = $derived(cord_y + distance * $width);
+	const weight_x = $derived(cx_2 + radius * (selected_side === SIDE_LEFT ? -1 : 1));
+	const weight_y = $derived(cord_y + distance * $width - 20); // 20 is half the weight height
 </script>
 
 {#if grid.has_weight}
 	<g>
-		{#if selected_side === 'left'}
+		{#if selected_side === SIDE_LEFT}
 			<path
 				d="
 				M {$xScale(wall_x2)} {cy - radius}
