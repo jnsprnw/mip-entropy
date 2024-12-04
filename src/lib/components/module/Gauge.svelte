@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getGridState } from '$grid/grid-state.svelte';
 	import Gauge from '$lib/components/gauge/Gauge.svelte';
-	import { getObserverDetail } from '$lib/components/grid/utils-order';
+	import { getObserverDetail } from '$grid/utils-order';
 	import { OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);

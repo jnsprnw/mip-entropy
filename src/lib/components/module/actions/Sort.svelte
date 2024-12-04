@@ -5,7 +5,7 @@
 	import { fade } from 'svelte/transition';
 	const { grid } = $derived(gridState);
 	const { hasObserver, observer, sort, can_sort, entropy, is_sorting } = $derived(grid);
-	import { getObserverDetail } from '$lib/components/grid/utils-order';
+	import { getObserverDetail } from '$grid/utils-order';
 	const verb = $derived(is_sorting ? 'Sorting' : entropy === 0 ? 'Sorted' : 'Sort');
 	const { label } = $derived(getObserverDetail(observer));
 </script>

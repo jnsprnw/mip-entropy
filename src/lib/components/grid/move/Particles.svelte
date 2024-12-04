@@ -2,9 +2,9 @@
 	import { getFill } from '$lib/utils/utils';
 	import { getContext } from 'svelte';
 	import { getGridState } from '$grid/grid-state.svelte';
-	import Square from '$lib/components/grid/shapes/Square.svelte';
-	import Circle from '$lib/components/grid/shapes/Circle.svelte';
-	import Triangle from '$lib/components/grid/shapes/Triangle.svelte';
+	import Square from '$grid/shapes/Square.svelte';
+	import Circle from '$grid/shapes/Circle.svelte';
+	import Triangle from '$grid/shapes/Triangle.svelte';
 	import {
 		OBSERVER_ALICE,
 		ENTITY_SHAPE_SQUARE,

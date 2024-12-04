@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { getFill, getX, getY } from '$lib/utils/utils';
 	import { getContext } from 'svelte';
-	import Square from '$lib/components/grid/shapes/Square.svelte';
-	import Circle from '$lib/components/grid/shapes/Circle.svelte';
-	import Triangle from '$lib/components/grid/shapes/Triangle.svelte';
+	import Square from '$grid/shapes/Square.svelte';
+	import Circle from '$grid/shapes/Circle.svelte';
+	import Triangle from '$grid/shapes/Triangle.svelte';
 
 	const { xScale, yScale } = getContext('LayerCake');
 

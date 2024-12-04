@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { setStoryState } from './story-state.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
-	import Grid from '$lib/components/grid/Grid.svelte';
+	import Grid from '$grid/Grid.svelte';
 	import { setGridState } from '$grid/grid-state.svelte';
 	import { onMount } from 'svelte';
 	import Menu from '$lib/components/menu/Menu.svelte';
 
-	import { ID as id_order } from '$lib/components/grid/grid-order.svelte';
-	import { ID as id_simple } from '$lib/components/grid/grid-simple.svelte';
-	import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
+	import { ID as id_order } from '$grid/grid-order.svelte';
+	import { ID as id_simple } from '$grid/grid-simple.svelte';
+	import { ID as id_move } from '$grid/grid-move.svelte';
 
 	const story = setStoryState();
 	let grid = setGridState();

@@ -12,8 +12,8 @@
 
 	const gridState = getGridState();
 	const { grid, height, currentState, padding } = $derived(gridState);
-	import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
-	import { ID as id_simple } from '$lib/components/grid/grid-simple.svelte';
+	import { ID as id_move } from '$grid/grid-move.svelte';
+	import { ID as id_simple } from '$grid/grid-simple.svelte';
 	import Guess from './interactives/Guess.svelte';
 	const scale = $derived(grid.layout === LAYOUT_LINEAR ? scaleLinear() : scaleBand());
 

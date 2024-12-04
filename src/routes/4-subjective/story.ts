@@ -1,6 +1,6 @@
 import type { Page } from '$types';
 
-import { ID as id_order } from '$lib/components/grid/grid-order.svelte';
+import { ID as id_order } from '$grid/grid-order.svelte';
 
 export const pages: Page[] = [
 	{

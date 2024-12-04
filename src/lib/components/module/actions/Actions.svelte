@@ -5,9 +5,9 @@
 	import Guess from './Guess.svelte';
 	import Side from './Side.svelte';
 	const gridState = getGridState();
-	import { ID as id_order } from '$lib/components/grid/grid-order.svelte';
-	import { ID as id_simple } from '$lib/components/grid/grid-simple.svelte';
-	import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
+	import { ID as id_order } from '$grid/grid-order.svelte';
+	import { ID as id_simple } from '$grid/grid-simple.svelte';
+	import { ID as id_move } from '$grid/grid-move.svelte';
 </script>
 
 {#if gridState.currentState === id_order}

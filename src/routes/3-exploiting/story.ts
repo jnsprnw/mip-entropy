@@ -1,6 +1,6 @@
 import type { Page } from '$types';
 
-import { ID as id_move } from '$lib/components/grid/grid-move.svelte';
+import { ID as id_move } from '$grid/grid-move.svelte';
 
 export const pages: Page[] = [
 	{

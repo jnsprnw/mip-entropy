@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getGridState } from '$grid/grid-state.svelte';
-	import { GUESS_PARTICLE_COUNT } from '$lib/components/grid/grid-simple.svelte';
+	import { GUESS_PARTICLE_COUNT } from '$grid/grid-simple.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { MODE_GUESS, ENTROPY_LOW } from '$config';
 	const gridState = getGridState();

@@ -1,11 +1,11 @@
 <script lang="ts">
-	import Grid from '$lib/components/grid/Grid.svelte';
+	import Grid from '$grid/Grid.svelte';
 	import Observer from './Observer.svelte';
 	import Gauge from './Gauge.svelte';
 	import Actions from './actions/Actions.svelte';
 	import { getGridState } from '$grid/grid-state.svelte';
 	const gridState = getGridState();
-	import { ID as id_order } from '$lib/components/grid/grid-order.svelte';
+	import { ID as id_order } from '$grid/grid-order.svelte';
 </script>
 
 <main
