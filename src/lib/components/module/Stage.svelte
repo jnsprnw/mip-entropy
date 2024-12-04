@@ -10,13 +10,13 @@
 
 <main
 	id="stage"
-	class="w-full sm:p-2 md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
+	class="w-full aspect-video sm:p-2 grid-cols-[1fr_5fr_1fr] md:grid-cols-[2fr_1fr_5fr_1fr_2fr] md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
 >
 	{#if gridState.currentState === id_order}
 		<Observer />
 	{/if}
 	<Gauge />
-	<div class="col-start-3 row-start-1 w-full h-full p-2">
+	<div class="col-start-2 md:col-start-3 row-start-1 w-full h-full p-2">
 		<Grid />
 	</div>
 	<Actions />
@@ -24,7 +24,6 @@
 
 <style>
 	#stage {
-		grid-template-rows: 5fr 50px;
-		grid-template-columns: 2fr 1fr 5fr 1fr 2fr;
+		grid-template-rows: 1fr 50px;
 	}
 </style>

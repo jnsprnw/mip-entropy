@@ -9,7 +9,9 @@
 	const { observer, hasObserver, is_visible_alice, is_visible_bob } = $derived(grid);
 
 	const highlight_area = $derived(
-		observer === OBSERVER_ALICE ? 'col-start-1 col-end-4' : 'col-start-3 col-end-6 '
+		observer === OBSERVER_ALICE
+			? 'col-start-1 col-end-3 md:col-end-4'
+			: 'col-start-2 md:col-start-3 col-end-4 md:col-end-6 '
 	);
 </script>
 
@@ -22,8 +24,16 @@
 	></div>
 {/if}
 
-<div class="col-start-1 row-start-1 sm:p-3 md:p-5" class:opacity-50={!is_visible_alice}>
+<div
+	class="hidden md:block col-start-1 row-start-1 sm:p-3 md:p-5"
+	class:opacity-50={!is_visible_alice}
+>
 	<Alice />
 </div>
 
-<div class="col-start-5 row-start-1 sm:p-3 md:p-5" class:opacity-50={!is_visible_bob}><Bob /></div>
+<div
+	class="hidden md:block col-start-5 row-start-1 sm:p-3 md:p-5"
+	class:opacity-50={!is_visible_bob}
+>
+	<Bob />
+</div>

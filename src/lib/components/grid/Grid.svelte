@@ -18,14 +18,9 @@
 	const scale = $derived(grid.layout === LAYOUT_LINEAR ? scaleLinear() : scaleBand());
 
 	const domain = $derived(grid.layout === LAYOUT_LINEAR ? [0, 1] : range(0, GRID_SIZE));
-
-	// let height = $state<number>(0);
-	// const width = $derived(
-	// 	height + PADDING_GRID.left + PADDING_GRID.right - PADDING_GRID.top - PADDING_GRID.bottom
-	// );
 </script>
 
-<div class="w-full flex items-center h-full" bind:clientWidth={gridState.width}>
+<div class="w-full flex items-center h-full bg-red-50" bind:clientWidth={gridState.width}>
 	{#if height}
 		<div class="grid-container w-full relative" style="height: {height}px">
 			<LayerCake
