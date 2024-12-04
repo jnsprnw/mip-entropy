@@ -26,9 +26,9 @@
 >
 	{#if typeof opt !== 'undefined'}
 		{#if typeof opt?.fill === 'boolean'}
-			<circle cx={0} cy={0} r={entity_size / 2} class="fill-entity" />
+			<circle r={entity_size / 2} class="fill-entity" />
 		{:else if grid.observer === 'alice'}
-			<Circle {color} isBlur={true} />
+			<Circle {color} r={entity_size / 2} isBlur={true} />
 		{:else if opt.figure === 'square'}
 			<Square {color} size={entity_size} />
 		{:else if opt.figure === 'triangle'}

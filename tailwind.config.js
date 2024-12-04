@@ -3,6 +3,9 @@ export default {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 	theme: {
 		extend: {
+			blur: {
+				xs: '2px'
+			},
 			colors: {
 				bg: {
 					bright: '#D5EDF5',

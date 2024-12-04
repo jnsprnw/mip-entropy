@@ -3,7 +3,7 @@
 		color: string;
 		cx?: number;
 		cy?: number;
-		r?: number;
+		r: number;
 		isBlur?: boolean;
 	}
 	const { color, cx = 0, cy = 0, r = 8, isBlur = false }: Props = $props();
@@ -12,7 +12,8 @@
 <circle
 	{cx}
 	{cy}
-	r={r + (isBlur ? 1 : 0)}
+	{r}
 	class="fill transition-colors {color}"
-	class:blur-sm={isBlur}
+	class:blur-xs={isBlur}
+	class:md:blur-sm={isBlur}
 />
