@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Grid from '$grid/Grid.svelte';
 	import Observer from './Observer.svelte';
-	import Gauge from './Gauge.svelte';
+	import Gauges from './Gauges.svelte';
 	import Actions from './actions/Actions.svelte';
 	import { getGridState } from '$grid/grid-state.svelte';
 	const gridState = getGridState();
@@ -15,7 +15,7 @@
 	{#if gridState.currentState === id_order}
 		<Observer />
 	{/if}
-	<Gauge />
+	<Gauges />
 	<div class="col-start-2 md:col-start-3 row-start-1 w-full h-full p-2">
 		<Grid />
 	</div>

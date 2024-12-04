@@ -9,7 +9,7 @@
 </script>
 
 {#if typeof entropy_value === 'number'}
-	<div class="col-start-2 row-start-1 w-full p-2 h-full">
+	<div class="col-start-1 md:col-start-2 row-start-1 w-full p-2 h-full">
 		<Gauge value={entropy_value} label="Entropy" />
 	</div>
 {:else if Array.isArray(entropy_value) && entropy_value.length === 2}
