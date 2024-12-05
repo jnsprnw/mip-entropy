@@ -16,7 +16,7 @@
 	<div
 		in:fade
 		out:fade
-		class="col-start-1 col-span-3 md:col-span-5 justify-self-center row-start-2 text-xs"
+		class="col-start-[left] col-end-[right] justify-self-center row-start-2 text-xs"
 	>
 		<span class="tabular-nums">{count_run_str} / {count_total_str} configurations explored</span>
 	</div>

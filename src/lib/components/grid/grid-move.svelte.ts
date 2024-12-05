@@ -42,6 +42,7 @@ export function createMove() {
 	const wall_width_scaled = $derived(scale.invert(WALL_WIDTH / 2));
 	const wall_offset_scaled = $derived(scale.invert(10));
 	const pulley_radius = $derived(Math.max(scale.invert(10), 6));
+	const hasObserver = $derived(typeof observer !== 'undefined');
 
 	// Koordinaten der Wand
 	let wall_x1 = $state<number>(0);
@@ -474,6 +475,9 @@ export function createMove() {
 		},
 		get has_shadow() {
 			return has_shadow;
+		},
+		get hasObserver() {
+			return hasObserver;
 		}
 	};
 }

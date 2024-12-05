@@ -10,7 +10,9 @@
 </script>
 
 {#if mode === MODE_GUESS}
-	<div class="col-start-1 col-span-5 row-start-2 grid grid-cols-2 text-center items-center gap-x-4">
+	<div
+		class="col-start-[left] col-end-[right] row-start-2 grid grid-cols-2 text-center items-center gap-x-4"
+	>
 		<div class="flex flex-col transition-opacity" class:opacity-50={!canGuess}>
 			<span class="text-xs">Guesses: {count_guess}</span>
 			<span class="text-xs">

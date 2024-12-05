@@ -9,7 +9,7 @@ const GRID_KEY = Symbol('grid');
 
 export function createGrid() {
 	let currentState = $state<GridType>(id_simple);
-	let grid_width = $state<number>(0);
+	let grid_height = $state<number>(0);
 
 	const gridState = $derived.by(() => {
 		switch (currentState) {
@@ -34,25 +34,31 @@ export function createGrid() {
 		}
 	});
 
-	const grid_width_inner = $derived.by(() => {
-		const width = grid_width - padding.left - padding.right;
-		gridState.width = width;
-		return width;
+	const grid_height_inner: number = $derived.by(() => {
+		$inspect({ grid_height });
+		return grid_height - padding.top - padding.bottom;
+		// gridState.width = width;
+		// return width;
 	});
 
-	const grid_height = $derived(grid_width_inner + padding.top + padding.bottom);
+	const grid_width: number = $derived.by(() => {
+		const width = grid_height_inner + padding.left + padding.right;
+		gridState.width = width;
+		$inspect({ grid_height_inner, width });
+		return width;
+	});
 
 	const entity_size = $derived((grid_height / GRID_SIZE) * 0.3);
 
 	return {
-		set width(value: number) {
-			grid_width = value;
-		},
-		get width(): number {
-			return grid_width;
+		set height(value: number) {
+			grid_height = value;
 		},
 		get height(): number {
 			return grid_height;
+		},
+		get width(): number {
+			return grid_width;
 		},
 		get grid() {
 			return gridState;

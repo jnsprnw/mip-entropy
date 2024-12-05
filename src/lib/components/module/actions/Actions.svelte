@@ -23,4 +23,5 @@
 	<Counter />
 {:else if gridState.currentState === id_move}
 	<Side />
+	<Observer />
 {/if}

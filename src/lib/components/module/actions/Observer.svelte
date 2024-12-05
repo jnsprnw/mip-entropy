@@ -12,6 +12,7 @@
 	);
 
 	const { other } = $derived(getObserverDetail(observer));
+	$inspect(hasObserver, allow_observer_switch);
 </script>
 
 {#if hasObserver && allow_observer_switch}
