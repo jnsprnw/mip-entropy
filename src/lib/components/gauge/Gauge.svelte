@@ -41,7 +41,7 @@
 	></span>
 	<span
 		style="height: {scale($progress)}%;"
-		class="bg-highlight w-2/5 justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
+		class="bg-highlight w-[20px] justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
 		aria-hidden="true"
 	></span>
 	<span

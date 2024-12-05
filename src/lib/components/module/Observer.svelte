@@ -25,14 +25,14 @@
 {/if}
 
 <div
-	class="hidden md:block col-start-[alice] row-start-1 w-[150px] sm:p-3 md:p-5"
+	class="hidden md:block col-start-[alice] row-start-1 w-[70px] lg:w-[120px] lg:p-3"
 	class:opacity-50={!is_visible_alice}
 >
 	<Alice />
 </div>
 
 <div
-	class="hidden md:block col-start-[bob] row-start-1 w-[150px] sm:p-3 md:p-5"
+	class="hidden md:block col-start-[bob] row-start-1 w-[70px] lg:w-[120px] lg:p-3"
 	class:opacity-50={!is_visible_bob}
 >
 	<Bob />
