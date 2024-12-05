@@ -20,7 +20,7 @@
 
 <div class="w-full flex items-center h-full" bind:clientHeight={gridState.height}>
 	{#if width}
-		<div class="grid-container h-full relative" style="width: {width}px">
+		<div class="relative w-full" style="aspect-ratio: {width} / {gridState.height};">
 			<LayerCake {padding} xDomain={domain} yDomain={domain} xScale={scale} yScale={scale}>
 				<Svg>
 					<Base />

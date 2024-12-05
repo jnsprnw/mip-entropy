@@ -35,16 +35,12 @@ export function createGrid() {
 	});
 
 	const grid_height_inner: number = $derived.by(() => {
-		$inspect({ grid_height });
-		return grid_height - padding.top - padding.bottom;
-		// gridState.width = width;
-		// return width;
+		return grid_height - padding.top + padding.bottom;
 	});
 
 	const grid_width: number = $derived.by(() => {
 		const width = grid_height_inner + padding.left + padding.right;
 		gridState.width = width;
-		$inspect({ grid_height_inner, width });
 		return width;
 	});
 

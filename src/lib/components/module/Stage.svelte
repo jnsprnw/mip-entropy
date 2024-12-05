@@ -14,7 +14,7 @@
 			case id_order:
 				return `grid-cols-[60px_1fr_60px] [grid-template-areas:'gaugeA_grid_gaugeB''left_center_right'] md:grid-cols-[150px_60px_1fr_60px_150px] md:[grid-template-areas:'alice_gaugeA_grid_gaugeB_bob''left_left_center_right_right']`;
 			case id_move:
-				return `grid-cols-[60px_1fr_60px] [grid-template-areas:'gaugeA_grid_gaugeB''left_center_right']`;
+				return `grid-cols-[60px_1fr_60px] [grid-template-areas:'grid_grid_grid''left_center_right']`;
 			case id_simple:
 				return `grid-cols-[60px_1fr_60px] [grid-template-areas:'gaugeA_grid_gaugeB''left_center_right']`;
 		}
@@ -22,13 +22,13 @@
 </script>
 
 <main
-	class="{cols} w-full aspect-video sm:p-2 gap-x-2 grid-rows-[1fr_50px] md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
+	class="{cols} w-full aspect-square md:aspect-video sm:p-2 gap-x-6 grid-rows-[auto_50px] md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
 >
 	{#if gridState.currentState === id_order}
 		<Observer />
 	{/if}
 	<Gauges />
-	<div class="col-start-[grid] row-start-1 h-full min-w-fit max-w-full p-2">
+	<div class="col-start-[grid] col-end-[grid] aspect-square row-start-1 h-full max-w-full p-2">
 		<Grid />
 	</div>
 	<Actions />
