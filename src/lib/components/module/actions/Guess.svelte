@@ -16,9 +16,9 @@
 		<div class="flex flex-col transition-opacity" class:opacity-50={!canGuess}>
 			<div class="font-medium text-primary-dark">
 				<em class="not-italic text-xl/none tabular-nums">{count_guess}</em>
-				<span class="text-xs uppercase tracking-wider"
-					>{count_guess == 1 ? 'guess' : 'guesses'}</span
-				>
+				<span class="text-xs uppercase tracking-wider">
+					{count_guess == 1 ? 'guess' : 'guesses'}
+				</span>
 			</div>
 			<hr class="h-px my-1 bg-primary-dark border-0" />
 			<span class="text-xs tabular-nums uppercase font-medium tracking-wider">
