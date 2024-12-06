@@ -15,7 +15,7 @@
 	>
 		{#each range(GRID_SIZE * GRID_SIZE) as position}
 			<button
-				class="bg-accent-light outline outline-1 outline-grid-inner transition-[colors_opacity] focus:outline-none focus:bg-accent-dark hover:bg-accent-dark"
+				class="bg-primary-dark outline outline-1 outline-grid-inner transition-[colors_opacity] focus:outline-none focus:bg-accent-dark hover:bg-primary-light"
 				disabled={!grid.canGuess || grid.guesses[position]}
 				class:bg-transparent={grid.guesses[position]}
 				class:pointer-events-none={grid.guesses[position]}

@@ -4,7 +4,7 @@ import { ID as id_simple } from '$grid/grid-simple.svelte';
 
 export const pages: Page[] = [
 	{
-		text: 'Entropy can also be thought of as a measure of uncertainty. Click on the squares to reveal where all nine particles are. Let’s start with the “ordered” state in which we know the particles are clumped together.',
+		text: 'Let’s start with the “ordered” state in which we know the particles are clumped together.',
 		actions: ['setEntropyLow', 'guessLow'],
 		type: id_simple
 	},

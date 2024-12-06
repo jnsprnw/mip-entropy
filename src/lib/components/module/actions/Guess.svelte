@@ -11,11 +11,17 @@
 
 {#if mode === MODE_GUESS}
 	<div
-		class="col-start-[left] col-end-[right] row-start-2 grid grid-cols-2 text-center items-center gap-x-4"
+		class="col-start-[left] col-end-[right] row-start-2 gap-x-12 grid grid-cols-2 text-center items-center"
 	>
 		<div class="flex flex-col transition-opacity" class:opacity-50={!canGuess}>
-			<span class="text-xs">Guesses: {count_guess}</span>
-			<span class="text-xs">
+			<div class="font-medium text-primary-dark">
+				<em class="not-italic text-xl/none tabular-nums">{count_guess}</em>
+				<span class="text-xs uppercase tracking-wider"
+					>{count_guess == 1 ? 'guess' : 'guesses'}</span
+				>
+			</div>
+			<hr class="h-px my-1 bg-primary-dark border-0" />
+			<span class="text-xs tabular-nums uppercase font-medium tracking-wider">
 				{#if count_found < GUESS_PARTICLE_COUNT}
 					{count_found} / {GUESS_PARTICLE_COUNT} particles found
 				{:else}
