@@ -6,7 +6,7 @@
 	import Package from '$icons/Package.svelte';
 	import { WEIGHT_WIDTH, SIDE_LEFT, WALL_WIDTH } from '$config';
 
-	const { xScale, yScale, width, height } = getContext('LayerCake');
+	const { xScale, yScale } = getContext('LayerCake');
 
 	const { wall_x, pulley_radius: radius, selected_side, weight_distance } = $derived(grid);
 
