@@ -22,7 +22,7 @@
 	const rect_height = $derived(y1 - y0);
 </script>
 
-<g class="base" transform="translate({0}, {0})">
+<g>
 	<rect
 		x={x0}
 		y={y0}
@@ -32,7 +32,6 @@
 		stroke-linejoin="round"
 		class="fill-white"
 	></rect>
-
 	{#if grid.mode !== MODE_GUESS}
 		{#each $xDomain as tick, i}
 			{#if i !== 0}
