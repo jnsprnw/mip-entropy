@@ -43,28 +43,6 @@ export function getWallNormal(x1: number, y1: number, x2: number, y2: number) {
 	return { x: -dy / length, y: dx / length };
 }
 
-export function isWallLeft(
-	cx: number,
-	cy: number,
-	wall_x1: number,
-	wall_x2: number,
-	wall_y1: number,
-	wall_y2: number
-) {
-	const wallDirX = wall_x2 - wall_x1;
-	const wallDirY = wall_y2 - wall_y1;
-
-	// Vektor vom Startpunkt der Wand zum Ball
-	const ballVecX = cx - wall_x1;
-	const ballVecY = cy - wall_y1;
-
-	// Berechne das Kreuzprodukt
-	const crossProduct = wallDirX * ballVecY - wallDirY * ballVecX;
-
-	// Wenn das Kreuzprodukt positiv ist, befindet sich der Ball rechts von der Wand
-	return crossProduct > 0;
-}
-
 export function checkIfWallHitRight(
 	particle: Particle,
 	radius: number,
