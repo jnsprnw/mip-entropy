@@ -28,6 +28,7 @@ export function createSimple() {
 	let count_guess = $state<number>(0);
 	let count_found = $state<number>(0);
 	let show_count = $state<boolean>(true);
+	let grid_area_active = $state<number | null>(null);
 
 	let entropy_level = $state<EntropyLevel>(ENTROPY_LOW);
 	const entropy_value = $derived(getEntropyValue(entropy_level));
@@ -40,7 +41,7 @@ export function createSimple() {
 		if (setLevel) {
 			entropy_level = ENTROPY_HIGH;
 		}
-
+		grid_area_active = range_size !== GRID_SIZE ? range_size : null;
 		center = undefined;
 		const placements = randomPlacement(range_size, GUESS_PARTICLE_COUNT);
 		fields = fields.map((_, n) => (placements.includes(n) ? { fill: true } : undefined));
@@ -79,6 +80,7 @@ export function createSimple() {
 
 	function findNextLow(start?: number | undefined) {
 		entropy_level = ENTROPY_LOW;
+		grid_area_active = null;
 		if (typeof start !== 'undefined') {
 			center = start;
 		}
@@ -223,6 +225,9 @@ export function createSimple() {
 		},
 		get entropy_level() {
 			return entropy_level;
+		},
+		get grid_area_active() {
+			return grid_area_active;
 		},
 		loopHigh,
 		loopLow,

@@ -32,17 +32,25 @@
 		stroke-linejoin="round"
 		class="fill-white"
 	></rect>
+
 	{#if grid.mode !== MODE_GUESS}
 		{#each $xDomain as tick, i}
 			{#if i !== 0}
-				<path d="M {$xScale(tick)} {y0} V {y1}" class="stroke stroke-grid-inner" />
+				<path d="M {$xScale(tick)} {y0} V {y1}" class="fill-none stroke stroke-grid-inner" />
 			{/if}
 		{/each}
 		{#each $yDomain as tick, i}
 			{#if i !== 0}
-				<path d="M {x0} {$yScale(tick)} H {x1}" class="stroke stroke-grid-inner" />
+				<path d="M {x0} {$yScale(tick)} H {x1}" class="fill-none stroke stroke-grid-inner" />
 			{/if}
 		{/each}
+	{/if}
+	{#if grid.grid_area_active}
+		<path
+			d="M {$xScale(grid.grid_area_active)} {y1} V {y1 - $yScale(grid.grid_area_active)} H {x0}"
+			class="fill-none stroke stroke-[1.4px] stroke-orange-400"
+			stroke-dasharray="4 4"
+		/>
 	{/if}
 	<rect
 		x={x0}
