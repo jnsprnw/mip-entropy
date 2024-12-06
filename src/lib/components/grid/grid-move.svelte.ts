@@ -45,8 +45,7 @@ export function createMove() {
 	const hasObserver = $derived(typeof observer !== 'undefined');
 
 	// Koordinaten der Wand
-	let wall_x1 = $state<number>(0);
-	let wall_x2 = $state<number>(0);
+	let wall_x = $state<number>(0);
 
 	const wall_y1 = 0;
 	const wall_y2 = 1;
@@ -63,7 +62,7 @@ export function createMove() {
 			const wall_hit_right = checkIfWallHitRight(
 				particle,
 				RADIUS,
-				wall_x1,
+				wall_x,
 				wall_width_scaled,
 				ignore_color
 			);
@@ -71,7 +70,7 @@ export function createMove() {
 			// The wall was hit on the right hand side
 			const wall_hit_left =
 				!wall_hit_right &&
-				checkIfWallHitLeft(particle, RADIUS, wall_x1, wall_width_scaled, ignore_color);
+				checkIfWallHitLeft(particle, RADIUS, wall_x, wall_width_scaled, ignore_color);
 
 			// The wall or outer bounds are hit
 			if (particle.cx - RADIUS < 0 || wall_hit_right || wall_hit_left || particle.cx + RADIUS > 1) {
@@ -140,15 +139,15 @@ export function createMove() {
 	const WALL_SPEED = 0.01;
 
 	const is_wall_ended = $derived(
-		(wall_x1 <= wall_width_scaled + wall_offset_scaled && selected_side === SIDE_RIGHT) ||
-			(wall_x1 >= 1 - wall_width_scaled - wall_offset_scaled && selected_side === SIDE_LEFT)
+		(wall_x <= wall_width_scaled + wall_offset_scaled && selected_side === SIDE_RIGHT) ||
+			(wall_x >= 1 - wall_width_scaled - wall_offset_scaled && selected_side === SIDE_LEFT)
 	);
 
 	// const can_wall_be_moved = $derived(
 	// 	particles.some(
 	// 		({ cx }) =>
-	// 			(cx - RADIUS < wall_x1 + wall_width_scaled && selected_side === SIDE_LEFT) ||
-	// 			(cx + RADIUS > wall_x1 - wall_width_scaled && selected_side === SIDE_RIGHT)
+	// 			(cx - RADIUS < wall_x + wall_width_scaled && selected_side === SIDE_LEFT) ||
+	// 			(cx + RADIUS > wall_x - wall_width_scaled && selected_side === SIDE_RIGHT)
 	// 	)
 	// );
 
@@ -158,17 +157,16 @@ export function createMove() {
 		speed: number = WALL_SPEED
 	) {
 		if (
-			wall_x1 > wall_width_scaled + wall_offset_scaled &&
-			wall_x1 < 1 - wall_width_scaled - wall_offset_scaled
+			wall_x > wall_width_scaled + wall_offset_scaled &&
+			wall_x < 1 - wall_width_scaled - wall_offset_scaled
 		) {
 			if (wall_hit_right) {
 				// The addition is not greater than the distance of the wall to the left outer bound
-				wall_x1 = Math.max(wall_width_scaled, wall_x1 - speed);
+				wall_x = Math.max(wall_width_scaled, wall_x - speed);
 			} else {
 				// The addition is not greater than the distance of the wall to the right outer bound
-				wall_x1 = Math.min(1 - wall_width_scaled, wall_x1 + speed);
+				wall_x = Math.min(1 - wall_width_scaled, wall_x + speed);
 			}
-			wall_x2 = wall_x1;
 
 			if (!without_highlight) {
 				wall_highlight = true;
@@ -200,8 +198,7 @@ export function createMove() {
 	}
 
 	function resetWall() {
-		wall_x1 = 0.5;
-		wall_x2 = 0.5;
+		wall_x = 0.5;
 		// if (!particles.length) {
 		// 	resetParticleOneSide();
 		// 	// resetParticles(4, undefined, 'alternately', 'alternately');
@@ -461,14 +458,8 @@ export function createMove() {
 		get has_weight() {
 			return has_weight;
 		},
-		get wall_x1() {
-			return wall_x1;
-		},
-		get wall_x2() {
-			return wall_x2;
-		},
 		get wall_x() {
-			return wall_x1;
+			return wall_x;
 		},
 		get wall_highlight() {
 			return wall_highlight;

@@ -8,7 +8,7 @@
 
 	const { xScale, yScale, width } = getContext('LayerCake');
 
-	const { wall_x2, pulley_radius: radius, selected_side } = $derived(grid);
+	const { wall_x, pulley_radius: radius, selected_side } = $derived(grid);
 
 	const cy = $derived($yScale(1) - padding.top / 2);
 
@@ -21,7 +21,7 @@
 	const cord_y = $derived($yScale(1));
 
 	const distance = $derived(
-		(1 / $width) * (selected_side === SIDE_LEFT ? $width - $xScale(wall_x2) : $xScale(wall_x2))
+		(1 / $width) * (selected_side === SIDE_LEFT ? $width - $xScale(wall_x) : $xScale(wall_x))
 	);
 
 	const weight_x = $derived(cx_2 + radius * (selected_side === SIDE_LEFT ? -1 : 1));
@@ -30,8 +30,8 @@
 	const ANCHOR_SIZE = 5;
 	const ANCHOR_DISTANCE = 8;
 
-	const anchor_x_right = $derived($xScale(wall_x2) + WALL_WIDTH / 2);
-	const anchor_x_left = $derived($xScale(wall_x2) - WALL_WIDTH / 2);
+	const anchor_x_right = $derived($xScale(wall_x) + WALL_WIDTH / 2);
+	const anchor_x_left = $derived($xScale(wall_x) - WALL_WIDTH / 2);
 </script>
 
 {#if grid.has_weight}
