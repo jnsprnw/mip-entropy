@@ -4,7 +4,7 @@
 	const gridState = getGridState();
 	const { grid, padding } = $derived(gridState);
 	import Package from '$icons/Package.svelte';
-	import { WEIGHT_WIDTH, SIDE_LEFT } from '$config';
+	import { WEIGHT_WIDTH, SIDE_LEFT, WALL_WIDTH } from '$config';
 
 	const { xScale, yScale, width } = getContext('LayerCake');
 
@@ -26,30 +26,54 @@
 
 	const weight_x = $derived(cx_2 + radius * (selected_side === SIDE_LEFT ? -1 : 1));
 	const weight_y = $derived(cord_y + distance * $width - 20); // 20 is half the weight height
+
+	const ANCHOR_SIZE = 5;
+	const ANCHOR_DISTANCE = 8;
+
+	const anchor_x_right = $derived($xScale(wall_x2) + WALL_WIDTH / 2);
+	const anchor_x_left = $derived($xScale(wall_x2) - WALL_WIDTH / 2);
 </script>
 
 {#if grid.has_weight}
 	<g>
 		{#if selected_side === SIDE_LEFT}
+			<g style="transform: translate({anchor_x_left}px, {cy - radius}px);">
+				<path d="M {0} 0 H {-ANCHOR_DISTANCE}" class="stroke-[3px] stroke-[#00AAE9]" />
+				<circle
+					cx={-ANCHOR_SIZE - ANCHOR_DISTANCE}
+					r={ANCHOR_SIZE}
+					class="fill-none stroke-[3px] stroke-[#00AAE9]"
+				/>
+			</g>
 			<path
 				d="
-				M {$xScale(wall_x2)} {cy - radius}
+				M {anchor_x_left - ANCHOR_DISTANCE - ANCHOR_SIZE * 1.25} {cy - radius}
 				L {cx_2} {cy - radius}
 				C {cx_2} {cy - radius}, {cx_2 - radius} {cy - radius}, {cx_2 - radius} {cy}
 				L {weight_x} {cord_y}
-				L {weight_x} {weight_y}
+				L {weight_x} {weight_y + 1}
 			"
+				stroke-linecap="round"
 				class="fill-none stroke-2 stroke-wall-cord"
 			/>
 		{:else}
+			<g style="transform: translate({anchor_x_right}px, {cy - radius}px);">
+				<path d="M {0} 0 H {ANCHOR_DISTANCE}" class="stroke-[3px] stroke-[#00AAE9]" />
+				<circle
+					cx={ANCHOR_SIZE + ANCHOR_DISTANCE}
+					r={ANCHOR_SIZE}
+					class="fill-none stroke-[3px] stroke-[#00AAE9]"
+				/>
+			</g>
 			<path
 				d="
-				M {$xScale(wall_x2)} {cy - radius}
+				M {anchor_x_right + ANCHOR_DISTANCE + ANCHOR_SIZE * 1.25} {cy - radius}
 				L {cx_2} {cy - radius}
 				C {cx_2} {cy - radius}, {cx_2 + radius} {cy - radius}, {cx_2 + radius} {cy}
 				L {weight_x} {cord_y}
-				L {weight_x} {weight_y}
+				L {weight_x} {weight_y + 1}
 			"
+				stroke-linecap="round"
 				class="fill-none stroke-2 stroke-wall-cord"
 			/>
 		{/if}
