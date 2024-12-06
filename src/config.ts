@@ -4,7 +4,7 @@ export const MODE_GUESS = 'guess';
 export const MODE_LOOP = 'loop';
 
 export const WEIGHT_WIDTH = 62;
-export const WEIGHT_HEIGHT = 49;
+export const WEIGHT_HEIGHT = 25;
 
 export const PADDING_GRID_WITH_WEIGHT: Padding = {
 	bottom: 10,

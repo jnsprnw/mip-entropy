@@ -7,7 +7,8 @@ import {
 	ENTITY_SHAPE_TRIANGLE,
 	WALL_WIDTH,
 	SIDE_LEFT,
-	SIDE_RIGHT
+	SIDE_RIGHT,
+	WEIGHT_WIDTH
 } from '$config';
 import { random } from 'lodash-es';
 import type { Observer, EntityColor, Particle } from '$types';
@@ -25,6 +26,10 @@ const SPEED = 0.02;
 // Radius des Balls
 const RADIUS = 0.03;
 
+const WALL_MOVEMENT_PADDING = 5;
+
+const WALL_MOVEMENT_BOUNDS = WALL_MOVEMENT_PADDING + WALL_WIDTH / 2;
+
 export function createMove() {
 	let is_moving = $state<boolean>(false);
 	let has_weight = $state<boolean>(false);
@@ -38,7 +43,11 @@ export function createMove() {
 	let ignore_color = $state<EntityColor>(undefined);
 
 	let width = $state<number>(0);
-	const scale = $derived(scaleLinear().domain([0, 1]).range([0, width]));
+	const scale = $derived(
+		scaleLinear()
+			.domain([0, 1])
+			.range([WALL_MOVEMENT_BOUNDS, width - WALL_MOVEMENT_BOUNDS - WEIGHT_WIDTH * 2])
+	);
 	const wall_width_scaled = $derived(scale.invert(WALL_WIDTH / 2));
 	const wall_offset_scaled = $derived(scale.invert(10));
 	const pulley_radius = $derived(Math.max(scale.invert(10), 6));
@@ -46,6 +55,15 @@ export function createMove() {
 
 	// Koordinaten der Wand
 	let wall_x = $state<number>(0);
+
+	const scale_weight = $derived(
+		scaleLinear()
+			.domain(selected_side === SIDE_LEFT ? scale.range().toReversed() : scale.range())
+			.range([scale(0), scale(1) + WALL_MOVEMENT_BOUNDS - 48]) // 48 = Package height
+	);
+
+	const wall_x_scaled = $derived(scale(wall_x));
+	const weight_y = $derived(scale_weight(wall_x_scaled));
 
 	const wall_y1 = 0;
 	const wall_y2 = 1;
@@ -156,16 +174,13 @@ export function createMove() {
 		without_highlight: boolean = false,
 		speed: number = WALL_SPEED
 	) {
-		if (
-			wall_x > wall_width_scaled + wall_offset_scaled &&
-			wall_x < 1 - wall_width_scaled - wall_offset_scaled
-		) {
+		if (wall_x >= 0 && wall_x <= 1) {
 			if (wall_hit_right) {
 				// The addition is not greater than the distance of the wall to the left outer bound
-				wall_x = Math.max(wall_width_scaled, wall_x - speed);
+				wall_x = Math.max(0, wall_x - speed);
 			} else {
 				// The addition is not greater than the distance of the wall to the right outer bound
-				wall_x = Math.min(1 - wall_width_scaled, wall_x + speed);
+				wall_x = Math.min(1, wall_x + speed);
 			}
 
 			if (!without_highlight) {
@@ -179,13 +194,11 @@ export function createMove() {
 
 	function animateWallMovement() {
 		let direction: boolean = true;
-		let counter: number = 0;
 		interval = setInterval(function () {
-			if (counter > 50 || counter < 0) {
+			moveWall(direction, true, 0.01);
+			if (wall_x >= 1 || wall_x <= 0) {
 				direction = !direction;
 			}
-			counter = counter + (direction ? 1 : -1);
-			moveWall(direction, true, 0.005);
 		}, 30);
 	}
 
@@ -199,11 +212,6 @@ export function createMove() {
 
 	function resetWall() {
 		wall_x = 0.5;
-		// if (!particles.length) {
-		// 	resetParticleOneSide();
-		// 	// resetParticles(4, undefined, 'alternately', 'alternately');
-		// }
-		// resetBall();
 	}
 
 	function resetParticleOneSide() {
@@ -434,6 +442,15 @@ export function createMove() {
 		get is_wall_ended() {
 			return is_wall_ended;
 		},
+		get bounds() {
+			return {
+				x0: scale(0),
+				x1: scale(1)
+			};
+		},
+		get weight_distance() {
+			return weight_y;
+		},
 		get show_wall() {
 			return show_wall;
 		},
@@ -459,7 +476,7 @@ export function createMove() {
 			return has_weight;
 		},
 		get wall_x() {
-			return wall_x;
+			return wall_x_scaled;
 		},
 		get wall_highlight() {
 			return wall_highlight;

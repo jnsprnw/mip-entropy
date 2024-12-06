@@ -6,9 +6,9 @@
 	import Package from '$icons/Package.svelte';
 	import { WEIGHT_WIDTH, SIDE_LEFT, WALL_WIDTH } from '$config';
 
-	const { xScale, yScale, width } = getContext('LayerCake');
+	const { xScale, yScale, width, height } = getContext('LayerCake');
 
-	const { wall_x, pulley_radius: radius, selected_side } = $derived(grid);
+	const { wall_x, pulley_radius: radius, selected_side, weight_distance } = $derived(grid);
 
 	const cy = $derived($yScale(1) - padding.top / 2);
 
@@ -20,18 +20,14 @@
 
 	const cord_y = $derived($yScale(1));
 
-	const distance = $derived(
-		(1 / $width) * (selected_side === SIDE_LEFT ? $width - $xScale(wall_x) : $xScale(wall_x))
-	);
-
 	const weight_x = $derived(cx_2 + radius * (selected_side === SIDE_LEFT ? -1 : 1));
-	const weight_y = $derived(cord_y + distance * $width - 20); // 20 is half the weight height
+	const weight_y = $derived(cord_y + weight_distance); // 20 is half the weight height
 
 	const ANCHOR_SIZE = 5;
 	const ANCHOR_DISTANCE = 8;
 
-	const anchor_x_right = $derived($xScale(wall_x) + WALL_WIDTH / 2);
-	const anchor_x_left = $derived($xScale(wall_x) - WALL_WIDTH / 2);
+	const anchor_x_right = $derived(wall_x + WALL_WIDTH / 2);
+	const anchor_x_left = $derived(wall_x - WALL_WIDTH / 2);
 </script>
 
 {#if grid.has_weight}

@@ -50,11 +50,7 @@ export function checkIfWallHitRight(
 	wall_width: number,
 	ignore_color: string | undefined
 ) {
-	return (
-		particle.color !== ignore_color &&
-		particle.cx - radius <= wall_x + wall_width &&
-		particle.cx > wall_x
-	);
+	return particle.color !== ignore_color && particle.cx - radius <= wall_x && particle.cx > wall_x;
 }
 
 export function checkIfWallHitLeft(
@@ -64,9 +60,5 @@ export function checkIfWallHitLeft(
 	wall_width: number,
 	ignore_color: string | undefined
 ) {
-	return (
-		particle.color !== ignore_color &&
-		particle.cx + radius >= wall_x - wall_width &&
-		particle.cx < wall_x
-	);
+	return particle.color !== ignore_color && particle.cx + radius >= wall_x && particle.cx < wall_x;
 }
