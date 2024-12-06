@@ -12,12 +12,28 @@
 		$derived(getStoryState());
 </script>
 
-<menu class="bg-bg-dark flex items-center">
+<menu class=" flex items-center">
 	<div
-		class="w-full sm:px-2 py-2 max-w-[920px] mx-auto grid grid-cols-3 justify-items-center items-center gap-x-4"
+		class="border-t h-full border-t-white w-full sm:px-2 py-2 max-w-[920px] mx-auto grid grid-cols-3 justify-items-center items-center gap-x-4"
 	>
-		<Button isButtonPrevious={true} onclick={prevPage} disabled={is_first_page} label="Previous" />
-		<span class="text-accent-light tabular-nums">{current_page_number} / {total_pages}</span>
-		<Button isButtonNext={true} onclick={nextPage} disabled={is_last_page} label="Next" />
+		<Button
+			isButtonPrevious={true}
+			isPrimary={true}
+			onclick={prevPage}
+			disabled={is_first_page}
+			label="Previous"
+			class="justify-self-start"
+		/>
+		<span class="text-accent-light tabular-nums text-sm text-primary-dark">
+			{current_page_number} / {total_pages}
+		</span>
+		<Button
+			isButtonNext={true}
+			isPrimary={true}
+			onclick={nextPage}
+			disabled={is_last_page}
+			label="Next"
+			class="justify-self-end"
+		/>
 	</div>
 </menu>

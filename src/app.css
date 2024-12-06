@@ -2,6 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-display: swap;
+	font-family: 'Pangram';
+	font-style: normal;
+	font-weight: 400;
+	src:
+		url('/fonts/Pangram-Regular.woff') format('woff'),
+		url('/fonts/Pangram-Regular.woff2') format('woff2');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Pangram';
+	font-style: normal;
+	font-weight: 500;
+	src:
+		url('/fonts/Pangram-Medium.woff') format('woff'),
+		url('/fonts/Pangram-Medium.woff2') format('woff2');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Pangram';
+	font-style: normal;
+	font-weight: 700;
+	src:
+		url('/fonts/Pangram-Bold.woff') format('woff'),
+		url('/fonts/Pangram-Bold.woff2') format('woff2');
+}
+
+@font-face {
+	font-display: swap;
+	font-family: 'Merriweather';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/merriweather-v30-latin-regular.woff2') format('woff2');
+}
+
 html {
 	@apply bg-bg-bright;
 }

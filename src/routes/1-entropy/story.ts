@@ -4,12 +4,12 @@ import { ID as id_simple } from '$grid/grid-simple.svelte';
 
 export const pages: Page[] = [
 	{
-		text: 'Entropy is a measure of disorder. It corresponds with how many possible configurations are compatible with a particular state. Take the case in which the nine particles in this box must be clumped together as one big square. There are only 16 ways for this state to exist.',
+		text: 'Take the case in which the nine particles in this box must be clumped together as one big square. There are only <strong>16</strong> ways for this state to exist.',
 		actions: ['loopLow'],
 		type: id_simple
 	},
 	{
-		text: 'Now, consider the state in which the particles can occupy all the squares in the box. There are 27,540,584,512 different ways they can be arranged.',
+		text: 'Now, consider the state in which the particles can occupy all the squares in the box. There are <strong>27,540,584,512</strong> different ways they can be arranged.',
 		actions: ['loopHigh'],
 		type: id_simple
 	},

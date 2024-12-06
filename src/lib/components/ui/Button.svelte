@@ -14,6 +14,7 @@
 		isButtonSort?: boolean;
 		isButtonView?: boolean;
 		isPrimary?: boolean;
+		class?: string;
 	}
 	const {
 		onclick,
@@ -24,19 +25,17 @@
 		isButtonPrevious = false,
 		isButtonSort = false,
 		isButtonView = false,
-		isPrimary = false
+		isPrimary = false,
+		class: classes = ''
 	}: Props = $props();
 </script>
 
 <button
 	{disabled}
 	aria-pressed={isActive}
-	class="gap-x-1 md:gap-x-2 text-white text-balance disabled:cursor-not-allowed px-2 sm:px-3 md:px-6 py-1 sm:py-2 shadow-sm shadow-black/[0.04] hover:bg-button-primary inline-flex items-center justify-center rounded-lg text-xs/none md:text-sm/none font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
+	class="{classes} gap-x-1 md:gap-x-2 disabled:opacity-0 text-white text-balance px-2 sm:px-6 md:px-8 py-1 sm:py-2 shadow-sm shadow-black/[0.04] hover:bg-primary-dark inline-flex items-center justify-center rounded-lg text-xs/none md:text-sm/none font-medium ring-offset-background transition-[colors_opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
 	class:bg-amber-800={isActive}
-	class:bg-button-secondary={!isActive}
-	class:disabled:bg-button-mute={!isActive}
-	class:disabled:bg-amber-700={isActive}
-	class:bg-button-primary={isPrimary}
+	class:bg-primary-light={isPrimary}
 	{onclick}
 >
 	{#if isButtonPrevious}

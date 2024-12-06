@@ -3,4 +3,8 @@
 	import { pages } from './story';
 </script>
 
-<Module {pages} title="What Is Entropy?" />
+<Module
+	{pages}
+	title="What Is Entropy?"
+	intro="Entropy is a measure of disorder. It corresponds with how many possible configurations are compatible with a particular state."
+/>

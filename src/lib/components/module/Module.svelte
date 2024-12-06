@@ -9,9 +9,10 @@
 
 	interface Props {
 		title: string;
+		intro: string;
 		pages: Page[];
 	}
-	const { title, pages }: Props = $props();
+	const { title, pages, intro }: Props = $props();
 
 	const story = setStoryState(pages);
 	let grid = setGridState();
@@ -61,11 +62,20 @@
 	<title>{title}</title>
 </svelte:head>
 
-<section class="grid grid-rows-[2fr_5fr_1fr] max-w-full w-screen h-screen gap-y-2">
-	<header class="sm:px-2 w-full sm:pt-2 flex flex-col gap-y-4 max-w-[920px] mx-auto">
-		<h2 class="text-accent-dark font-bold text-xl md:text-3xl">{title}</h2>
-		<p class="font-serif text-base md:text-xl">{story.currentText}</p>
-	</header>
+<section class="grid grid-rows-[124px_1fr_5fr_1fr] max-w-full w-screen h-screen gap-y-2">
+	<div class="bg-bg-dark flex items-center justify-center">
+		<header class="w-full flex flex-col gap-y-3 max-w-[920px] text-center">
+			<h2 class="text-primary-dark font-bold text-xl/tight md:text-2xl/none">{title}</h2>
+			<p class="text-primary-mute font-serif text-base md:text-lg text-balance">
+				{intro}
+			</p>
+		</header>
+	</div>
+	<div class="flex items-center justify-center">
+		<p class="font-sans text-text md:text-lg max-w-[920px] text-center text-balance">
+			{@html story.currentText}
+		</p>
+	</div>
 	<Stage />
 	<Footer {nextPage} {prevPage} />
 </section>

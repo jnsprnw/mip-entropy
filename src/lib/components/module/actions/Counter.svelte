@@ -16,8 +16,11 @@
 	<div
 		in:fade
 		out:fade
-		class="col-start-[left] col-end-[right] justify-self-center row-start-2 text-xs"
+		class="col-start-[left] flex flex-col items-center col-end-[right] justify-self-center row-start-2"
 	>
-		<span class="tabular-nums">{count_run_str} / {count_total_str} configurations explored</span>
+		<span class="tabular-nums text-xl font-medium">
+			<em class="text-primary-dark not-italic">{count_run_str}</em> / {count_total_str}
+		</span>
+		<span class="text-xs uppercase font-medium tracking-wider">configurations explored</span>
 	</div>
 {/if}

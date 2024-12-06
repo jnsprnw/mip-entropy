@@ -27,7 +27,7 @@
 </script>
 
 <div
-	class="grid grid-rows-[1fr_auto] gap-y-2 w-full h-full justify-items-center"
+	class="grid grid-rows-[1fr_auto] grid-cols-[auto_auto] gap-x-1 gap-y-2 w-full h-full justify-items-center"
 	style="padding-top: {padding.top}px; box-sizing: border-box;"
 	role="meter"
 	aria-valuenow={value}
@@ -35,18 +35,31 @@
 	aria-valuemax="100"
 	aria-labelledby={gauge_id}
 >
-	<span
-		class="bg-entropy-bar h-full w-[5px] justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
+	<div
+		class="bg-entropy-bar h-full w-[3px] justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
 		aria-hidden="true"
-	></span>
+	></div>
+	<div
+		class="bg-entropy-bar h-[2px] w-[20px] justify-self-center place-self-start col-start-1 col-end-2 row-start-1"
+		aria-hidden="true"
+	></div>
 	<span
+		class="text-xs/none tracking-wider uppercase font-medium col-start-2 row-start-1 justify-self-start text-entropy-text"
+		>High</span
+	>
+	<div
 		style="height: {scale($progress)}%;"
 		class="bg-highlight w-[20px] justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
 		aria-hidden="true"
-	></span>
+	></div>
+	<span
+		class="text-xs/none tracking-wider uppercase font-medium col-start-2 row-start-1 place-self-end justify-self-start text-entropy-text"
+		>Low</span
+	>
 	<span
 		id={gauge_id}
-		class="text-highlight font-semibold text-center text-xs/none sm:text-sm/none md:text-lg/none"
-		>{label}</span
+		class="col-span-2 text-highlight font-medium text-center text-xs/none sm:text-sm/none uppercase tracking-wider"
 	>
+		{label}
+	</span>
 </div>
