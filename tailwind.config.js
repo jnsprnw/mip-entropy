@@ -12,9 +12,6 @@ export default {
 			base: '16px',
 			xl: '23px',
 			'2xl': '26px'
-			// '3xl': '1.953rem',
-			// '4xl': '2.441rem',
-			// '5xl': '3.052rem',
 		},
 		extend: {
 			colors: {
@@ -45,7 +42,8 @@ export default {
 					mute: '#B3DCE2'
 				},
 				highlight: {
-					DEFAULT: '#dd5041'
+					DEFAULT: '#dd5041',
+					bob: '#862F8B'
 				},
 				entropy: {
 					bar: '#C7DADF',

@@ -3,6 +3,9 @@
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 	import { getGridState } from '$grid/grid-state.svelte';
+	import { getObserverDetail } from '$grid/utils-order';
+	import type { Observer } from '$types';
+	import { OBSERVER_BOB } from '$config';
 	const gridState = getGridState();
 	const { padding } = $derived(gridState);
 
@@ -11,8 +14,9 @@
 	interface Props {
 		value: number;
 		label?: string;
+		observer?: Observer;
 	}
-	const { value, label = 'Entropy' }: Props = $props();
+	const { value, label = 'Entropy', observer }: Props = $props();
 
 	const scale = scaleLinear().domain([0, 100]).range([2, 100]);
 
@@ -24,6 +28,9 @@
 	$effect(() => {
 		progress.set(value);
 	});
+
+	const fill = $derived(observer === OBSERVER_BOB ? 'bg-highlight-bob' : 'bg-highlight');
+	const text = $derived(observer === OBSERVER_BOB ? 'text-highlight-bob' : 'text-highlight');
 </script>
 
 <div
@@ -49,7 +56,7 @@
 	>
 	<div
 		style="height: {scale($progress)}%;"
-		class="bg-highlight w-[20px] justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
+		class="{fill} w-[20px] justify-self-center place-self-end col-start-1 col-end-2 row-start-1"
 		aria-hidden="true"
 	></div>
 	<span
@@ -58,8 +65,8 @@
 	>
 	<span
 		id={gauge_id}
-		class="col-span-2 text-highlight font-medium text-center text-xs/none sm:text-sm/none uppercase tracking-wider"
+		class="{text} col-span-2 font-medium text-center text-xs/none sm:text-sm/none uppercase tracking-wider"
 	>
-		{label}
+		{observer ? getObserverDetail(observer).label : label}
 	</span>
 </div>
