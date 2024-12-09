@@ -63,10 +63,10 @@
 		class="text-xs/none tracking-wider uppercase font-medium col-start-2 row-start-1 place-self-end justify-self-start text-entropy-text"
 		>Low</span
 	>
-	<span
-		id={gauge_id}
-		class="{text} col-span-2 font-medium text-center text-xs/none sm:text-sm/none uppercase tracking-wider"
-	>
-		{observer ? getObserverDetail(observer).label : label}
-	</span>
+	<div id={gauge_id} class="{text} col-span-2 font-medium text-center text-xs/none sm:text-sm/none">
+		<span class="uppercase tracking-wider">{label}</span>
+		{#if observer}
+			<span>according to {getObserverDetail(observer).label}</span>
+		{/if}
+	</div>
 </div>
