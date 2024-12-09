@@ -54,8 +54,10 @@
 	{disabled}
 	aria-pressed={isActive}
 	aria-hidden={hidden}
-	class="{classes} {colors} gap-x-1 aria-hidden:opacity-0 md:gap-x-2 hover:text-white text-balance px-2 sm:px-6 md:px-8 py-1 sm:py-2 shadow-sm shadow-black/[0.04] inline-flex items-center justify-center rounded-lg md:text-base/none tracking-wider font-medium ring-offset-background transition-[colors_opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
+	class="{classes} {colors} gap-x-1 aria-hidden:opacity-0 md:gap-x-2 hover:text-white text-balance px-2 sm:px-6 md:px-8 py-1 sm:py-2 shadow-sm shadow-black/[0.04] inline-grid items-center justify-center rounded-lg md:text-base/none tracking-wider font-medium ring-offset-background transition-[colors_opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
 	{onclick}
+	class:grid-cols-[auto_24px]={isButtonNext || isButtonSort || isButtonView}
+	class:grid-cols-[24px_auto]={isButtonPrevious}
 >
 	{#if isButtonPrevious}
 		<Left />
