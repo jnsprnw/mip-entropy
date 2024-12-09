@@ -3,4 +3,8 @@
 	import { pages } from './story';
 </script>
 
-<Module {pages} title="Entropy Is Subjective" />
+<Module
+	{pages}
+	title="Entropy is Subjective"
+	intro="The concept of order can differ between observers, depending on what they know."
+/>

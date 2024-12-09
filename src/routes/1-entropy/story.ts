@@ -9,12 +9,12 @@ export const pages: Page[] = [
 		type: id_simple
 	},
 	{
-		text: 'Now, consider the state in which the particles can occupy all the squares in the box. There are <strong>27,540,584,512</strong> different ways they can be arranged.',
+		text: 'Now consider the state in which the particles can occupy any of the squares in the box. There are <strong>27,540,584,512</strong> possible arrangements.',
 		actions: ['loopHigh'],
 		type: id_simple
 	},
 	{
-		text: 'It’s much more probable for the particles to be spread throughout the box than it is for them to be clumped together. This is the basic idea behind the Second Law of Thermodynamics, the statement that entropy never decreases in a closed system.',
+		text: 'Because there are so many more ways for particles to be spread out, particles are overwhelmingly likely to move into the spread-out states. This is the idea behind the second law of thermodynamics, which says the entropy of a closed system always increases.',
 		actions: ['toggleLowHigh'],
 		type: id_simple
 	}

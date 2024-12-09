@@ -6,5 +6,5 @@
 <Module
 	{pages}
 	title="What Is Entropy?"
-	intro="Entropy is a measure of disorder. It corresponds with how many possible configurations are compatible with a particular state."
+	intro="Entropy is a measure of disorder. It corresponds with how many possible microscopic configurations can underlie an overall state."
 />
