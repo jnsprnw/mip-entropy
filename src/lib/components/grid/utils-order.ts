@@ -37,7 +37,16 @@ export function sortBy(fields: RichField[], observer: Observer | null, sort_by_l
 const LABEL_ALICE = 'Alice';
 const LABEL_BOB = 'Bob';
 
-export function getObserverDetail(observer: typeof OBSERVER_ALICE | typeof OBSERVER_BOB) {
+type ObserverDetail = {
+	label: string;
+	description: string;
+	other: {
+		id: Observer;
+		label: string;
+	};
+};
+
+export function getObserverDetail(observer: Observer): ObserverDetail {
 	if (observer === OBSERVER_ALICE) {
 		return {
 			label: LABEL_ALICE,
