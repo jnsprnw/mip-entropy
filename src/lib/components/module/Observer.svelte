@@ -5,12 +5,15 @@
 	import { getObserverDetail } from '$grid/utils-order';
 	import { OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 	import Highlight from './Highlight.svelte';
+	import View from './View.svelte';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
 	const { is_visible_alice, is_visible_bob } = $derived(grid);
 </script>
 
 <!-- <Highlight /> -->
+
+<View />
 
 <div
 	class="hidden md:flex flex-col gap-y-1 col-start-[alice] row-start-1 w-[70px] lg:w-[120px] lg:p-3 text-center text-highlight"
