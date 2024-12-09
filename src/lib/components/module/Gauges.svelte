@@ -14,13 +14,13 @@
 {:else if Array.isArray(entropy_value) && entropy_value.length === 2}
 	<div
 		class="col-start-[gaugeA] row-start-1 w-[60px] md:w-[75px] lg:w-[90px] p-2 h-full"
-		class:opacity-50={observer !== OBSERVER_ALICE}
+		class:opacity-20={observer !== OBSERVER_ALICE}
 	>
 		<Gauge value={entropy_value[0]} observer={OBSERVER_ALICE} />
 	</div>
 	<div
 		class="col-start-[gaugeB] row-start-1 w-[60px] md:w-[75px] lg:w-[90px] p-2 h-full"
-		class:opacity-50={observer !== OBSERVER_BOB}
+		class:opacity-20={observer !== OBSERVER_BOB}
 	>
 		<Gauge value={entropy_value[1]} observer={OBSERVER_BOB} />
 	</div>

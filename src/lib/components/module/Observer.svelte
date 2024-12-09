@@ -17,7 +17,7 @@
 
 <div
 	class="hidden md:flex flex-col gap-y-1 col-start-[alice] row-start-1 w-[70px] lg:w-[120px] lg:p-3 text-center text-highlight"
-	class:opacity-50={observer !== OBSERVER_ALICE}
+	class:opacity-20={observer !== OBSERVER_ALICE}
 >
 	<Alice />
 	<span class="text-base/none mt-2 uppercase tracking-wider font-semibold">
@@ -30,7 +30,7 @@
 
 <div
 	class="hidden md:flex flex-col col-start-[bob] row-start-1 w-[70px] gap-y-1 lg:w-[120px] lg:p-3 text-center text-highlight-bob"
-	class:opacity-50={observer !== OBSERVER_BOB}
+	class:opacity-20={observer !== OBSERVER_BOB}
 >
 	<Bob />
 	<span class="text-base/none mt-2 uppercase tracking-wider font-semibold">
