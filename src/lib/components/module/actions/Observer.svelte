@@ -22,9 +22,11 @@
 			class="{button_area} justify-self-center col-span-1 md:col-span-2 row-start-2"
 		>
 			<Button
+				class="text-sm/none sm:text-sm/none md:text-sm/none"
 				isPrimary={true}
 				isButtonView={true}
-				label="{other.label}’s view"
+				label="Change to {other.label}’s view"
+				observer={other.id}
 				onclick={() => setObserver(other.id)}
 			/>
 		</div>
