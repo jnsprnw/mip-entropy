@@ -20,18 +20,18 @@
 			isButtonPrevious={true}
 			isPrimary={true}
 			onclick={prevPage}
-			disabled={is_first_page}
+			hidden={is_first_page}
 			label="Previous"
 			class="justify-self-start"
 		/>
-		<span class="text-accent-light tabular-nums text-sm text-primary-dark">
+		<span class="tabular-nums text-sm text-primary-dark">
 			{current_page_number} / {total_pages}
 		</span>
 		<Button
 			isButtonNext={true}
 			isPrimary={true}
 			onclick={nextPage}
-			disabled={is_last_page}
+			hidden={is_last_page}
 			label="Next"
 			class="justify-self-end"
 		/>

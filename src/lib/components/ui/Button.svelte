@@ -3,6 +3,8 @@
 	import Left from '$icons/Left.svelte';
 	import Sort from '$icons/Sort.svelte';
 	import Eye from '$icons/Eye.svelte';
+	import type { Observer } from '$types';
+	import { OBSERVER_ALICE } from '$config';
 
 	interface Props {
 		onclick: () => void;
@@ -15,6 +17,8 @@
 		isButtonView?: boolean;
 		isPrimary?: boolean;
 		class?: string;
+		observer?: Observer;
+		hidden?: boolean;
 	}
 	const {
 		onclick,
@@ -26,21 +30,31 @@
 		isButtonSort = false,
 		isButtonView = false,
 		isPrimary = false,
-		class: classes = ''
+		class: classes = '',
+		observer,
+		hidden = false
 	}: Props = $props();
+
+	const colors = $derived.by(() => {
+		if (!isPrimary) {
+			return 'bg-white text-primary-light hover:bg-primary-light';
+		}
+		if (observer) {
+			if (observer === OBSERVER_ALICE) {
+				return 'bg-highlight text-white hover:bg-highlight';
+			} else {
+				return 'bg-highlight-bob text-white hover:bg-highlight-bob';
+			}
+		}
+		return 'bg-primary-light text-white hover:bg-primary-dark';
+	});
 </script>
 
 <button
 	{disabled}
 	aria-pressed={isActive}
-	class="{classes} gap-x-1 md:gap-x-2 disabled:opacity-0 hover:text-white text-balance px-2 sm:px-6 md:px-8 py-1 sm:py-2 shadow-sm shadow-black/[0.04] inline-flex items-center justify-center rounded-lg md:text-base/none tracking-wider font-medium ring-offset-background transition-[colors_opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
-	class:bg-amber-800={isActive}
-	class:bg-primary-light={isPrimary}
-	class:bg-white={!isPrimary}
-	class:text-white={isPrimary}
-	class:text-primary-light={!isPrimary}
-	class:hover:bg-primary-dark={isPrimary}
-	class:hover:bg-primary-light={!isPrimary}
+	aria-hidden={hidden}
+	class="{classes} {colors} gap-x-1 aria-hidden:opacity-0 md:gap-x-2 hover:text-white text-balance px-2 sm:px-6 md:px-8 py-1 sm:py-2 shadow-sm shadow-black/[0.04] inline-flex items-center justify-center rounded-lg md:text-base/none tracking-wider font-medium ring-offset-background transition-[colors_opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
 	{onclick}
 >
 	{#if isButtonPrevious}
