@@ -4,7 +4,7 @@
 	import { OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
-	const { entropy_value, is_visible_alice, is_visible_bob } = $derived(grid);
+	const { observer, entropy_value } = $derived(grid);
 </script>
 
 {#if typeof entropy_value === 'number'}
@@ -14,13 +14,13 @@
 {:else if Array.isArray(entropy_value) && entropy_value.length === 2}
 	<div
 		class="col-start-[gaugeA] row-start-1 w-[60px] md:w-[75px] lg:w-[90px] p-2 h-full"
-		class:opacity-50={!is_visible_alice}
+		class:opacity-50={observer !== OBSERVER_ALICE}
 	>
 		<Gauge value={entropy_value[0]} observer={OBSERVER_ALICE} />
 	</div>
 	<div
 		class="col-start-[gaugeB] row-start-1 w-[60px] md:w-[75px] lg:w-[90px] p-2 h-full"
-		class:opacity-50={!is_visible_bob}
+		class:opacity-50={observer !== OBSERVER_BOB}
 	>
 		<Gauge value={entropy_value[1]} observer={OBSERVER_BOB} />
 	</div>
