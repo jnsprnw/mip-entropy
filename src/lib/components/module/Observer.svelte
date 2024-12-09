@@ -1,29 +1,16 @@
 <script lang="ts">
 	import Alice from '$icons/Alice.svelte';
 	import Bob from '$icons/Bob.svelte';
-	import { fade } from 'svelte/transition';
 	import { getGridState } from '$grid/grid-state.svelte';
 	import { getObserverDetail } from '$grid/utils-order';
 	import { OBSERVER_ALICE, OBSERVER_BOB } from '$config';
+	import Highlight from './Highlight.svelte';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
-	const { observer, hasObserver, is_visible_alice, is_visible_bob } = $derived(grid);
-
-	const highlight_area = $derived(
-		observer === OBSERVER_ALICE
-			? 'col-start-1 col-end-3 md:col-end-4'
-			: 'col-start-2 md:col-start-3 col-end-4 md:col-end-6 '
-	);
+	const { is_visible_alice, is_visible_bob } = $derived(grid);
 </script>
 
-{#if hasObserver}
-	<div
-		out:fade
-		in:fade
-		class="bg-white/50 transition-all -z-10 w-full h-full rounded-3xl row-start-1 row-end-3 {highlight_area}"
-		role="presentation"
-	></div>
-{/if}
+<!-- <Highlight /> -->
 
 <div
 	class="hidden md:flex flex-col gap-y-1 col-start-[alice] row-start-1 w-[70px] lg:w-[120px] lg:p-3 text-center text-highlight"
