@@ -3,7 +3,8 @@
 	import Bob from '$icons/Bob.svelte';
 	import { fade } from 'svelte/transition';
 	import { getGridState } from '$grid/grid-state.svelte';
-	import { OBSERVER_ALICE } from '$config';
+	import { getObserverDetail } from '$grid/utils-order';
+	import { OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
 	const { observer, hasObserver, is_visible_alice, is_visible_bob } = $derived(grid);
@@ -25,15 +26,27 @@
 {/if}
 
 <div
-	class="hidden md:block col-start-[alice] row-start-1 w-[70px] lg:w-[120px] lg:p-3"
+	class="hidden md:flex flex-col gap-y-1 col-start-[alice] row-start-1 w-[70px] lg:w-[120px] lg:p-3 text-center text-highlight"
 	class:opacity-50={!is_visible_alice}
 >
 	<Alice />
+	<span class="text-base/none mt-2 uppercase tracking-wider font-semibold">
+		{getObserverDetail(OBSERVER_ALICE).label}
+	</span>
+	<span class="text-sm/none">
+		{getObserverDetail(OBSERVER_ALICE).description}
+	</span>
 </div>
 
 <div
-	class="hidden md:block col-start-[bob] row-start-1 w-[70px] lg:w-[120px] lg:p-3"
+	class="hidden md:flex flex-col col-start-[bob] row-start-1 w-[70px] gap-y-1 lg:w-[120px] lg:p-3 text-center text-highlight-bob"
 	class:opacity-50={!is_visible_bob}
 >
 	<Bob />
+	<span class="text-base/none mt-2 uppercase tracking-wider font-semibold">
+		{getObserverDetail(OBSERVER_BOB).label}
+	</span>
+	<span class="text-sm/none">
+		{getObserverDetail(OBSERVER_BOB).description}
+	</span>
 </div>

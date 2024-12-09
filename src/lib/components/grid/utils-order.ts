@@ -41,6 +41,7 @@ export function getObserverDetail(observer: typeof OBSERVER_ALICE | typeof OBSER
 	if (observer === OBSERVER_ALICE) {
 		return {
 			label: LABEL_ALICE,
+			description: 'Sees colors',
 			other: {
 				id: OBSERVER_BOB,
 				label: LABEL_BOB
@@ -49,6 +50,7 @@ export function getObserverDetail(observer: typeof OBSERVER_ALICE | typeof OBSER
 	} else {
 		return {
 			label: LABEL_BOB,
+			description: 'Sees shapes',
 			other: {
 				id: OBSERVER_ALICE,
 				label: LABEL_ALICE
