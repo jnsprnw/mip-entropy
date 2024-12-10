@@ -1,5 +1,9 @@
-import adapter from '@sveltejs/adapter-netlify';
+import adapter_auto from '@sveltejs/adapter-auto';
+import adapter_netlify from '@sveltejs/adapter-netlify';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
+console.log(`Using ${process.env.NETLIFY ? 'Netlify' : 'auto'} adapter`);
+const adapter = process.env.NETLIFY ? adapter_netlify : adapter_auto;
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
