@@ -39,9 +39,7 @@ export function createGrid() {
 	});
 
 	const grid_width: number = $derived.by(() => {
-		const width = grid_height_inner + padding.left + padding.right;
-		gridState.width = grid_height - padding.left * 2 + padding.right * 2;
-		return width;
+		return grid_height_inner + padding.left + padding.right;
 	});
 
 	const entity_size = $derived((grid_height / GRID_SIZE) * 0.3);
