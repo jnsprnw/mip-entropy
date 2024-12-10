@@ -185,7 +185,9 @@ export function createMove() {
 
 			if (!without_highlight) {
 				wall_highlight = true;
-				setTimeout(() => (wall_highlight = false), 100);
+				setTimeout(function () {
+					wall_highlight = false;
+				}, 100);
 			}
 		}
 	}
