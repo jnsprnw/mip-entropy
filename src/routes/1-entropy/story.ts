@@ -4,7 +4,7 @@ import { ID as id_simple } from '$grid/grid-simple.svelte';
 
 export const pages: Page[] = [
 	{
-		text: 'Take the case in which the nine particles in this box must be clumped together as one big square. There are only <strong>16</strong> ways for this state to exist.',
+		text: 'Take the case in which the nine particles in this box must clump together in one big square. There are only <strong>16</strong> ways for this state to exist.',
 		actions: ['loopLow'],
 		type: id_simple
 	},

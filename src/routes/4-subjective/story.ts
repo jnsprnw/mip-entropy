@@ -14,12 +14,12 @@ export const pages: Page[] = [
 		actions: ['setAlice', 'setVisibleAlice', 'setInvisibleBob']
 	},
 	{
-		text: 'Now Bob enters the room. Bob is color-blind, so he can distinguish only the shapes of the objects. To Bob, this room still looks messy.',
+		text: 'Now Bob enters the room. Bob is colorblind, so he can distinguish only the shapes of the objects. To Bob, this room still looks messy.',
 		type: id_order,
 		actions: ['setBob', 'setVisibleAlice', 'disallowObserverSwitch', 'setVisibleBob', 'stopLoop']
 	},
 	{
-		text: 'This illustrates that entropy is a subjective measure. What different observers perceive as ordered depends on the information they have access to.',
+		text: 'This illustrates the fact that entropy is a subjective measure. What different observers perceive as ordered depends on the information they have access to.',
 		type: id_order,
 		actions: ['setVisibleAlice', 'setVisibleBob', 'allowObserverSwitch', 'stopLoop']
 	}

@@ -5,6 +5,6 @@
 
 <Module
 	{pages}
-	title="Entropy is Subjective"
+	title="Entropy Is Subjective"
 	intro="The concept of order can differ between observers, depending on what they know."
 />

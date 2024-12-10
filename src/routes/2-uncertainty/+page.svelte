@@ -6,5 +6,5 @@
 <Module
 	{pages}
 	title="Entropy as Uncertainty"
-	intro="Entropy can also be thought of as a measure of uncertainty. The more disordered a set of particles are, the more uncertain their exact arrangement."
+	intro="Entropy can also be thought of as a measure of uncertainty. The more disordered a set of particles is, the more uncertain their exact arrangement."
 />
