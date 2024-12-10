@@ -4,9 +4,9 @@
 	const gridState = getGridState();
 	import { fade } from 'svelte/transition';
 	const { grid } = $derived(gridState);
-	const { hasObserver, observer, sort, can_sort, entropy, is_sorting } = $derived(grid);
+	const { hasObserver, observer, sort, can_sort, is_sorting, is_sorted } = $derived(grid);
 	import { getObserverDetail } from '$grid/utils-order';
-	const verb = $derived(is_sorting ? 'Sorting' : entropy === 0 ? 'Sorted' : 'Sort');
+	const verb = $derived(is_sorting ? 'Sorting' : is_sorted ? 'Sorted' : 'Sort');
 	const { label } = $derived(getObserverDetail(observer));
 </script>
 
@@ -18,6 +18,7 @@
 			label="{verb} for {label}"
 			onclick={sort}
 			isButtonSort={true}
+			isActive={is_sorting || is_sorted}
 			{observer}
 		/>
 	</div>

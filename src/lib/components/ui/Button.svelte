@@ -37,16 +37,16 @@
 
 	const colors = $derived.by(() => {
 		if (!isPrimary) {
-			return 'bg-white text-primary-light hover:bg-primary-light';
+			return 'bg-white text-primary-light hover:bg-primary-light focus:bg-primary-light';
 		}
 		if (observer) {
 			if (isAlice(observer)) {
-				return 'bg-highlight text-white hover:bg-highlight';
+				return 'bg-highlight text-white hover:bg-highlight aria-pressed:bg-white aria-pressed:text-highlight';
 			} else {
-				return 'bg-highlight-bob text-white hover:bg-highlight-bob';
+				return 'bg-highlight-bob text-white hover:bg-highlight-bob aria-pressed:bg-white aria-pressed:text-highlight-bob';
 			}
 		}
-		return 'bg-primary-light text-white hover:bg-primary-dark';
+		return 'bg-primary-light text-white hover:bg-primary-dark focus:bg-primary-dark';
 	});
 </script>
 
