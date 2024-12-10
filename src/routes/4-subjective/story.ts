@@ -16,7 +16,7 @@ export const pages: Page[] = [
 	{
 		text: 'Now Bob enters the room. Bob is color-blind, so he can distinguish only the shapes of the objects. To Bob, this room still looks messy.',
 		type: id_order,
-		actions: ['setBob', 'setInvisibleAlice', 'disallowObserverSwitch', 'setVisibleBob']
+		actions: ['setBob', 'setVisibleAlice', 'disallowObserverSwitch', 'setVisibleBob']
 	},
 	{
 		text: 'This illustrates that entropy is a subjective measure. What different observers perceive as ordered depends on the information they have access to.',
