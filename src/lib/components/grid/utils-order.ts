@@ -1,4 +1,5 @@
 import { scaleLinear } from 'd3-scale';
+import { isAlice } from '$lib/utils/utils';
 import type { Observer, RichField, SortByKey } from '$types';
 import { GRID_SIZE, KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
 
@@ -47,7 +48,7 @@ type ObserverDetail = {
 };
 
 export function getObserverDetail(observer: Observer): ObserverDetail {
-	if (observer === OBSERVER_ALICE) {
+	if (isAlice(observer)) {
 		return {
 			label: LABEL_ALICE,
 			description: 'Sees colors',

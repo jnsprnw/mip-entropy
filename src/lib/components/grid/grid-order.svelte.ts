@@ -1,4 +1,4 @@
-import { createMixedFields } from '$lib/utils/utils';
+import { createMixedFields, isAlice } from '$lib/utils/utils';
 import { orderBy } from 'lodash-es';
 import type { Observer, RichField, SortByKey } from '$types';
 import { KEY_SORT_COLOR, KEY_SORT_FIGURE, OBSERVER_ALICE, OBSERVER_BOB } from '$config';
@@ -14,9 +14,7 @@ export function createOrder() {
 	let is_visible_alice = $state<boolean>(false);
 
 	let observer = $state<Observer>(undefined);
-	const sort_by = $derived<SortByKey>(
-		observer === OBSERVER_ALICE ? KEY_SORT_COLOR : KEY_SORT_FIGURE
-	);
+	const sort_by = $derived<SortByKey>(isAlice(observer) ? KEY_SORT_COLOR : KEY_SORT_FIGURE);
 	const hasObserver = $derived(typeof observer !== 'undefined');
 
 	let allow_observer_switch = $state<boolean>(false);

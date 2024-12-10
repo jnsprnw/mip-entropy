@@ -1,12 +1,13 @@
 import {
-	OBSERVER_BOB,
 	ENTITY_COLOR_A,
 	ENTITY_COLOR_B,
-	ENTITY_SHAPE_TRIANGLE,
 	ENTITY_SHAPE_SQUARE,
+	ENTITY_SHAPE_TRIANGLE,
+	GRID_SIZE,
 	KEY_SORT_COLOR,
 	KEY_SORT_FIGURE,
-	GRID_SIZE
+	OBSERVER_ALICE,
+	OBSERVER_BOB
 } from '$config';
 import type { Observer, EntityColor, RichField, SimpleField } from '$types';
 
@@ -100,4 +101,8 @@ export function getFill(observer: Observer, color: EntityColor) {
 			console.warn(`Undefined color ${color}`);
 			return 'fill-slate-600';
 	}
+}
+
+export function isAlice(observer: Observer) {
+	return observer === OBSERVER_ALICE;
 }

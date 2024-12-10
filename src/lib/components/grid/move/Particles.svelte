@@ -1,16 +1,11 @@
 <script lang="ts">
-	import { getFill } from '$lib/utils/utils';
+	import { getFill, isAlice } from '$lib/utils/utils';
 	import { getContext } from 'svelte';
 	import { getGridState } from '$grid/grid-state.svelte';
 	import Square from '$grid/shapes/Square.svelte';
 	import Circle from '$grid/shapes/Circle.svelte';
 	import Triangle from '$grid/shapes/Triangle.svelte';
-	import {
-		OBSERVER_ALICE,
-		ENTITY_SHAPE_SQUARE,
-		ENTITY_SHAPE_CIRCLE,
-		ENTITY_SHAPE_TRIANGLE
-	} from '$config';
+	import { ENTITY_SHAPE_SQUARE, ENTITY_SHAPE_CIRCLE, ENTITY_SHAPE_TRIANGLE } from '$config';
 
 	const { xScale, yScale, width } = getContext('LayerCake');
 
@@ -26,8 +21,8 @@
 		{@const x = $xScale(cx)}
 		{@const y = $yScale(cy)}
 		{@const color = getFill(observer, fill)}
-		{#if observer === OBSERVER_ALICE || shape === ENTITY_SHAPE_CIRCLE}
-			<Circle cx={x} cy={y} {r} {color} isBlur={observer === OBSERVER_ALICE} />
+		{#if isAlice(observer) || shape === ENTITY_SHAPE_CIRCLE}
+			<Circle cx={x} cy={y} {r} {color} isBlur={isAlice(observer)} />
 		{:else if shape === ENTITY_SHAPE_SQUARE}
 			<Square {x} {y} size={r} {color} />
 		{:else if shape === ENTITY_SHAPE_TRIANGLE}

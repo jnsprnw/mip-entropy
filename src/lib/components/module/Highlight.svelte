@@ -1,13 +1,13 @@
 <script lang="ts">
+	import { isAlice } from '$lib/utils/utils';
 	import { fade } from 'svelte/transition';
 	import { getGridState } from '$grid/grid-state.svelte';
-	import { OBSERVER_ALICE } from '$config';
 	const gridState = getGridState();
 	const { grid } = $derived(gridState);
 	const { observer, hasObserver } = $derived(grid);
 
 	const highlight_area = $derived(
-		observer === OBSERVER_ALICE
+		isAlice(observer)
 			? 'col-start-1 col-end-3 md:col-end-4'
 			: 'col-start-2 md:col-start-3 col-end-4 md:col-end-6 '
 	);

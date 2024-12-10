@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { isAlice } from '$lib/utils/utils';
 	import Right from '$icons/Right.svelte';
 	import Left from '$icons/Left.svelte';
 	import Sort from '$icons/Sort.svelte';
 	import Eye from '$icons/Eye.svelte';
 	import type { Observer } from '$types';
-	import { OBSERVER_ALICE } from '$config';
 
 	interface Props {
 		onclick: () => void;
@@ -40,7 +40,7 @@
 			return 'bg-white text-primary-light hover:bg-primary-light';
 		}
 		if (observer) {
-			if (observer === OBSERVER_ALICE) {
+			if (isAlice(observer)) {
 				return 'bg-highlight text-white hover:bg-highlight';
 			} else {
 				return 'bg-highlight-bob text-white hover:bg-highlight-bob';
