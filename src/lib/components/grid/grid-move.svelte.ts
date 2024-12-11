@@ -235,93 +235,6 @@ export function createMove() {
 		resetParticles(5, 'random');
 	}
 
-	function rLeft() {
-		return random(0.1, 0.4);
-	}
-	function rRight() {
-		return random(0.6, 0.9);
-	}
-	function rPosition() {
-		return random(0.1, 0.9);
-	}
-	function rAngle() {
-		const angle = Math.random() * 2 * Math.PI;
-		return {
-			dx: Math.cos(angle) * SPEED,
-			dy: Math.sin(angle) * SPEED,
-			angle
-		};
-	}
-
-	function setParticles() {
-		particles = [
-			{
-				cx: rLeft(),
-				cy: rPosition(),
-				...rAngle(),
-				radius: RADIUS,
-				shape: ENTITY_SHAPE_TRIANGLE,
-				color: ENTITY_COLOR_A
-			},
-			{
-				cx: rLeft(),
-				cy: rPosition(),
-				...rAngle(),
-				radius: RADIUS,
-				shape: ENTITY_SHAPE_SQUARE,
-				color: ENTITY_COLOR_A
-			},
-			{
-				cx: rRight(),
-				cy: rPosition(),
-				...rAngle(),
-				radius: RADIUS,
-				shape: ENTITY_SHAPE_TRIANGLE,
-				color: ENTITY_COLOR_B
-			},
-			{
-				cx: rRight(),
-				cy: rPosition(),
-				...rAngle(),
-				radius: RADIUS,
-				shape: ENTITY_SHAPE_SQUARE,
-				color: ENTITY_COLOR_B
-			},
-			{
-				cx: rLeft(),
-				cy: rPosition(),
-				...rAngle(),
-				radius: RADIUS,
-				shape: ENTITY_SHAPE_TRIANGLE,
-				color: ENTITY_COLOR_A
-			},
-			{
-				cx: rLeft(),
-				cy: rPosition(),
-				...rAngle(),
-				radius: RADIUS,
-				shape: ENTITY_SHAPE_SQUARE,
-				color: ENTITY_COLOR_A
-			},
-			{
-				cx: rRight(),
-				cy: rPosition(),
-				...rAngle(),
-				radius: RADIUS,
-				shape: ENTITY_SHAPE_TRIANGLE,
-				color: ENTITY_COLOR_B
-			},
-			{
-				cx: rRight(),
-				cy: rPosition(),
-				...rAngle(),
-				radius: RADIUS,
-				shape: ENTITY_SHAPE_SQUARE,
-				color: ENTITY_COLOR_B
-			}
-		];
-	}
-
 	function resetParticles(
 		count: number = 2,
 		side: typeof SIDE_LEFT | typeof SIDE_RIGHT | 'random' | undefined = undefined,
@@ -363,12 +276,9 @@ export function createMove() {
 		particles = arr;
 	}
 
-	// function resetBall() {
-	// 	resetParticles(4, 'random');
-	// 	// cx = Math.random() > 0.5 ? 0.75 : 0.25;
-	// 	// cy = 0.5;
-	// 	// resetAngle();
-	// }
+	function removeParticles() {
+		particles = [];
+	}
 
 	function allowSelectSide() {
 		can_select = true;
@@ -434,7 +344,6 @@ export function createMove() {
 		showObserverSwitch,
 		hideObserverSwitch,
 		setObserver,
-		setParticles,
 		showWall,
 		hideWall,
 		selectLeftSide,
@@ -445,6 +354,7 @@ export function createMove() {
 		stopAnimateWallMovement,
 		resetParticleOneSide,
 		selectNoSide,
+		removeParticles,
 		setNoIgnoreColor() {
 			ignore_color = undefined;
 		},
