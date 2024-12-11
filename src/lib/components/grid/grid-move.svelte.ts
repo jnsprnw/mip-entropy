@@ -33,7 +33,7 @@ const WALL_MOVEMENT_BOUNDS = WALL_MOVEMENT_PADDING + WALL_WIDTH / 2;
 export function createMove() {
 	let is_moving = $state<boolean>(false);
 	let has_weight = $state<boolean>(false);
-	let selected_side = $state<typeof SIDE_LEFT | typeof SIDE_RIGHT | null>(null);
+	let selected_side = $state<typeof SIDE_LEFT | typeof SIDE_RIGHT | undefined>(undefined);
 	let particles = $state<Particle[]>([]);
 	let can_select = $state<boolean>(false);
 	let observer = $state<Observer>(undefined);
@@ -73,6 +73,9 @@ export function createMove() {
 
 	function move() {
 		particles = particles.map((particle) => {
+			// const max_x = 1 - wall_x - wall_width_scaled- RADIUS;
+			// const min_x = wall_x + wall_width_scaled + RADIUS;
+
 			particle.cx += particle.dx;
 			particle.cy += particle.dy;
 
@@ -121,7 +124,7 @@ export function createMove() {
 		}
 	}
 
-	function selectSide(side: typeof SIDE_LEFT | typeof SIDE_RIGHT | null) {
+	function selectSide(side: typeof SIDE_LEFT | typeof SIDE_RIGHT | undefined) {
 		selected_side = side;
 		has_weight = side === SIDE_LEFT || side === SIDE_RIGHT;
 		startMoving();
@@ -137,10 +140,16 @@ export function createMove() {
 		has_weight = true;
 	}
 
+	function selectNoSide() {
+		selected_side = undefined;
+		has_weight = false;
+	}
+
 	function resetSide() {
 		is_moving = false;
-		selected_side = null;
+		selected_side = undefined;
 		has_weight = false;
+		can_select = true;
 		resetWall();
 		resetParticleOneSide();
 	}
@@ -156,25 +165,31 @@ export function createMove() {
 
 	const WALL_SPEED = 0.01;
 
-	const is_wall_ended = $derived(
-		(wall_x <= wall_width_scaled + wall_offset_scaled && selected_side === SIDE_RIGHT) ||
-			(wall_x >= 1 - wall_width_scaled - wall_offset_scaled && selected_side === SIDE_LEFT)
-	);
-
-	// const can_wall_be_moved = $derived(
-	// 	particles.some(
-	// 		({ cx }) =>
-	// 			(cx - RADIUS < wall_x + wall_width_scaled && selected_side === SIDE_LEFT) ||
-	// 			(cx + RADIUS > wall_x - wall_width_scaled && selected_side === SIDE_RIGHT)
-	// 	)
-	// );
+	const is_wall_ended: boolean | undefined = $derived.by(() => {
+		if (typeof selected_side === 'undefined') {
+			return undefined;
+		}
+		if (
+			(wall_x <= 0 && selected_side === SIDE_RIGHT) ||
+			(wall_x >= 1 && selected_side === SIDE_LEFT)
+		) {
+			return true;
+		}
+		if (
+			(wall_x <= 0 && selected_side === SIDE_LEFT) ||
+			(wall_x >= 1 && selected_side === SIDE_RIGHT)
+		) {
+			return false;
+		}
+		return undefined;
+	});
 
 	function moveWall(
 		wall_hit_right: boolean,
 		without_highlight: boolean = false,
 		speed: number = WALL_SPEED
 	) {
-		if (wall_x >= 0 && wall_x <= 1) {
+		if (wall_x > 0 && wall_x < 1) {
 			if (wall_hit_right) {
 				// The addition is not greater than the distance of the wall to the left outer bound
 				wall_x = Math.max(0, wall_x - speed);
@@ -198,7 +213,7 @@ export function createMove() {
 		let direction: boolean = true;
 		interval = setInterval(function () {
 			moveWall(direction, true, 0.01);
-			if (wall_x >= 1 || wall_x <= 0) {
+			if (wall_x >= 0.9 || wall_x <= 0.1) {
 				direction = !direction;
 			}
 		}, 30);
@@ -429,6 +444,7 @@ export function createMove() {
 		animateWallMovement,
 		stopAnimateWallMovement,
 		resetParticleOneSide,
+		selectNoSide,
 		setNoIgnoreColor() {
 			ignore_color = undefined;
 		},

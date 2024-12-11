@@ -14,6 +14,11 @@ export default {
 			'2xl': '26px'
 		},
 		extend: {
+			screens: {
+				xs: '440px',
+				mobile: '544px',
+				desktop: '920px'
+			},
 			colors: {
 				bg: {
 					bright: '#d5edf5',

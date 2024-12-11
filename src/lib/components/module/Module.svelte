@@ -62,17 +62,27 @@
 	<title>{title}</title>
 </svelte:head>
 
-<section class="grid grid-rows-[124px_1fr_5fr_1fr] max-w-full w-screen h-screen gap-y-2">
-	<div class="bg-bg-dark flex items-center justify-center px-2 lg:px-0">
+<section
+	class="grid grid-rows-[auto_auto_1fr_auto] desktop:grid-rows-[124px_auto_1fr_auto] min-w-[375px] max-w-full w-screen aspect-[600/900] overflow-hidden mobile:aspect-[920/760] desktop:h-[760px] sm:gap-y-2"
+>
+	<div
+		class="bg-bg-dark flex items-center justify-center p-2 xs:py-4 md:py-4 mobile:py-2 desktop:p-0"
+	>
 		<header class="w-full flex flex-col gap-y-3 max-w-[920px] text-center">
 			<h2 class="text-primary-dark font-bold text-xl/tight md:text-2xl/none">{title}</h2>
-			<p class="text-primary-mute font-serif text-base md:text-lg text-balance">
+			<p
+				class="text-primary-mute font-serif text-sm/tight xs:text-base/tight mobile:text-sm/tight sm:text-base/tight desktop:text-base/snug text-balance"
+			>
 				{intro}
 			</p>
 		</header>
 	</div>
-	<div class="flex items-center justify-center px-2 lg:px-0">
-		<p class="font-sans text-text md:text-lg max-w-[920px] text-center text-balance">
+	<div
+		class="flex items-center justify-center py-2 px-2 xs:py-4 sm:py-4 mobile:py-2 desktop:px-0 place-self-center"
+	>
+		<p
+			class="font-sans text-text text-sm/tight xs:text-base/tight mobile:text-sm/tight sm:text-base/tight desktop:text-base/snug max-w-[920px] text-center text-balance"
+		>
 			{@html story.currentText}
 		</p>
 	</div>

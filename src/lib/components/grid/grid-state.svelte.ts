@@ -42,7 +42,7 @@ export function createGrid() {
 		return grid_height_inner + padding.left + padding.right;
 	});
 
-	const entity_size = $derived((grid_height / GRID_SIZE) * 0.3);
+	const entity_size = $derived(Math.max((grid_height / GRID_SIZE) * 0.3, 2));
 
 	return {
 		set height(value: number) {
@@ -58,6 +58,7 @@ export function createGrid() {
 			return gridState;
 		},
 		get entity_size(): number {
+			console.log(entity_size);
 			return entity_size;
 		},
 		set currentState(value: GridType) {

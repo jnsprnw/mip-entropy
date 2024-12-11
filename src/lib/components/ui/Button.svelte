@@ -15,6 +15,7 @@
 		isButtonPrevious?: boolean;
 		isButtonSort?: boolean;
 		isButtonView?: boolean;
+		isAction?: boolean;
 		isPrimary?: boolean;
 		class?: string;
 		observer?: Observer;
@@ -30,14 +31,18 @@
 		isButtonSort = false,
 		isButtonView = false,
 		isPrimary = false,
+		isAction = false,
 		class: classes = '',
 		observer,
 		hidden = false
 	}: Props = $props();
 
 	const colors = $derived.by(() => {
+		if (isAction) {
+			return 'bg-[#7787BD] text-white hover:bg-primary-light focus:bg-primary-light';
+		}
 		if (!isPrimary) {
-			return 'bg-white text-primary-light hover:bg-primary-light focus:bg-primary-light';
+			return 'bg-white text-primary-light hover:text-primary-dark focus:text-primary-dark';
 		}
 		if (observer) {
 			if (isAlice(observer)) {
@@ -54,7 +59,7 @@
 	{disabled}
 	aria-pressed={isActive}
 	aria-hidden={hidden}
-	class="{classes} {colors} gap-x-1 aria-hidden:opacity-0 md:gap-x-2 hover:text-white text-balance px-2 sm:px-6 md:px-8 py-1 sm:py-2 shadow-sm shadow-black/[0.04] inline-grid items-center justify-center rounded-lg md:text-base/none tracking-wider font-medium ring-offset-background transition-[colors_opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
+	class="{classes} {colors} gap-x-1 aria-hidden:opacity-0 md:gap-x-2 hover:text-white text-balance px-4 sm:px-6 md:px-8 py-2 sm:py-2 shadow-sm shadow-black/[0.04] inline-grid items-center justify-center rounded-lg text-sm/tight sm:text-base/tight tracking-wide sm:tracking-wider font-medium ring-offset-background transition-[colors_opacity] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/70 focus-visible:ring-offset-2 disabled:pointer-events-none"
 	{onclick}
 	class:grid-cols-[auto_24px]={isButtonNext || isButtonSort || isButtonView}
 	class:grid-cols-[24px_auto]={isButtonPrevious}

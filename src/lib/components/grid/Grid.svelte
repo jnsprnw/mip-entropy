@@ -7,7 +7,6 @@
 	import Move from './Move.svelte';
 	import Pulley from './Pulley.svelte';
 	import Guess from './interactives/Guess.svelte';
-	import SideSelection from './interactives/SideSelection.svelte';
 	import { getGridState } from '$grid/grid-state.svelte';
 	import { GRID_SIZE } from '$config';
 
@@ -38,7 +37,6 @@
 				</Svg>
 
 				<Html>
-					<SideSelection />
 					<Guess />
 				</Html>
 			</LayerCake>
