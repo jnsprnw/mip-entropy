@@ -22,18 +22,4 @@
 			class:stroke-accent-dark={wall_highlight}
 		/>
 	{/if}
-	<!-- <line
-		class="stroke-2 stroke-red-500"
-		x1={bounds.x0}
-		x2={bounds.x0}
-		y1={$yScale(1)}
-		y2={$yScale(0)}
-	/>
-	<line
-		class="stroke-2 stroke-red-500"
-		x1={bounds.x1}
-		x2={bounds.x1}
-		y1={$yScale(1)}
-		y2={$yScale(0)}
-	/> -->
 </g>
