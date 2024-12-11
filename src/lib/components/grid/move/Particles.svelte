@@ -7,12 +7,12 @@
 	const { xScale, yScale } = getContext('LayerCake');
 
 	const gridState = getGridState();
-	const { grid, entity_size } = $derived(gridState);
-	const { particles, observer } = $derived(grid);
+	const { grid } = $derived(gridState);
+	const { particles, observer, radius } = $derived(grid);
 </script>
 
 <g>
 	{#each particles as { cx, cy, color: fill }}
-		<Circle cx={$xScale(cx)} cy={$yScale(cy)} r={entity_size / 2} color={getFill(observer, fill)} />
+		<Circle cx={$xScale(cx)} cy={$yScale(cy)} r={radius} color={getFill(observer, fill)} />
 	{/each}
 </g>
