@@ -94,7 +94,7 @@ export function getFill(observer: Observer, color: EntityColor) {
 	}
 	switch (color) {
 		case ENTITY_COLOR_A:
-			return 'fill-entity-a';
+			return 'fill-entity';
 		case ENTITY_COLOR_B:
 			return 'fill-entity-b';
 		default:
