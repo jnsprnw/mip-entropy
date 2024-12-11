@@ -1,10 +1,7 @@
 import {
 	ENTITY_COLOR_A,
-	ENTITY_COLOR_B,
 	OBSERVER_ALICE,
 	OBSERVER_BOB,
-	ENTITY_SHAPE_SQUARE,
-	ENTITY_SHAPE_TRIANGLE,
 	WALL_WIDTH,
 	SIDE_LEFT,
 	SIDE_RIGHT,
@@ -22,7 +19,7 @@ const SPEED = 0.02;
 // Radius des Balls
 const RADIUS = 6;
 
-const WALL_MOVEMENT_PADDING = 5;
+const WALL_MOVEMENT_PADDING = 8;
 
 const WALL_MOVEMENT_BOUNDS = WALL_MOVEMENT_PADDING + WALL_WIDTH / 2;
 
@@ -32,16 +29,13 @@ export function createMove() {
 	let selected_side = $state<typeof SIDE_LEFT | typeof SIDE_RIGHT | undefined>(undefined);
 	let particles = $state<Particle[]>([]);
 	let can_select = $state<boolean>(false);
-	let observer = $state<Observer>(undefined);
-	let allow_observer_switch = $state<boolean>(false);
-	let show_observer_switch = $state<boolean>(false);
 	let show_wall = $state<boolean>(false);
 
 	let width = $state<number>(0);
 	const scale = $derived(
 		scaleLinear()
 			.domain([0, 1])
-			.range([WALL_MOVEMENT_BOUNDS, width - WALL_MOVEMENT_BOUNDS - WEIGHT_WIDTH * 2])
+			.range([WALL_MOVEMENT_BOUNDS, width - WALL_MOVEMENT_BOUNDS])
 	);
 	const scale_inner = $derived(scaleLinear().domain([0, 1]).range([0, width]));
 
@@ -49,7 +43,6 @@ export function createMove() {
 	const scaled_radius = $derived(scale_inner.invert(RADIUS));
 	// const wall_offset_scaled = $derived(scale.invert(10));
 	const pulley_radius = $derived(Math.max(scale_inner.invert(10), 6));
-	const hasObserver = $derived(typeof observer !== 'undefined');
 
 	const scaled_padding = $derived(scale_inner.invert(WALL_MOVEMENT_PADDING));
 	const wall_max = $derived(1 - scaled_padding);
@@ -80,39 +73,30 @@ export function createMove() {
 			return;
 		}
 		particles = particles.map((particle) => {
-			const max_x = particle.cx > wall_x ? 1 : particle_min;
-			const min_x = particle.cx > wall_x ? particle_max : 0;
+			const max_x = particle.cx > wall_x ? 1 - scaled_radius : particle_min;
+			const min_x = particle.cx > wall_x ? particle_max : scaled_radius;
 
 			particle.cx = Math.min(Math.max(particle.cx + particle.dx, min_x), max_x);
 			particle.cy += particle.dy;
 
 			// The wall was hit on the right hand side. Particle is on the left side of the wall.
-			const wall_hit_right = particle.cx === max_x;
+			const wall_hit_right = particle.cx === particle_max;
 
 			// The wall was hit on the right hand side
-			const wall_hit_left = !wall_hit_right && particle.cx === min_x;
+			const wall_hit_left = !wall_hit_right && particle.cx === particle_min;
 
 			// The wall or outer bounds are hit
-			if (particle.cx - RADIUS < 0 || wall_hit_right || wall_hit_left || particle.cx + RADIUS > 1) {
+			if (particle.cx === max_x || particle.cx === min_x) {
 				particle.dx = -particle.dx;
 			}
 
-			// This moves the wall if the particle has weight and hits the wall from the selected side
-			// if (
-			// 	((wall_hit_right && selected_side === SIDE_RIGHT) ||
-			// 		(wall_hit_left && selected_side === SIDE_LEFT)) &&
-			// 	has_weight
-			// ) {
-			// 	moveWall(wall_hit_right);
-			// }
-
 			// This moves the wall if the particle has weight and hits the wall from any side
 			if ((wall_hit_right || wall_hit_left) && has_weight) {
-				// moveWall(wall_hit_right);
+				moveWall(wall_hit_right);
 			}
 
 			// The outer bounds are hit
-			if (particle.cy - RADIUS < 0 || particle.cy + RADIUS > 1) {
+			if (particle.cy - scaled_radius < 0 || particle.cy + scaled_radius > 1) {
 				particle.dy = -particle.dy;
 			}
 			return particle;
@@ -273,34 +257,6 @@ export function createMove() {
 		can_select = false;
 	}
 
-	function setObserver(value: Observer) {
-		observer = value;
-	}
-
-	function setAlice() {
-		setObserver(OBSERVER_ALICE);
-	}
-
-	function setBob() {
-		setObserver(OBSERVER_BOB);
-	}
-
-	function allowObserverSwitch() {
-		allow_observer_switch = true;
-	}
-
-	function disallowObserverSwitch() {
-		allow_observer_switch = false;
-	}
-
-	function showObserverSwitch() {
-		show_observer_switch = true;
-	}
-
-	function hideObserverSwitch() {
-		show_observer_switch = false;
-	}
-
 	function showWall() {
 		show_wall = true;
 	}
@@ -314,20 +270,12 @@ export function createMove() {
 		radius: RADIUS,
 		move,
 		resetWall,
-		// resetBall,
 		wall_y1,
 		wall_y2,
 		startMoving,
 		stopMoving,
 		allowSelectSide,
 		disallowSelectSide,
-		setAlice,
-		setBob,
-		allowObserverSwitch,
-		disallowObserverSwitch,
-		showObserverSwitch,
-		hideObserverSwitch,
-		setObserver,
 		showWall,
 		hideWall,
 		selectLeftSide,
@@ -348,26 +296,11 @@ export function createMove() {
 		get is_wall_ended() {
 			return is_wall_ended;
 		},
-		get bounds() {
-			return {
-				x0: scale(0),
-				x1: scale(1)
-			};
-		},
 		get weight_distance() {
 			return weight_y;
 		},
 		get show_wall() {
 			return show_wall;
-		},
-		get allow_observer_switch() {
-			return allow_observer_switch;
-		},
-		get show_observer_switch() {
-			return show_observer_switch;
-		},
-		get observer() {
-			return observer;
 		},
 		get can_select() {
 			return can_select;
@@ -386,24 +319,6 @@ export function createMove() {
 		},
 		get wall_highlight() {
 			return wall_highlight;
-		},
-		get hasObserver() {
-			return hasObserver;
-		},
-		get particle_max() {
-			return particle_max;
-		},
-		get particle_min() {
-			return particle_min;
-		},
-		get width() {
-			return width;
-		},
-		get scaled_radius() {
-			return scaled_radius;
-		},
-		get wall_width_scaled() {
-			return wall_width_scaled;
 		}
 	};
 }
