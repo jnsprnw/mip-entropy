@@ -20,7 +20,7 @@ export const ID = 'move' as const;
 const SPEED = 0.02;
 
 // Radius des Balls
-const RADIUS = 0.03;
+const RADIUS = 6;
 
 const WALL_MOVEMENT_PADDING = 5;
 
@@ -47,10 +47,14 @@ export function createMove() {
 	const scale_inner = $derived(scaleLinear().domain([0, 1]).range([0, width]));
 
 	const wall_width_scaled = $derived(scale_inner.invert(WALL_WIDTH / 2));
-	const scaled_radius = $derived(scale.invert(RADIUS));
+	const scaled_radius = $derived(scale_inner.invert(RADIUS));
 	// const wall_offset_scaled = $derived(scale.invert(10));
 	const pulley_radius = $derived(Math.max(scale_inner.invert(10), 6));
 	const hasObserver = $derived(typeof observer !== 'undefined');
+
+	const scaled_padding = $derived(scale_inner.invert(WALL_MOVEMENT_PADDING));
+	const wall_max = $derived(1 - scaled_padding);
+	const wall_min = $derived(scaled_padding);
 
 	// Koordinaten der Wand
 	let wall_x = $state<number>(0);
@@ -77,22 +81,14 @@ export function createMove() {
 			const max_x = particle.cx > wall_x ? 1 : particle_min;
 			const min_x = particle.cx > wall_x ? particle_max : 0;
 
-			particle.cx += particle.dx;
+			particle.cx = Math.min(Math.max(particle.cx + particle.dx, min_x), max_x);
 			particle.cy += particle.dy;
 
 			// The wall was hit on the right hand side. Particle is on the left side of the wall.
-			const wall_hit_right = checkIfWallHitRight(
-				particle,
-				RADIUS,
-				wall_x,
-				wall_width_scaled,
-				ignore_color
-			);
+			const wall_hit_right = particle.cx === max_x;
 
 			// The wall was hit on the right hand side
-			const wall_hit_left =
-				!wall_hit_right &&
-				checkIfWallHitLeft(particle, RADIUS, wall_x, wall_width_scaled, ignore_color);
+			const wall_hit_left = !wall_hit_right && particle.cx === min_x;
 
 			// The wall or outer bounds are hit
 			if (particle.cx - RADIUS < 0 || wall_hit_right || wall_hit_left || particle.cx + RADIUS > 1) {
@@ -110,7 +106,7 @@ export function createMove() {
 
 			// This moves the wall if the particle has weight and hits the wall from any side
 			if ((wall_hit_right || wall_hit_left) && has_weight) {
-				moveWall(wall_hit_right);
+				// moveWall(wall_hit_right);
 			}
 
 			// The outer bounds are hit
@@ -171,14 +167,14 @@ export function createMove() {
 			return undefined;
 		}
 		if (
-			(wall_x <= 0 && selected_side === SIDE_RIGHT) ||
-			(wall_x >= 1 && selected_side === SIDE_LEFT)
+			(wall_x <= wall_min && selected_side === SIDE_RIGHT) ||
+			(wall_x >= wall_max && selected_side === SIDE_LEFT)
 		) {
 			return true;
 		}
 		if (
-			(wall_x <= 0 && selected_side === SIDE_LEFT) ||
-			(wall_x >= 1 && selected_side === SIDE_RIGHT)
+			(wall_x <= wall_min && selected_side === SIDE_LEFT) ||
+			(wall_x >= wall_max && selected_side === SIDE_RIGHT)
 		) {
 			return false;
 		}
@@ -190,13 +186,13 @@ export function createMove() {
 		without_highlight: boolean = false,
 		speed: number = WALL_SPEED
 	) {
-		if (wall_x > 0 && wall_x < 1) {
+		if (wall_x > wall_min && wall_x < wall_max) {
 			if (wall_hit_right) {
 				// The addition is not greater than the distance of the wall to the left outer bound
-				wall_x = Math.max(0, wall_x - speed);
+				wall_x = Math.max(wall_min, wall_x - speed);
 			} else {
 				// The addition is not greater than the distance of the wall to the right outer bound
-				wall_x = Math.min(1, wall_x + speed);
+				wall_x = Math.min(wall_max, wall_x + speed);
 			}
 
 			if (!without_highlight) {
@@ -416,6 +412,12 @@ export function createMove() {
 		},
 		get width() {
 			return width;
+		},
+		get scaled_radius() {
+			return scaled_radius;
+		},
+		get wall_width_scaled() {
+			return wall_width_scaled;
 		}
 	};
 }
