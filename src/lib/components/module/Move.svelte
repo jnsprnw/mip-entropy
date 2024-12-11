@@ -22,9 +22,7 @@
 			label="Hang weight on left"
 		/>
 	{:else if typeof is_wall_ended === 'boolean' && is_wall_ended}
-		<span
-			class="text-sm/tight block sm:text-base/tight md:text-xl/tight text-center font-semibold text-[#00B200]"
-		>
+		<span class="text-base/tight block md:text-xl/tight text-center font-semibold text-[#00B200]">
 			Good job!
 		</span>
 	{/if}
@@ -43,9 +41,7 @@
 			label="Hang weight on right"
 		/>
 	{:else if typeof is_wall_ended === 'boolean' && !is_wall_ended}
-		<span
-			class="text-sm/tight block sm:text-base/tight md:text-xl/tight text-center font-semibold text-[#DD5041]"
-		>
+		<span class="block text-base/tight md:text-xl/tight text-center font-semibold text-[#DD5041]">
 			Try again.
 		</span>
 	{/if}

@@ -8,6 +8,6 @@
 
 {#if typeof selected_side !== 'undefined' && can_select}
 	<div class="col-start-[left] col-end-[right] row-start-2 text-center items-center gap-x-4">
-		<Button label="Reset selection" disabled={!selected_side} onclick={resetSide} />
+		<Button label="Reset selection" isWide={true} disabled={!selected_side} onclick={resetSide} />
 	</div>
 {/if}

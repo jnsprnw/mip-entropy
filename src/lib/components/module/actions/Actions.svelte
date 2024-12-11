@@ -13,7 +13,7 @@
 
 {#if gridState.currentState === id_order}
 	<div
-		class="grid w-full h-full col-start-1 row-start-2 col-span-3 md:col-start-1 md:col-span-5 md:grid-cols-subgrid max-md:grid-cols-3"
+		class="grid w-full h-full col-start-1 row-start-2 col-span-3 md:col-start-1 md:col-span-5 items-center gap-x-1 grid-cols-[2fr_1.5fr_2fr] mobile:grid-cols-3"
 	>
 		<Sort />
 		<Observer />

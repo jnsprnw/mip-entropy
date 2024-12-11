@@ -9,7 +9,7 @@
 </script>
 
 {#if typeof entropy_value === 'number'}
-	<div class="col-start-[gaugeA] row-start-1 w-[60px] md:w-[75px] lg:w-[90px] p-2 h-full">
+	<div class="col-start-[gaugeA] justify-self-end row-start-1 w-[65px] p-2 h-full">
 		<Gauge value={entropy_value} />
 	</div>
 {:else if Array.isArray(entropy_value) && entropy_value.length === 2}
@@ -17,7 +17,7 @@
 		<div
 			in:fade
 			out:fade
-			class="col-start-[gaugeA] justify-self-end row-start-1 w-[60px] md:w-[75px] lg:w-[90px] p-2 h-full"
+			class="col-start-[gaugeA] justify-self-end row-start-1 w-[65px] p-2 h-full"
 			class:opacity-20={observer !== OBSERVER_ALICE}
 		>
 			<Gauge value={entropy_value[0]} observer={OBSERVER_ALICE} />
@@ -27,7 +27,7 @@
 		<div
 			in:fade
 			out:fade
-			class="col-start-[gaugeB] justify-self-start row-start-1 w-[60px] md:w-[75px] lg:w-[90px] p-2 h-full"
+			class="col-start-[gaugeB] justify-self-start row-start-1 w-[65px] p-2 h-full"
 			class:opacity-20={observer !== OBSERVER_BOB}
 		>
 			<Gauge value={entropy_value[1]} observer={OBSERVER_BOB} />

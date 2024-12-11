@@ -14,7 +14,7 @@
 	<div
 		in:fade
 		out:fade
-		class="hidden md:flex flex-col gap-y-1 col-start-[alice] row-start-1 w-[70px] lg:w-[120px] lg:p-3 text-center text-highlight"
+		class="hidden md:flex flex-col justify-self-end gap-y-1 col-start-[alice] row-start-1 w-[70px] lg:w-[108px] max-w-full lg:p-3 text-center text-highlight"
 		class:opacity-20={observer !== OBSERVER_ALICE}
 	>
 		<Alice />
@@ -31,7 +31,7 @@
 	<div
 		in:fade
 		out:fade
-		class="hidden md:flex flex-col col-start-[bob] row-start-1 w-[70px] gap-y-1 lg:w-[120px] lg:p-3 text-center text-highlight-bob"
+		class="hidden md:flex flex-col justify-self-start col-start-[bob] row-start-1 w-[70px] gap-y-1 lg:w-[108px] max-w-full lg:p-3 text-center text-highlight-bob"
 		class:opacity-20={observer !== OBSERVER_BOB}
 	>
 		<Bob />

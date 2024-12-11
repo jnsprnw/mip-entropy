@@ -22,7 +22,7 @@
 			onclick={prevPage}
 			hidden={is_first_page}
 			label="Previous"
-			class="justify-self-start"
+			class="justify-self-stretch desktop:justify-self-start"
 		/>
 		<span class="tabular-nums text-sm text-primary-dark">
 			{current_page_number} / {total_pages}
@@ -33,7 +33,7 @@
 			onclick={nextPage}
 			hidden={is_last_page}
 			label="Next"
-			class="justify-self-end"
+			class="justify-self-stretch desktop:justify-self-end"
 		/>
 	</div>
 </menu>

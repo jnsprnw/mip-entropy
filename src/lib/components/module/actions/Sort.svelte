@@ -11,7 +11,7 @@
 </script>
 
 {#if hasObserver}
-	<div in:fade out:fade class="col-start-2 md:col-start-3 justify-self-center row-start-2">
+	<div in:fade out:fade class="col-start-2 md:col-start-2 justify-self-center row-start-2">
 		<Button
 			isPrimary={true}
 			disabled={!can_sort || is_sorting}
