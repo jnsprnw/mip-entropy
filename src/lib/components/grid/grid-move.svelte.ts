@@ -10,15 +10,11 @@ import {
 	SIDE_RIGHT,
 	WEIGHT_WIDTH
 } from '$config';
-import { random } from 'lodash-es';
 import type { Observer, EntityColor, Particle } from '$types';
 import { scaleLinear, scalePoint } from 'd3-scale';
 import { range } from 'd3-array';
-import { checkIfWallHitRight, checkIfWallHitLeft } from './utils-move';
 
 export const ID = 'move' as const;
-
-// const pulley_radius = 10;
 
 // Bewegungsgeschwindigkeit
 const SPEED = 0.02;
@@ -48,9 +44,12 @@ export function createMove() {
 			.domain([0, 1])
 			.range([WALL_MOVEMENT_BOUNDS, width - WALL_MOVEMENT_BOUNDS - WEIGHT_WIDTH * 2])
 	);
-	const wall_width_scaled = $derived(scale.invert(WALL_WIDTH / 2));
-	const wall_offset_scaled = $derived(scale.invert(10));
-	const pulley_radius = $derived(Math.max(scale.invert(10), 6));
+	const scale_inner = $derived(scaleLinear().domain([0, 1]).range([0, width]));
+
+	const wall_width_scaled = $derived(scale_inner.invert(WALL_WIDTH / 2));
+	const scaled_radius = $derived(scale.invert(RADIUS));
+	// const wall_offset_scaled = $derived(scale.invert(10));
+	const pulley_radius = $derived(Math.max(scale_inner.invert(10), 6));
 	const hasObserver = $derived(typeof observer !== 'undefined');
 
 	// Koordinaten der Wand
@@ -62,19 +61,21 @@ export function createMove() {
 			.range([scale(0), scale(1) + WALL_MOVEMENT_BOUNDS - 48]) // 48 = Package height
 	);
 
-	const wall_x_scaled = $derived(scale(wall_x));
+	const wall_x_scaled = $derived(scale_inner(wall_x));
 	const weight_y = $derived(scale_weight(wall_x_scaled));
 
 	const wall_y1 = 0;
 	const wall_y2 = 1;
 
 	let wall_highlight = $state<boolean>(false);
-	let has_shadow = $state<boolean>(false);
+
+	const particle_max = $derived(wall_x + scaled_radius + wall_width_scaled);
+	const particle_min = $derived(wall_x - scaled_radius - wall_width_scaled);
 
 	function move() {
 		particles = particles.map((particle) => {
-			// const max_x = 1 - wall_x - wall_width_scaled- RADIUS;
-			// const min_x = wall_x + wall_width_scaled + RADIUS;
+			const max_x = particle.cx > wall_x ? 1 : particle_min;
+			const min_x = particle.cx > wall_x ? particle_max : 0;
 
 			particle.cx += particle.dx;
 			particle.cy += particle.dy;
@@ -223,10 +224,6 @@ export function createMove() {
 		clearInterval(interval);
 	}
 
-	function changeShadow() {
-		has_shadow = !has_shadow;
-	}
-
 	function resetWall() {
 		wall_x = 0.5;
 	}
@@ -328,7 +325,6 @@ export function createMove() {
 		selectSide,
 		radius: RADIUS,
 		move,
-		changeShadow,
 		resetWall,
 		// resetBall,
 		wall_y1,
@@ -409,11 +405,17 @@ export function createMove() {
 		get wall_highlight() {
 			return wall_highlight;
 		},
-		get has_shadow() {
-			return has_shadow;
-		},
 		get hasObserver() {
 			return hasObserver;
+		},
+		get particle_max() {
+			return particle_max;
+		},
+		get particle_min() {
+			return particle_min;
+		},
+		get width() {
+			return width;
 		}
 	};
 }
