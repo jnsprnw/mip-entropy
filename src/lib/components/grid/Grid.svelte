@@ -23,7 +23,10 @@
 		<div
 			class="relative w-full"
 			style="aspect-ratio: {width} / {gridState.height};"
-			bind:clientWidth={grid.width}
+			bind:clientWidth={null,
+			(v) => {
+				grid.width = v - padding.left - padding.right;
+			}}
 		>
 			<LayerCake {padding} xDomain={domain} yDomain={domain} xScale={scale} yScale={scale}>
 				<Svg>
