@@ -10,7 +10,7 @@ import {
 	SIDE_RIGHT,
 	WEIGHT_WIDTH
 } from '$config';
-import type { Observer, EntityColor, Particle } from '$types';
+import type { Observer, Particle } from '$types';
 import { scaleLinear, scalePoint } from 'd3-scale';
 import { range } from 'd3-array';
 
@@ -36,7 +36,6 @@ export function createMove() {
 	let allow_observer_switch = $state<boolean>(false);
 	let show_observer_switch = $state<boolean>(false);
 	let show_wall = $state<boolean>(false);
-	let ignore_color = $state<EntityColor>(undefined);
 
 	let width = $state<number>(0);
 	const scale = $derived(
@@ -77,6 +76,9 @@ export function createMove() {
 	const particle_min = $derived(wall_x - scaled_radius - wall_width_scaled);
 
 	function move() {
+		if (!is_moving) {
+			return;
+		}
 		particles = particles.map((particle) => {
 			const max_x = particle.cx > wall_x ? 1 : particle_min;
 			const min_x = particle.cx > wall_x ? particle_max : 0;
@@ -116,9 +118,7 @@ export function createMove() {
 			return particle;
 		});
 
-		if (is_moving) {
-			requestAnimationFrame(move);
-		}
+		requestAnimationFrame(move);
 	}
 
 	function selectSide(side: typeof SIDE_LEFT | typeof SIDE_RIGHT | undefined) {
@@ -230,9 +230,7 @@ export function createMove() {
 
 	function resetParticles(
 		count: number = 2,
-		side: typeof SIDE_LEFT | typeof SIDE_RIGHT | 'random' | undefined = undefined,
-		fill?: 'red' | 'blue' | 'alternately' | undefined,
-		form?: undefined | 'alternately'
+		side: typeof SIDE_LEFT | typeof SIDE_RIGHT | 'random' | undefined = undefined
 	) {
 		const scaleY = scalePoint().range([0, 1]).domain(range(count).map(String)).padding(0.6);
 		const arr: Particle[] = [];
@@ -247,14 +245,8 @@ export function createMove() {
 			} else if (side === SIDE_RIGHT) {
 				cx = 0.75;
 			}
-			let shape = 'circle';
-			if (form === 'alternately') {
-				shape = i % 2 ? ENTITY_SHAPE_SQUARE : ENTITY_SHAPE_TRIANGLE;
-			}
-			let color = fill ?? ENTITY_COLOR_A;
-			if (fill === 'alternately') {
-				color = i % 2 ? ENTITY_COLOR_A : ENTITY_COLOR_B;
-			}
+			const shape = 'circle';
+			const color = ENTITY_COLOR_A;
 			arr.push({
 				cx,
 				cy: scaleY(String(i)),
@@ -347,12 +339,6 @@ export function createMove() {
 		resetParticleOneSide,
 		selectNoSide,
 		removeParticles,
-		setNoIgnoreColor() {
-			ignore_color = undefined;
-		},
-		setRedIgnoreColor() {
-			ignore_color = ENTITY_COLOR_B;
-		},
 		get pulley_radius() {
 			return pulley_radius;
 		},
