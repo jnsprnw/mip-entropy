@@ -12,7 +12,7 @@
 		$derived(getStoryState());
 </script>
 
-<menu class=" flex items-center">
+<menu class="px-2 lg:px-0 flex items-center">
 	<div
 		class="border-t h-full border-t-white w-full sm:px-2 py-2 max-w-[920px] mx-auto grid grid-cols-3 justify-items-center items-center gap-x-4"
 	>

@@ -22,7 +22,7 @@
 </script>
 
 <main
-	class="{cols} w-full aspect-square sm:aspect-[1.4] md:aspect-video sm:p-2 gap-x-4 grid-rows-[auto_50px] md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
+	class="{cols} px-2 lg:px-0 w-full aspect-square sm:aspect-[1.4] md:aspect-video sm:p-2 gap-x-4 grid-rows-[auto_50px] md:p-4 grid items-center justify-items-center justify-center max-w-[920px] mx-auto"
 >
 	{#if gridState.currentState === id_order}
 		<Observer />
