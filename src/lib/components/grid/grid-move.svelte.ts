@@ -276,12 +276,9 @@ export function createMove() {
 		particles = arr;
 	}
 
-	// function resetBall() {
-	// 	resetParticles(4, 'random');
-	// 	// cx = Math.random() > 0.5 ? 0.75 : 0.25;
-	// 	// cy = 0.5;
-	// 	// resetAngle();
-	// }
+	function removeParticles() {
+		particles = [];
+	}
 
 	function allowSelectSide() {
 		can_select = true;
@@ -357,6 +354,7 @@ export function createMove() {
 		stopAnimateWallMovement,
 		resetParticleOneSide,
 		selectNoSide,
+		removeParticles,
 		setNoIgnoreColor() {
 			ignore_color = undefined;
 		},
