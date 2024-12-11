@@ -13,7 +13,6 @@
 
 <g>
 	<Particles />
-
 	{#if show_wall}
 		<path
 			d="M {wall_x} {$yScale(0) - 1} V {$yScale(1) - padding.top}"
