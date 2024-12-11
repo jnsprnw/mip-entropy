@@ -63,7 +63,7 @@
 </svelte:head>
 
 <section
-	class="grid grid-rows-[auto_auto_1fr_auto] desktop:grid-rows-[124px_auto_1fr_auto] min-w-[375px] max-w-full w-screen aspect-[600/900] overflow-hidden mobile:aspect-[920/760] desktop:h-[760px] sm:gap-y-2"
+	class="grid grid-rows-[auto_auto_1fr_auto] desktop:grid-rows-[124px_auto_1fr_auto] min-w-[375px] max-w-full w-screen aspect-[2/3] overflow-hidden mobile:aspect-[23/19] desktop:h-[760px] sm:gap-y-2"
 >
 	<div
 		class="bg-bg-dark flex items-center justify-center p-2 xs:py-4 md:py-4 mobile:py-2 desktop:p-0"
