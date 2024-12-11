@@ -1,13 +1,5 @@
-import {
-	ENTITY_COLOR_A,
-	OBSERVER_ALICE,
-	OBSERVER_BOB,
-	WALL_WIDTH,
-	SIDE_LEFT,
-	SIDE_RIGHT,
-	WEIGHT_WIDTH
-} from '$config';
-import type { Observer, Particle } from '$types';
+import { ENTITY_COLOR_A, WALL_WIDTH, SIDE_LEFT, SIDE_RIGHT } from '$config';
+import type { Particle } from '$types';
 import { scaleLinear, scalePoint } from 'd3-scale';
 import { range } from 'd3-array';
 
@@ -32,7 +24,7 @@ export function createMove() {
 	let show_wall = $state<boolean>(false);
 
 	let width = $state<number>(0);
-	const scale = $derived(
+	const scale_bounds = $derived(
 		scaleLinear()
 			.domain([0, 1])
 			.range([WALL_MOVEMENT_BOUNDS, width - WALL_MOVEMENT_BOUNDS])
@@ -41,7 +33,6 @@ export function createMove() {
 
 	const wall_width_scaled = $derived(scale_inner.invert(WALL_WIDTH / 2));
 	const scaled_radius = $derived(scale_inner.invert(RADIUS));
-	// const wall_offset_scaled = $derived(scale.invert(10));
 	const pulley_radius = $derived(Math.max(scale_inner.invert(10), 6));
 
 	const scaled_padding = $derived(scale_inner.invert(WALL_MOVEMENT_PADDING));
@@ -53,8 +44,10 @@ export function createMove() {
 
 	const scale_weight = $derived(
 		scaleLinear()
-			.domain(selected_side === SIDE_LEFT ? scale.range().toReversed() : scale.range())
-			.range([scale(0), scale(1) + WALL_MOVEMENT_BOUNDS - 48]) // 48 = Package height
+			.domain(
+				selected_side === SIDE_LEFT ? scale_bounds.range().toReversed() : scale_bounds.range()
+			)
+			.range([scale_bounds(0), scale_bounds(1) + WALL_MOVEMENT_BOUNDS - 48]) // 48 = Package height
 	);
 
 	const wall_x_scaled = $derived(scale_inner(wall_x));
@@ -237,7 +230,6 @@ export function createMove() {
 				angle,
 				dx: Math.cos(angle) * SPEED,
 				dy: Math.sin(angle) * SPEED,
-				radius: RADIUS,
 				shape,
 				color
 			});
