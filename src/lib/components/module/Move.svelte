@@ -19,7 +19,7 @@
 			class="max-w-[150px]"
 			isAction={true}
 			onclick={() => selectSide('left')}
-			label="Hang weight on left"
+			label="Hang weight on LEFT"
 		/>
 	{:else if typeof is_wall_ended === 'boolean' && is_wall_ended}
 		<span class="text-base/tight block md:text-xl/tight text-center font-semibold text-[#00B200]">
@@ -38,7 +38,7 @@
 			class="max-w-[150px]"
 			isAction={true}
 			onclick={() => selectSide('right')}
-			label="Hang weight on right"
+			label="Hang weight on RIGHT"
 		/>
 	{:else if typeof is_wall_ended === 'boolean' && !is_wall_ended}
 		<span class="block text-base/tight md:text-xl/tight text-center font-semibold text-[#DD5041]">
