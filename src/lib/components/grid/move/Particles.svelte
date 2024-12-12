@@ -12,7 +12,7 @@
 </script>
 
 <g>
-	{#each particles as { cx, cy, color: fill }}
-		<Circle cx={$xScale(cx)} cy={$yScale(cy)} r={radius} color={getFill(observer, fill)} />
+	{#each particles as { cx, cy, color }}
+		<Circle cx={$xScale(cx)} cy={$yScale(cy)} r={radius} color={getFill(observer, color)} />
 	{/each}
 </g>
