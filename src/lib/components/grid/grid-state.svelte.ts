@@ -58,7 +58,6 @@ export function createGrid() {
 			return gridState;
 		},
 		get entity_size(): number {
-			console.log(entity_size);
 			return entity_size;
 		},
 		set currentState(value: GridType) {
