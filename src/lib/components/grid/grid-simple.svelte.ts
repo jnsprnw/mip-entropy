@@ -75,7 +75,7 @@ export function createSimple() {
 
 	function loopHigh() {
 		entropy_level = ENTROPY_HIGH;
-		loop(27540584512, findHigh, 200, true);
+		loop(94143280, findHigh, 200, true);
 	}
 
 	function findNextLow(start?: number | undefined) {

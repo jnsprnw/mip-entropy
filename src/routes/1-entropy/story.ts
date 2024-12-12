@@ -9,7 +9,7 @@ export const pages: Page[] = [
 		type: id_simple
 	},
 	{
-		text: 'Now consider the state in which the particles can occupy any of the squares in the box. There are <strong>27,540,584,512</strong> possible arrangements.',
+		text: 'Now consider the state in which the particles can occupy any of the squares in the box. There are <strong>94,143,280</strong> possible arrangements.',
 		actions: ['loopHigh'],
 		type: id_simple
 	},
