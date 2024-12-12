@@ -1,4 +1,4 @@
-import { ENTITY_COLOR_A, WALL_WIDTH, SIDE_LEFT, SIDE_RIGHT } from '$config';
+import { ENTITY_COLOR_B, WALL_WIDTH, SIDE_LEFT, SIDE_RIGHT } from '$config';
 import type { Particle } from '$types';
 import { scaleLinear, scalePoint } from 'd3-scale';
 import { range } from 'd3-array';
@@ -223,7 +223,7 @@ export function createMove() {
 				cx = 0.75;
 			}
 			const shape = 'circle';
-			const color = ENTITY_COLOR_A;
+			const color = ENTITY_COLOR_B;
 			arr.push({
 				cx,
 				cy: scaleY(String(i)),
